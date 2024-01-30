@@ -1,0 +1,5 @@
+[[d1_databases]]
+binding = "DB"
+database_name = "jittter-product-db"
+database_id = "TODO:"
+preview_database_id = "DB"
