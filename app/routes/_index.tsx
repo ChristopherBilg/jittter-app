@@ -2,15 +2,19 @@ import type { MetaFunction } from "@remix-run/cloudflare";
 
 export const meta: MetaFunction = () => {
   return [
-    { title: "New Remix App" },
-    { name: "description", content: "Welcome to Remix!" },
+    { title: "Jittter | Welcome!" },
+    { name: "description", content: "Welcome to Jittter!" },
   ];
 };
 
-export default function Index() {
+const Landing = () => {
   return (
-    <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.8" }}>
-      <h1>Welcome to the Jittter web application!</h1>
+    <div className="m-3">
+      <h1 className="text-3xl font-bold underline">
+        Welcome to the Jittter web application!
+      </h1>
     </div>
   );
-}
+};
+
+export default Landing;
