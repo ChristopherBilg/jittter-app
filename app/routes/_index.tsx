@@ -10,7 +10,7 @@ export const meta: MetaFunction = () => {
 export default function Index() {
   return (
     <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.8" }}>
-      <h1>Welcome to Cloudfalre Pages!</h1>
+      <h1>Welcome to Cloudflare pages!</h1>
     </div>
   );
 }
