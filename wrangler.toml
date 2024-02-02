@@ -1,5 +1,4 @@
-[[d1_databases]]
-binding = "DB"
-database_name = "jittter-product-db"
-database_id = "TODO:"
-preview_database_id = "DB"
+name = "jittter-app"
+#main = "src/index.js"
+main = "./server.ts"
+compatibility_date = "2023-09-04"
