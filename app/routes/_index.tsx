@@ -10,7 +10,7 @@ export const meta: MetaFunction = () => {
 const Landing = () => {
   return (
     <div className="m-3">
-      <h1 className="text-3xl font-bold underline text-red-500">
+      <h1 className="text-3xl font-bold text-red-500 underline">
         Welcome to the Jittter web application!
       </h1>
     </div>
