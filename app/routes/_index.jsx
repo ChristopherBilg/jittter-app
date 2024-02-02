@@ -1,6 +1,4 @@
-import type { MetaFunction } from "@remix-run/cloudflare";
-
-export const meta: MetaFunction = () => {
+export const meta = () => {
   return [
     { title: "Jittter | Welcome!" },
     { name: "description", content: "Welcome to Jittter!" },

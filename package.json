@@ -13,8 +13,7 @@
     "migrations:gen": "drizzle-kit generate:sqlite",
     "migrations:up": "drizzle-kit up:sqlite",
     "pages:deploy": "npm run build && wrangler pages deploy ./public",
-    "start": "wrangler pages dev --compatibility-date=2023-09-04 ./public",
-    "typecheck": "tsc"
+    "start": "wrangler pages dev --compatibility-date=2023-09-04 ./public"
   },
   "dependencies": {
     "@remix-run/cloudflare": "^2.5.1",
@@ -29,9 +28,6 @@
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20240129.0",
     "@remix-run/dev": "^2.5.1",
-    "@types/react": "^18.2.20",
-    "@types/react-dom": "^18.2.7",
-    "@typescript-eslint/eslint-plugin": "^6.7.4",
     "drizzle-kit": "^0.20.13",
     "eslint": "^8.38.0",
     "eslint-config-prettier": "^9.0.0",
@@ -43,7 +39,6 @@
     "prettier": "^3.2.4",
     "prettier-plugin-tailwindcss": "^0.5.11",
     "tailwindcss": "^3.4.1",
-    "typescript": "^5.1.0",
     "wrangler": "^3.19.0"
   },
   "engines": {
