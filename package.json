@@ -9,11 +9,10 @@
     "format:check": "prettier --check app/",
     "format:write": "prettier --write app/",
     "lint": "eslint --ignore-path .gitignore --cache --cache-location ./node_modules/.cache/eslint .",
-    "migrations:apply": "wrangler d1 migrations apply jittter-product-db",
-    "migrations:gen": "drizzle-kit generate:sqlite",
-    "migrations:up": "drizzle-kit up:sqlite",
-    "pages:deploy": "npm run build && wrangler pages deploy ./public",
     "start": "wrangler pages dev --compatibility-date=2023-09-04 ./public",
+    "drizzle:generate": "drizzle-kit generate:pg",
+    "drizzle:push": "drizzle-kit push:pg",
+    "drizzle:studio": "drizzle-kit studio",
     "typecheck": "tsc"
   },
   "dependencies": {
@@ -42,6 +41,7 @@
     "eslint-plugin-jsx-a11y": "^6.7.1",
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-hooks": "^4.6.0",
+    "pg": "^8.11.3",
     "prettier": "^3.2.4",
     "prettier-plugin-tailwindcss": "^0.5.11",
     "tailwindcss": "^3.4.1",

@@ -1,3 +1,9 @@
-import { drizzle } from "drizzle-orm/d1";
+import { neon } from "@neondatabase/serverless";
+import { drizzle } from "drizzle-orm/neon-http";
 
-export const db = (database: D1Database) => drizzle(database);
+const db = (connection: string) => {
+  const sql = neon(connection);
+  return drizzle(sql);
+};
+
+export default db;

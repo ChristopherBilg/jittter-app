@@ -7,7 +7,6 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
-  json,
 } from "@remix-run/react";
 import stylesheet from "~/tailwind.css";
 
@@ -15,14 +14,6 @@ export const links: LinksFunction = () => [
   ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
   { rel: "stylesheet", href: stylesheet },
 ];
-
-export function loader() {
-  return json({
-    ENV: {
-      NODE_ENV: process.env.NODE_ENV,
-    },
-  });
-}
 
 const App = () => (
   <html lang="en">

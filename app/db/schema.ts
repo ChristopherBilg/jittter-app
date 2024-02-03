@@ -1,13 +1,15 @@
 import { sql } from "drizzle-orm";
-import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
+import { date, integer, pgTable, text } from "drizzle-orm/pg-core";
 
-export const slideshow = sqliteTable("slideshow", {
-  id: text("id").primaryKey().notNull(),
-  createdAt: integer("created_at")
+export const user = pgTable("user", {
+  id: integer("id").primaryKey().notNull(),
+  firstName: text("first_name"),
+  lastName: text("last_name"),
+  createdAt: date("created_at")
     .notNull()
     .default(sql`CURRENT_TIMESTAMP`),
-  updatedAt: integer("updated_at")
+  updatedAt: date("updated_at")
     .notNull()
     .default(sql`CURRENT_TIMESTAMP`),
-  deletedAt: integer("deleted_at"),
+  deletedAt: date("deleted_at"),
 });
