@@ -3,7 +3,7 @@ import type {
   LoaderFunctionArgs,
   MetaFunction,
 } from "@remix-run/cloudflare";
-import { Form, useLoaderData } from "@remix-run/react";
+import { useFetcher, useLoaderData } from "@remix-run/react";
 import db from "~/db/client.server";
 import { user } from "~/db/schema";
 
@@ -28,7 +28,7 @@ export async function action({ context }: ActionFunctionArgs) {
     await db(env.NEON_DATABASE_URL).insert(user).values({}).execute();
   }
 
-  return {};
+  return { ok: true };
 }
 
 export const loader = async ({ context }: LoaderFunctionArgs) => {
@@ -41,10 +41,11 @@ export const loader = async ({ context }: LoaderFunctionArgs) => {
 
 const Landing = () => {
   const { length } = useLoaderData<typeof loader>();
+  const fetcher = useFetcher();
 
   return (
     <div className="flex h-screen items-center justify-center">
-      <Form method="POST" className="flex flex-col space-y-4">
+      <fetcher.Form method="POST" className="flex flex-col space-y-4">
         <h1 className="text-4xl font-bold">Welcome to Jittter!</h1>
 
         <p>
@@ -53,10 +54,10 @@ const Landing = () => {
 
         <input
           type="submit"
-          value={length >= 5 ? "Delete all users" : "Add a user"}
+          value={fetcher.state === "submitting" ? "Submitting..." : "Submit"}
           className="mx-auto my-1 w-fit rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
         />
-      </Form>
+      </fetcher.Form>
     </div>
   );
 };
