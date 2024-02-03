@@ -30,12 +30,14 @@ export const ErrorBoundary = () => {
       </head>
 
       <body>
-        {/* add the UI you want your users to see */}
+        <h1>Oh no!</h1>
+        <p>Something went wrong.</p>
+
         <Scripts />
       </body>
     </html>
   );
-}
+};
 
 const App = () => (
   <html lang="en">

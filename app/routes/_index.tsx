@@ -13,7 +13,7 @@ export const meta: MetaFunction = () => {
     { name: "description", content: "Welcome to Jittter!" },
     { name: "keywords", content: "Jittter, welcome" },
     { name: "author", content: "Jittter, LLC" },
-    { name: "robots", content: "index, follow" }
+    { name: "robots", content: "index, follow" },
   ];
 };
 
@@ -22,18 +22,13 @@ export async function action({ context }: ActionFunctionArgs) {
 
   const users = await db(env.NEON_DATABASE_URL).select().from(user).execute();
 
-  if (users.length >= 10) {
+  if (users.length >= 5) {
     await db(env.NEON_DATABASE_URL).delete(user).execute();
   } else {
-    await db(env.NEON_DATABASE_URL)
-      .insert(user)
-      .values({})
-      .execute();
+    await db(env.NEON_DATABASE_URL).insert(user).values({}).execute();
   }
 
-  return {
-    success: true,
-  };
+  return {};
 }
 
 export const loader = async ({ context }: LoaderFunctionArgs) => {
@@ -41,31 +36,27 @@ export const loader = async ({ context }: LoaderFunctionArgs) => {
 
   const users = await db(env.NEON_DATABASE_URL).select().from(user);
 
-  return { users };
+  return { length: users.length };
 };
 
 const Landing = () => {
-  const { users } = useLoaderData<typeof loader>();
+  const { length } = useLoaderData<typeof loader>();
 
   return (
-    <div className="m-3">
-      <h1 className="text-3xl font-bold text-red-500 underline">
-        Welcome to the Jittter web application!
-      </h1>
+    <div className="flex h-screen items-center justify-center">
+      <Form method="POST" className="flex flex-col space-y-4">
+        <h1 className="text-4xl font-bold">Welcome to Jittter!</h1>
 
-      <Form method="POST">
-        <input type="submit" value="Submit" />
+        <p>
+          There are currently <b>{length}</b> users in the database.
+        </p>
+
+        <input
+          type="submit"
+          value={length >= 5 ? "Delete all users" : "Add a user"}
+          className="mx-auto my-1 w-fit rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
+        />
       </Form>
-
-      <div>
-        {users.map((user) => (
-          <div key={user.id}>
-            <p>
-              {user.id}
-            </p>
-          </div>
-        ))}
-      </div>
     </div>
   );
 };
