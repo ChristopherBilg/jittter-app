@@ -5,43 +5,8 @@
     {
       "idx": 0,
       "version": "5",
-      "when": 1706915658586,
-      "tag": "0000_special_tyger_tiger",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "5",
-      "when": 1706917010006,
-      "tag": "0001_elite_zaran",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "5",
-      "when": 1706917163684,
-      "tag": "0002_supreme_talos",
-      "breakpoints": true
-    },
-    {
-      "idx": 3,
-      "version": "5",
-      "when": 1706917190492,
-      "tag": "0003_bumpy_sauron",
-      "breakpoints": true
-    },
-    {
-      "idx": 4,
-      "version": "5",
-      "when": 1706917293538,
-      "tag": "0004_youthful_bug",
-      "breakpoints": true
-    },
-    {
-      "idx": 5,
-      "version": "5",
-      "when": 1706917315950,
-      "tag": "0005_demonic_namora",
+      "when": 1706927021266,
+      "tag": "0000_lonely_lily_hollister",
       "breakpoints": true
     }
   ]

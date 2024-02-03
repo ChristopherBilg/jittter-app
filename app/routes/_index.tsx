@@ -9,8 +9,11 @@ import { user } from "~/db/schema";
 
 export const meta: MetaFunction = () => {
   return [
-    { title: "Jittter | Welcome!" },
+    { title: "Welcome to Jittter!" },
     { name: "description", content: "Welcome to Jittter!" },
+    { name: "keywords", content: "Jittter, welcome" },
+    { name: "author", content: "Jittter, LLC" },
+    { name: "robots", content: "index, follow" }
   ];
 };
 
@@ -25,9 +28,8 @@ export async function action({ context }: ActionFunctionArgs) {
     await db(env.NEON_DATABASE_URL)
       .insert(user)
       .values({
-        id: Math.floor(Math.random() * 1_000_000),
-        firstName: "C",
-        lastName: "B",
+        email: "C",
+        password: "B",
       })
       .execute();
   }
@@ -62,8 +64,7 @@ const Landing = () => {
         {users.map((user) => (
           <div key={user.id}>
             <p>
-              {user.id} | {user.firstName} | {user.lastName} | {user.createdAt}{" "}
-              | {user.updatedAt}
+              {user.id} | {user.email} | {user.password}
             </p>
           </div>
         ))}
