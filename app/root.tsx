@@ -16,7 +16,7 @@ export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
 ];
 
-export function ErrorBoundary() {
+export const ErrorBoundary = () => {
   const error = useRouteError();
   console.error(error);
 
@@ -24,9 +24,11 @@ export function ErrorBoundary() {
     <html lang="en">
       <head>
         <title>Oh no!</title>
+
         <Meta />
         <Links />
       </head>
+
       <body>
         {/* add the UI you want your users to see */}
         <Scripts />

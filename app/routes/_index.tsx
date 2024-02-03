@@ -27,10 +27,7 @@ export async function action({ context }: ActionFunctionArgs) {
   } else {
     await db(env.NEON_DATABASE_URL)
       .insert(user)
-      .values({
-        email: "C",
-        password: "B",
-      })
+      .values({})
       .execute();
   }
 
@@ -64,7 +61,7 @@ const Landing = () => {
         {users.map((user) => (
           <div key={user.id}>
             <p>
-              {user.id} | {user.email} | {user.password}
+              {user.id}
             </p>
           </div>
         ))}
