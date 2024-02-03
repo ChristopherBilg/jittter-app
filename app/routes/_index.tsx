@@ -17,12 +17,12 @@ export const meta: MetaFunction = () => {
 export async function action({ context }: ActionFunctionArgs) {
   const env = context.env as Record<string, string>;
 
-  const users = await db(env.DATABASE_URL).select().from(user).execute();
+  const users = await db(env.NEON_DATABASE_URL).select().from(user).execute();
 
   if (users.length >= 10) {
-    await db(env.DATABASE_URL).delete(user).execute();
+    await db(env.NEON_DATABASE_URL).delete(user).execute();
   } else {
-    await db(env.DATABASE_URL)
+    await db(env.NEON_DATABASE_URL)
       .insert(user)
       .values({
         id: Math.floor(Math.random() * 1_000_000),
@@ -40,7 +40,7 @@ export async function action({ context }: ActionFunctionArgs) {
 export const loader = async ({ context }: LoaderFunctionArgs) => {
   const env = context.env as Record<string, string>;
 
-  const users = await db(env.DATABASE_URL).select().from(user);
+  const users = await db(env.NEON_DATABASE_URL).select().from(user);
 
   return { users };
 };
