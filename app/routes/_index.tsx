@@ -59,15 +59,14 @@ const Landing = () => {
       </Form>
 
       <div>
-        <ol>
-          {users.map((user) => (
-            <li key={user.id}>
-              <a href={`/users/${user.id}`}>
-                {user.firstName} {user.lastName}
-              </a>
-            </li>
-          ))}
-        </ol>
+        {users.map((user) => (
+          <div key={user.id}>
+            <p>
+              {user.id} | {user.firstName} | {user.lastName} | {user.createdAt}{" "}
+              | {user.updatedAt}
+            </p>
+          </div>
+        ))}
       </div>
     </div>
   );
