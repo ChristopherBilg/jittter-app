@@ -1,5 +1,5 @@
 {
-  "id": "03d49427-3935-4a3f-bc10-a5b043904f30",
+  "id": "88d473f6-367f-47eb-87c5-99c858b12b12",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "5",
   "dialect": "pg",
@@ -10,9 +10,10 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "serial",
+          "type": "uuid",
           "primaryKey": true,
-          "notNull": true
+          "notNull": true,
+          "default": "gen_random_uuid()"
         },
         "created_at": {
           "name": "created_at",
