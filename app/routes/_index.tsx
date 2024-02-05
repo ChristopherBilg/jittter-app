@@ -25,7 +25,13 @@ export async function action({ context }: ActionFunctionArgs) {
   if (users.length >= 5) {
     await db(env.NEON_DATABASE_URL).delete(user).execute();
   } else {
-    await db(env.NEON_DATABASE_URL).insert(user).values({}).execute();
+    await db(env.NEON_DATABASE_URL)
+      .insert(user)
+      .values({
+        email: `user${users.length}@example.com`,
+        password: "password",
+      })
+      .execute();
   }
 
   return { ok: true };
