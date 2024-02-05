@@ -1,4 +1,4 @@
-import type { LinksFunction } from "@remix-run/cloudflare";
+import type { LinksFunction, MetaFunction } from "@remix-run/cloudflare";
 import { cssBundleHref } from "@remix-run/css-bundle";
 import {
   Links,
@@ -11,6 +11,14 @@ import {
   useRouteError,
 } from "@remix-run/react";
 import stylesheet from "~/tailwind.css";
+
+export const meta: MetaFunction = () => {
+  return [
+    {
+      title: "Jittter",
+    },
+  ];
+};
 
 export const links: LinksFunction = () => [
   ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
