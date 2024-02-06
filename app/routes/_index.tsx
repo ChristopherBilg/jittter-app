@@ -8,9 +8,7 @@ export const meta: MetaFunction = () => {
 };
 
 export const loader = async ({ context }: LoaderFunctionArgs) => {
-  const env = context.env as Record<string, string>;
-
-  const users = await db(env.NEON_DATABASE_URL).select().from(user);
+  const users = await db(context.env.NEON_DATABASE_URL).select().from(user);
 
   return { length: users.length };
 };

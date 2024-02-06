@@ -8,14 +8,18 @@ export const meta: MetaFunction = () => {
   return [{ title: "Register for Jittter!" }];
 };
 
+export const loader = async () => {
+  // TODO: Check if user is already logged in and if so, redirect to dashboard
+  return null;
+};
+
 export const action = async ({ request, context }: ActionFunctionArgs) => {
-  const env = context.env as Record<string, string>;
   const { ok, values } = await validate(request);
 
   if (!ok) return null;
 
   try {
-    const newUser = await db(env.NEON_DATABASE_URL)
+    const newUser = await db(context.env.NEON_DATABASE_URL)
       .insert(user)
       .values({
         email: values.email as string,
