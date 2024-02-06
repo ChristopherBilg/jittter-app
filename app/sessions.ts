@@ -19,6 +19,7 @@ const { getSession, commitSession, destroySession } =
       maxAge: 60 * 60 * 24 * 7,
       path: "/",
       sameSite: "lax",
+      // TODO: Find a method to get the secret from the environment
       secrets: ["super-duper-secret"],
       secure: true,
       // domain: "example.com",
