@@ -34,6 +34,7 @@ export const ErrorBoundary = () => {
         <h1>
           {error.status} {error.statusText}
         </h1>
+
         <p>{error.data}</p>
       </div>
     );
@@ -42,6 +43,7 @@ export const ErrorBoundary = () => {
       <div>
         <h1>Error</h1>
         <p>{error.message}</p>
+
         <p>The stack trace is:</p>
         <pre>{error.stack}</pre>
       </div>

@@ -5,6 +5,7 @@ import { output, z } from "zod";
 
 export const ApplicationEnvironmentVariableSchema = z.object({
   NEON_DATABASE_URL: z.string().min(1),
+  COOKIE_SESSION_SECRET: z.string().min(1),
 });
 
 declare module "@remix-run/cloudflare" {
