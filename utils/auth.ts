@@ -11,7 +11,7 @@
  * @example
  *   const key = await pbkdf2('pāşšŵōřđ'); // eg 'djAxBRKXWNWPyXgpKWHld8SWJA9CQFmLyMbNet7Rle5RLKJAkBCllLfM6tPFa7bAis0lSTiB'
  */
-export async function pbkdf2(password: string, iterations = 100_000) {
+export const pbkdf2 = async (password: string, iterations = 100_000) => {
   const pwUtf8 = new TextEncoder().encode(password); // encode pw as UTF-8
   const pwKey = await crypto.subtle.importKey("raw", pwUtf8, "PBKDF2", false, [
     "deriveBits",
@@ -45,7 +45,7 @@ export async function pbkdf2(password: string, iterations = 100_000) {
   const compositeBase64 = btoa("v01" + compositeStr); // encode as base64
 
   return compositeBase64; // return composite key
-}
+};
 
 /**
  * Verifies whether the supplied password matches the password previously used to generate the key.
@@ -57,7 +57,7 @@ export async function pbkdf2(password: string, iterations = 100_000) {
  * @example
  *   const match = await pbkdf2Verify(key, 'pāşšŵōřđ'); // true
  */
-export async function pbkdf2Verify(key: string, password: string) {
+export const pbkdf2Verify = async (key: string, password: string) => {
   let compositeStr = null; // composite key is salt, iteration count, and derived key
   try {
     compositeStr = atob(key);
@@ -103,4 +103,4 @@ export async function pbkdf2Verify(key: string, password: string) {
   const keyStrNew = keyArray.map((byte) => String.fromCharCode(byte)).join(""); // key as string
 
   return keyStrNew == keyStr; // test if newly generated key matches stored key
-}
+};

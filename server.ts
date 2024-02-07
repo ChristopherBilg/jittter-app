@@ -14,7 +14,7 @@ declare module "@remix-run/cloudflare" {
 }
 
 declare global {
-  // @ts-expect-error - We're adding a new property to the global object here
+  // @ts-expect-error - We're re-declaring a global here
   const process: {
     env: ProcessEnv;
   };

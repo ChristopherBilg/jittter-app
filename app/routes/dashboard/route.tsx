@@ -4,7 +4,7 @@ import {
   MetaFunction,
   redirect,
 } from "@remix-run/cloudflare";
-import { Form } from "@remix-run/react";
+import { Link } from "@remix-run/react";
 import { destroySession, getSession } from "~/sessions";
 
 export const meta: MetaFunction = () => {
@@ -35,15 +35,14 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   });
 };
 
-export default function DashboardRoute() {
+const DashboardRoute = () => {
   return (
     <div className="p-4">
       <h1 className="text-2xl">Dashboard</h1>
 
-      {/* TODO: Move this to /logout */}
-      <Form method="POST">
-        <input type="submit" value="Log out" />
-      </Form>
+      <Link to="/logout">Log out</Link>
     </div>
   );
-}
+};
+
+export default DashboardRoute;
