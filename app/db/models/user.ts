@@ -22,8 +22,8 @@ export const getUserByAuthenticating = async (
   email: string,
   password: string,
 ) => {
-  const users = await NeonDB.getInstance()
-    .db.select()
+  const users = await NeonDB()
+    .select()
     .from(UserTable)
     .where(and(eq(UserTable.email, email), isNull(UserTable.deletedAt)))
     .limit(1);
@@ -45,8 +45,8 @@ export const createUser = async (
   const key = await pbkdf2(password);
 
   try {
-    const newUsers = await NeonDB.getInstance()
-      .db.insert(UserTable)
+    const newUsers = await NeonDB()
+      .insert(UserTable)
       .values({
         firstName,
         lastName,
