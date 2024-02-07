@@ -16,13 +16,11 @@ const { getSession, commitSession, destroySession } =
     cookie: {
       name: "__session",
       httpOnly: true,
-      maxAge: 60 * 60 * 24 * 7,
+      maxAge: 60 * 60 * 24 * 30,
       path: "/",
       sameSite: "lax",
-      // TODO: Find a method to get the secret from the environment
-      secrets: ["super-duper-secret"],
+      secrets: ["FtbXxXvxg809OWogmoxeFQ5T9V2hOgPQ"],
       secure: true,
-      // domain: "example.com",
     },
   });
 

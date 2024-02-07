@@ -4,11 +4,12 @@ import type {
   MetaFunction,
 } from "@remix-run/cloudflare";
 import { json, redirect, useFetcher, useLoaderData } from "@remix-run/react";
+import { createUser } from "~/db/schema";
 import { commitSession, getSession } from "~/sessions";
-import { validateCredentials } from "./validate-credentials";
+import { validate } from "./validate";
 
 export const meta: MetaFunction = () => {
-  return [{ title: "Login to Jittter!" }];
+  return [{ title: "Register for Jittter!" }];
 };
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
@@ -28,13 +29,29 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 export const action = async ({ request }: ActionFunctionArgs) => {
   const session = await getSession(request.headers.get("Cookie"));
 
-  const user = await validateCredentials(request);
+  const { ok, formData } = await validate(request);
+
+  if (!ok) {
+    session.flash("error", "Please fill out all fields.");
+
+    return redirect("/register", {
+      headers: {
+        "Set-Cookie": await commitSession(session),
+      },
+    });
+  }
+
+  const firstName = formData.get("firstName") as string;
+  const lastName = formData.get("lastName") as string;
+  const email = formData.get("email") as string;
+  const password = formData.get("password") as string;
+
+  const user = await createUser(firstName, lastName, email, password);
 
   if (!user) {
-    session.flash("error", "Invalid username and/or password");
+    session.flash("error", "An error occurred while creating your account.");
 
-    // Redirect back to the login page with errors.
-    return redirect("/login", {
+    return redirect("/register", {
       headers: {
         "Set-Cookie": await commitSession(session),
       },
@@ -45,7 +62,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   session.set("firstName", user.firstName);
   session.set("lastName", user.lastName);
 
-  // Login succeeded, send them to the home page.
+  // Registration succeeded, send them to the home page.
   return redirect("/dashboard", {
     headers: {
       "Set-Cookie": await commitSession(session),
@@ -53,18 +70,40 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   });
 };
 
-const LoginRoute = () => {
+const RegisterRoute = () => {
   const { error } = useLoaderData<typeof loader>();
   const fetcher = useFetcher();
 
   return (
     <div className="flex h-screen items-center justify-center">
       <fetcher.Form method="POST" className="flex flex-col space-y-4">
-        <h1 className="text-center text-4xl font-bold">Login to Jittter!</h1>
+        <h1 className="text-center text-4xl font-bold">
+          Register for Jittter!
+        </h1>
 
         <hr />
 
         {error && <p className="text-red-500">{error}</p>}
+
+        <div className="mx-auto flex w-full justify-between">
+          <input
+            type="text"
+            name="firstName"
+            placeholder="First Name"
+            autoComplete="given-name"
+            className="mr-2 rounded border px-4 py-2"
+            required
+          />
+
+          <input
+            type="text"
+            name="lastName"
+            placeholder="Last Name"
+            autoComplete="family-name"
+            className="rounded border px-4 py-2"
+            required
+          />
+        </div>
 
         <input
           type="email"
@@ -79,14 +118,14 @@ const LoginRoute = () => {
           type="password"
           name="password"
           placeholder="Password"
-          autoComplete="current-password"
+          autoComplete="new-password"
           className="rounded border px-4 py-2"
           required
         />
 
         <input
           type="submit"
-          value={fetcher.state !== "idle" ? "Logging in..." : "Login"}
+          value={fetcher.state !== "idle" ? "Registering..." : "Register"}
           className="mx-auto my-1 w-fit rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
         />
       </fetcher.Form>
@@ -94,4 +133,4 @@ const LoginRoute = () => {
   );
 };
 
-export default LoginRoute;
+export default RegisterRoute;

@@ -28,7 +28,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 export const action = async ({ request }: ActionFunctionArgs) => {
   const session = await getSession(request.headers.get("Cookie"));
 
-  return redirect("/login", {
+  return redirect("/", {
     headers: {
       "Set-Cookie": await destroySession(session),
     },
@@ -40,6 +40,7 @@ export default function DashboardRoute() {
     <div className="p-4">
       <h1 className="text-2xl">Dashboard</h1>
 
+      {/* TODO: Move this to /logout */}
       <Form method="POST">
         <input type="submit" value="Log out" />
       </Form>
