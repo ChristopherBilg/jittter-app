@@ -28,6 +28,10 @@ export const links: LinksFunction = () => [
 export const ErrorBoundary = () => {
   const error = useRouteError();
 
+  // TODO: In production none of this information should be exposed to the user.
+  // You should log the error to an error reporting service and return a generic
+  // error screen to the user.
+
   if (isRouteErrorResponse(error)) {
     return (
       <div>

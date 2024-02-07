@@ -4,7 +4,7 @@ import * as build from "@remix-run/dev/server-build";
 import { output, z } from "zod";
 
 export const ApplicationEnvironmentVariableSchema = z.object({
-  NODE_ENV: z.enum(["development", "production", "test"]).default("development"),
+  NODE_ENV: z.enum(["development", "production", "test"]).default("production"),
 });
 
 declare module "@remix-run/cloudflare" {
