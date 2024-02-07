@@ -9,7 +9,7 @@
     "format:check": "prettier --check app/",
     "format:write": "prettier --write app/",
     "lint": "eslint --ignore-path .gitignore --cache --cache-location ./node_modules/.cache/eslint .",
-    "start": "wrangler pages dev --compatibility-date=2023-09-04 ./public",
+    "start": "wrangler pages dev --compatibility-date=2023-12-01 ./public",
     "drizzle:generate": "drizzle-kit generate:pg",
     "drizzle:push": "drizzle-kit push:pg",
     "drizzle:studio": "drizzle-kit studio",
