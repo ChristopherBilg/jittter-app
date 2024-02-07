@@ -36,7 +36,7 @@
  * @example
  *   const key = await pbkdf2('pāşšŵōřđ'); // eg 'djAxBRKXWNWPyXgpKWHld8SWJA9CQFmLyMbNet7Rle5RLKJAkBCllLfM6tPFa7bAis0lSTiB'
  */
-export async function pbkdf2(password: string, iterations = 1_000_000) {
+export async function pbkdf2(password: string, iterations = 100_000) {
   const pwUtf8 = new TextEncoder().encode(password); // encode pw as UTF-8
   const pwKey = await crypto.subtle.importKey("raw", pwUtf8, "PBKDF2", false, [
     "deriveBits",
