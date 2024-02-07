@@ -33,7 +33,7 @@ const LandingRoute = () => {
 
         <hr />
 
-        <p>{length}</p>
+        <p>{loaderData?.length}</p>
 
         <hr />
 
