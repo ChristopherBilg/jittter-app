@@ -46,6 +46,9 @@ export const ErrorBoundary = () => {
 
         <p>The stack trace is:</p>
         <pre>{error.stack}</pre>
+
+        <p>The error object is:</p>
+        <pre>{JSON.stringify(error, null, 2)}</pre>
       </div>
     );
   } else {
