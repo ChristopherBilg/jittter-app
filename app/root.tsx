@@ -30,7 +30,8 @@ export const ErrorBoundary = () => {
 
   // TODO: In production none of this information should be exposed to the user.
   // You should log the error to an error reporting service and return a generic
-  // error screen to the user.
+  // error screen to the user. Also, this should be cleaned up for better error
+  // outputs for development.
 
   if (isRouteErrorResponse(error)) {
     return (

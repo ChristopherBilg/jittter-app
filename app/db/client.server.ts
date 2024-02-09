@@ -1,7 +1,6 @@
 import { neon } from "@neondatabase/serverless";
 import { drizzle } from "drizzle-orm/neon-http";
 
-// TODO: Figure out why this didn't work in production but does locally
 class NeonDB {
   private static _instance: NeonDB;
 
@@ -10,6 +9,7 @@ class NeonDB {
   private _db: ReturnType<typeof drizzle>;
 
   private constructor() {
+    // TODO: Figure out how to get the connection string from the environment
     this._connectionString =
       "postgresql://christopherbilg:dv91LmpwCjVb@ep-weathered-sky-a5ilhn57-pooler.us-east-2.aws.neon.tech/jittter-product-db?sslmode=require";
     this._sql = neon(this._connectionString);
@@ -28,12 +28,5 @@ class NeonDB {
     return this._db;
   }
 }
-
-// const NeonDB = () => {
-//   const connectionString =
-//     "postgresql://christopherbilg:dv91LmpwCjVb@ep-weathered-sky-a5ilhn57-pooler.us-east-2.aws.neon.tech/jittter-product-db?sslmode=require";
-//   const sql = neon(connectionString);
-//   return drizzle(sql);
-// };
 
 export default NeonDB;
