@@ -22,18 +22,23 @@ export const getUserByAuthenticating = async (
   email: string,
   password: string,
 ) => {
-  const users = await NeonDB()
-    .select()
-    .from(UserTable)
-    .where(and(eq(UserTable.email, email), isNull(UserTable.deletedAt)))
-    .limit(1);
+  try {
+    const users = await NeonDB()
+      .select()
+      .from(UserTable)
+      .where(and(eq(UserTable.email, email), isNull(UserTable.deletedAt)))
+      .limit(1);
 
-  if (users.length !== 1) return null;
+    if (users.length !== 1) return null;
 
-  const valid = await pbkdf2Verify(users[0].passKey, password);
-  if (!valid) return null;
+    const valid = await pbkdf2Verify(users[0].passKey, password);
+    if (!valid) return null;
 
-  return users[0];
+    return users[0];
+  } catch (err) {
+    console.error(err);
+    return null;
+  }
 };
 
 export const createUser = async (
