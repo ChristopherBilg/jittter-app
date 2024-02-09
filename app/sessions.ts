@@ -1,4 +1,4 @@
-import { createCookieSessionStorage } from "@remix-run/cloudflare";
+import { createCookieSessionStorage, redirect } from "@remix-run/cloudflare";
 import { UserTable } from "./db/schema";
 
 type SessionData = {
@@ -25,4 +25,15 @@ const { getSession, commitSession, destroySession } =
     },
   });
 
-export { commitSession, destroySession, getSession };
+const redirectIfNotAuthenticated = async (request: Request, route: string) => {
+  const session = await getSession(request.headers.get("Cookie"));
+
+  if (!session.has("id")) throw redirect(route, 302);
+};
+
+export {
+  commitSession,
+  destroySession,
+  getSession,
+  redirectIfNotAuthenticated,
+};
