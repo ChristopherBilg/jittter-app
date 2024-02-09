@@ -21,9 +21,11 @@ const DashboardRoute = () => {
     <div className="p-4">
       <h1 className="text-2xl">Dashboard</h1>
 
-      <Link to="/">Main page</Link>
-      <Link to="/account">My Account</Link>
-      <Link to="/logout">Log out</Link>
+      <div className="flex flex-col space-y-4">
+        <Link to="/">Main page</Link>
+        <Link to="/account">My Account</Link>
+        <Link to="/logout">Log out</Link>
+      </div>
     </div>
   );
 };
