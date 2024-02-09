@@ -76,6 +76,13 @@ const App = () => (
       <ScrollRestoration />
       <Scripts />
       <LiveReload />
+
+      {/* Cloudflare Web Analytics */}
+      <script
+        defer
+        src="https://static.cloudflareinsights.com/beacon.min.js"
+        data-cf-beacon='{"token": "42a1a6e5974245b7bb08af85b8487894"}'
+      ></script>
     </body>
   </html>
 );
