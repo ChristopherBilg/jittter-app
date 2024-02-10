@@ -11,7 +11,7 @@ export const meta: MetaFunction = () => {
 };
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
-  redirectIfNotAuthenticated(request, "/login");
+  await redirectIfNotAuthenticated(request, "/login");
 
   return null;
 };
