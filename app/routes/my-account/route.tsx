@@ -27,7 +27,7 @@ const AccountRoute = () => {
 
   return (
     <div className="p-4">
-      <h1 className="text-2xl">Dashboard</h1>
+      <h1 className="text-2xl">My Account</h1>
 
       <div className="flex flex-col space-y-4">
         <Link to="/">Main page</Link>
