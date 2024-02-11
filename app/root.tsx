@@ -36,7 +36,7 @@ export const links: LinksFunction = () => [
     sizes: "16x16",
     href: "/favicon-16x16.png",
   },
-  { rel: "manifest", href: "/site.webmanifest" },
+  { rel: "manifest", href: "/manifest.json" },
 ];
 
 export const ErrorBoundary = () => {
