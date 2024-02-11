@@ -29,6 +29,8 @@ const redirectIfNotAuthenticated = async (request: Request, route: string) => {
   const session = await getSession(request.headers.get("Cookie"));
 
   if (!session.has("id")) throw redirect(route, 302);
+
+  return session;
 };
 
 export {

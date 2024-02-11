@@ -27,12 +27,31 @@ export const getUserByAuthenticating = async (
       .db.select()
       .from(UserTable)
       .where(and(eq(UserTable.email, email), isNull(UserTable.deletedAt)))
-      .limit(1);
+      .limit(1)
+      .execute();
 
     if (users.length !== 1) return null;
 
     const valid = await pbkdf2Verify(users[0].passKey, password);
     if (!valid) return null;
+
+    return users[0];
+  } catch (err) {
+    console.error(err);
+    return null;
+  }
+};
+
+export const getUserById = async (id: string) => {
+  try {
+    const users = await NeonDB.getInstance()
+      .db.select()
+      .from(UserTable)
+      .where(eq(UserTable.id, id))
+      .limit(1)
+      .execute();
+
+    if (users.length !== 1) return null;
 
     return users[0];
   } catch (err) {
@@ -63,6 +82,26 @@ export const createUser = async (
     if (newUsers.length !== 1) return null;
 
     return newUsers[0];
+  } catch (err) {
+    console.error(err);
+    return null;
+  }
+};
+
+export const updateUser = async (
+  id: string,
+  user: Partial<typeof UserTable.$inferSelect>,
+) => {
+  try {
+    const updatedUsers = await NeonDB.getInstance()
+      .db.update(UserTable)
+      .set(user)
+      .where(eq(UserTable.id, id))
+      .returning();
+
+    if (updatedUsers.length !== 1) return null;
+
+    return updatedUsers[0];
   } catch (err) {
     console.error(err);
     return null;
