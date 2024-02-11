@@ -1,6 +1,13 @@
-import { LoaderFunctionArgs, MetaFunction } from "@remix-run/cloudflare";
-import { Link, useFetcher } from "@remix-run/react";
-import { redirectIfNotAuthenticated } from "~/sessions";
+import {
+  ActionFunctionArgs,
+  LoaderFunctionArgs,
+  MetaFunction,
+  json,
+} from "@remix-run/cloudflare";
+import { Link, useFetcher, useLoaderData } from "@remix-run/react";
+import { exhaustiveMatchingGuard } from "utils/misc";
+import { getUserById, updateUser } from "~/db/models/user";
+import { commitSession, redirectIfNotAuthenticated } from "~/sessions";
 
 export const meta: MetaFunction = () => {
   return [
@@ -11,18 +18,58 @@ export const meta: MetaFunction = () => {
 };
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
-  await redirectIfNotAuthenticated(request, "/login");
+  const session = await redirectIfNotAuthenticated(request, "/login");
 
-  return null;
+  const user = await getUserById(session.data.id!);
+
+  return {
+    user,
+  };
 };
 
-export const action = async () => {
-  await new Promise((resolve) => setTimeout(resolve, 100));
+const enum FormAction {
+  UpdateNames = "updateNames",
+}
 
-  return null;
+export const action = async ({ request }: ActionFunctionArgs) => {
+  const session = await redirectIfNotAuthenticated(request, "/login");
+
+  const formData = await request.formData();
+  const _action = formData.get("_action") as FormAction;
+  console.log("action", _action);
+
+  switch (_action) {
+    case FormAction.UpdateNames: {
+      const id = String(session.get("id"));
+      const firstName = String(formData.get("firstName"));
+      const lastName = String(formData.get("lastName"));
+
+      if (!firstName || !lastName) return null;
+
+      const user = await updateUser(id, {
+        firstName,
+        lastName,
+      });
+
+      if (!user) return null;
+
+      session.set("firstName", user.firstName);
+      session.set("lastName", user.lastName);
+
+      return json(user, {
+        headers: {
+          "Set-Cookie": await commitSession(session),
+        },
+      });
+    }
+    default: {
+      return exhaustiveMatchingGuard(_action);
+    }
+  }
 };
 
 const AccountRoute = () => {
+  const { user } = useLoaderData<typeof loader>();
   const fetcher = useFetcher();
 
   return (
@@ -35,8 +82,40 @@ const AccountRoute = () => {
         <Link to="/logout">Log out</Link>
       </div>
 
+      <hr className="my-2" />
+
       <fetcher.Form method="POST">
-        <input type="submit" value="Update Account" />
+        <div className="mx-auto flex w-full justify-start">
+          <input
+            type="text"
+            name="firstName"
+            placeholder="First Name"
+            autoComplete="given-name"
+            className="mr-2 rounded border px-4 py-2"
+            defaultValue={user?.firstName || ""}
+            required
+          />
+
+          <input
+            type="text"
+            name="lastName"
+            placeholder="Last Name"
+            autoComplete="family-name"
+            className="rounded border px-4 py-2"
+            defaultValue={user?.lastName || ""}
+            required
+          />
+        </div>
+
+        <input type="hidden" name="_action" value={FormAction.UpdateNames} />
+
+        <input
+          type="submit"
+          value={
+            fetcher.state !== "idle" ? "Updating Names..." : "Update Names"
+          }
+          className="mx-auto my-1 w-fit rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
+        />
       </fetcher.Form>
     </div>
   );

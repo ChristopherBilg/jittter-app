@@ -41,10 +41,10 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     });
   }
 
-  const firstName = formData.get("firstName") as string;
-  const lastName = formData.get("lastName") as string;
-  const email = formData.get("email") as string;
-  const password = formData.get("password") as string;
+  const firstName = String(formData.get("firstName"));
+  const lastName = String(formData.get("lastName"));
+  const email = String(formData.get("email"));
+  const password = String(formData.get("password"));
 
   const user = await createUser(firstName, lastName, email, password);
 
