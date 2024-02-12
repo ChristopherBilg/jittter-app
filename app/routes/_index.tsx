@@ -49,6 +49,10 @@ const LandingRoute = () => {
         <Link to="/dashboard" className="text-blue-500 underline">
           Dashboard
         </Link>
+
+        <Link to="/account" className="text-blue-500 underline">
+          My Account
+        </Link>
       </div>
     </div>
   );
