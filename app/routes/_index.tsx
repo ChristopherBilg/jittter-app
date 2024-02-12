@@ -50,7 +50,7 @@ const LandingRoute = () => {
           Dashboard
         </Link>
 
-        <Link to="/account" className="text-blue-500 underline">
+        <Link to="/my-account" className="text-blue-500 underline">
           My Account
         </Link>
       </div>
