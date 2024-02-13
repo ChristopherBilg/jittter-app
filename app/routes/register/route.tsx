@@ -4,8 +4,8 @@ import type {
   MetaFunction,
 } from "@remix-run/cloudflare";
 import { json, redirect, useFetcher, useLoaderData } from "@remix-run/react";
-import { createUser } from "~/db/schema";
-import { commitSession, getSession } from "~/sessions";
+import { createUser } from "~/app/db/schema";
+import { commitSession, getSession } from "~/app/sessions";
 import { REGISTER_USER_MINIMUM_PASSWORD_LENGTH, validate } from "./validate";
 
 export const meta: MetaFunction = () => {

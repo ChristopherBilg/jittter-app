@@ -3,7 +3,7 @@ import {
   MetaFunction,
   redirect,
 } from "@remix-run/cloudflare";
-import { destroySession, getSession } from "~/sessions";
+import { destroySession, getSession } from "~/app/sessions";
 
 export const meta: MetaFunction = () => {
   return [

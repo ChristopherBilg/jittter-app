@@ -10,7 +10,7 @@ import {
   isRouteErrorResponse,
   useRouteError,
 } from "@remix-run/react";
-import stylesheet from "~/tailwind.css";
+import stylesheet from "~/app/tailwind.css";
 
 export const meta: MetaFunction = () => {
   return [

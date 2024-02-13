@@ -1,6 +1,6 @@
 import { LoaderFunctionArgs, MetaFunction } from "@remix-run/cloudflare";
 import { Link } from "@remix-run/react";
-import { redirectIfNotAuthenticated } from "~/sessions";
+import { redirectIfNotAuthenticated } from "~/app/sessions";
 
 export const meta: MetaFunction = () => {
   return [
