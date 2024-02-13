@@ -1,7 +1,7 @@
 import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/cloudflare";
 import { useLoaderData } from "@remix-run/react";
+import Header from "~/app/components/Header";
 import { getSession } from "~/app/sessions";
-import Header from "~/components/Header";
 
 export const meta: MetaFunction = () => {
   return [{ title: "Welcome to Jittter!" }];
@@ -22,7 +22,7 @@ const LandingRoute = () => {
 
   return (
     <>
-      <Header />
+      <Header isAuthenticated={!!loaderData} />
     </>
   );
 };
