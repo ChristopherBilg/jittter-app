@@ -22,7 +22,9 @@ const LandingRoute = () => {
   return (
     <div className="flex h-screen items-center justify-center">
       <div className="flex flex-col space-y-4">
-        <h1 className="text-4xl font-bold">Welcome to Jittter!</h1>
+        <h1 className="text-4xl font-bold">
+          Welcome {loaderData && "back "}to Jittter!
+        </h1>
 
         <hr />
 
