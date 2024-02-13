@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { getUserByAuthenticating } from "~/db/schema";
+import { getUserByAuthenticating } from "~/app/db/schema";
 
 export const AUTHENTICATE_USER_MINIMUM_PASSWORD_LENGTH = 8;
 

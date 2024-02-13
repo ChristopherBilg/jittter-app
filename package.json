@@ -6,8 +6,8 @@
   "scripts": {
     "build": "remix build",
     "dev": "remix dev --manual -c \"npm run start\"",
-    "format:check": "prettier --check app/",
-    "format:write": "prettier --write app/",
+    "format:check": "prettier --check app/ components/ utils/",
+    "format:write": "prettier --write app/ components/ utils/",
     "lint": "eslint --ignore-path .gitignore --cache --cache-location ./node_modules/.cache/eslint .",
     "start": "wrangler pages dev --compatibility-date=2023-12-01 ./public",
     "drizzle:generate": "drizzle-kit generate:pg",
@@ -16,11 +16,14 @@
     "typecheck": "tsc"
   },
   "dependencies": {
+    "@headlessui/react": "^1.7.18",
+    "@heroicons/react": "^2.1.1",
     "@neondatabase/serverless": "^0.8.1",
     "@remix-run/cloudflare": "^2.5.1",
     "@remix-run/cloudflare-pages": "^2.5.1",
     "@remix-run/css-bundle": "^2.5.1",
     "@remix-run/react": "^2.5.1",
+    "clsx": "^2.1.0",
     "drizzle-orm": "^0.29.3",
     "isbot": "^4.1.0",
     "react": "^18.2.0",

@@ -4,7 +4,7 @@ import type {
   MetaFunction,
 } from "@remix-run/cloudflare";
 import { json, redirect, useFetcher, useLoaderData } from "@remix-run/react";
-import { commitSession, getSession } from "~/sessions";
+import { commitSession, getSession } from "~/app/sessions";
 import { validate } from "./validate";
 
 export const meta: MetaFunction = () => {
