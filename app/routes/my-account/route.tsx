@@ -5,9 +5,9 @@ import {
   json,
 } from "@remix-run/cloudflare";
 import { Link, useFetcher, useLoaderData } from "@remix-run/react";
-import { exhaustiveMatchingGuard } from "utils/misc";
 import { getUserById, updateUser } from "~/app/db/models/user";
 import { commitSession, redirectIfNotAuthenticated } from "~/app/sessions";
+import { exhaustiveMatchingGuard } from "~/app/utils/misc";
 
 export const meta: MetaFunction = () => {
   return [
