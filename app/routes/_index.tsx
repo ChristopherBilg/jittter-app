@@ -26,29 +26,31 @@ const LandingRoute = () => {
 
         <hr />
 
-        {loaderData && (
+        {loaderData ? (
           <>
-            <p>Welcome back!</p>
+            <Link to="/logout" className="text-blue-500 underline">
+              Logout
+            </Link>
 
-            <hr />
+            <Link to="/dashboard" className="text-blue-500 underline">
+              Dashboard
+            </Link>
+
+            <Link to="/my-account" className="text-blue-500 underline">
+              My Account
+            </Link>
+          </>
+        ) : (
+          <>
+            <Link to="/login" className="text-blue-500 underline">
+              Login
+            </Link>
+
+            <Link to="/register" className="text-blue-500 underline">
+              Register
+            </Link>
           </>
         )}
-
-        <Link to="/login" className="text-blue-500 underline">
-          Login
-        </Link>
-
-        <Link to="/register" className="text-blue-500 underline">
-          Register
-        </Link>
-
-        <Link to="/dashboard" className="text-blue-500 underline">
-          Dashboard
-        </Link>
-
-        <Link to="/my-account" className="text-blue-500 underline">
-          My Account
-        </Link>
       </div>
     </div>
   );

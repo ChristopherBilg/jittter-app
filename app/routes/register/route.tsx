@@ -6,7 +6,7 @@ import type {
 import { json, redirect, useFetcher, useLoaderData } from "@remix-run/react";
 import { createUser } from "~/db/schema";
 import { commitSession, getSession } from "~/sessions";
-import { validate } from "./validate";
+import { REGISTER_USER_MINIMUM_PASSWORD_LENGTH, validate } from "./validate";
 
 export const meta: MetaFunction = () => {
   return [{ title: "Register for Jittter!" }];
@@ -29,22 +29,20 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 export const action = async ({ request }: ActionFunctionArgs) => {
   const session = await getSession(request.headers.get("Cookie"));
 
-  const { ok, formData } = await validate(request);
+  const { errors, data } = await validate(request);
 
-  if (!ok) {
-    session.flash("error", "Please fill out all fields.");
-
-    return redirect("/register", {
-      headers: {
-        "Set-Cookie": await commitSession(session),
+  if (errors || !data) {
+    return json(
+      { errors },
+      {
+        headers: {
+          "Set-Cookie": await commitSession(session),
+        },
       },
-    });
+    );
   }
 
-  const firstName = String(formData.get("firstName"));
-  const lastName = String(formData.get("lastName"));
-  const email = String(formData.get("email"));
-  const password = String(formData.get("password"));
+  const { firstName, lastName, email, password } = data;
 
   const user = await createUser(firstName, lastName, email, password);
 
@@ -70,7 +68,9 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 
 const RegisterRoute = () => {
   const { error } = useLoaderData<typeof loader>();
-  const fetcher = useFetcher();
+
+  const fetcher = useFetcher<typeof action>();
+  const errors = fetcher.data?.errors;
 
   return (
     <div className="flex h-screen items-center justify-center">
@@ -82,6 +82,18 @@ const RegisterRoute = () => {
         <hr />
 
         {error && <p className="text-red-500">{error}</p>}
+
+        {errors?.firstName && (
+          <span className="text-sm text-gray-500">
+            First Name: {errors.firstName}
+          </span>
+        )}
+
+        {errors?.lastName && (
+          <span className="text-sm text-gray-500">
+            Last Name: {errors.lastName}
+          </span>
+        )}
 
         <div className="mx-auto flex w-full justify-between">
           <input
@@ -103,6 +115,10 @@ const RegisterRoute = () => {
           />
         </div>
 
+        {errors?.email && (
+          <span className="text-sm text-gray-500">Email: {errors.email}</span>
+        )}
+
         <input
           type="email"
           name="email"
@@ -112,12 +128,19 @@ const RegisterRoute = () => {
           required
         />
 
+        {errors?.password && (
+          <span className="text-sm text-gray-500">
+            Password: {errors.password}
+          </span>
+        )}
+
         <input
           type="password"
           name="password"
           placeholder="Password"
           autoComplete="new-password"
           className="rounded border px-4 py-2"
+          minLength={REGISTER_USER_MINIMUM_PASSWORD_LENGTH}
           required
         />
 
