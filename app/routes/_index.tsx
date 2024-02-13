@@ -13,8 +13,6 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 
   return {
     id: session.get("id"),
-    firstName: session.get("firstName"),
-    lastName: session.get("lastName"),
   };
 };
 
@@ -30,9 +28,7 @@ const LandingRoute = () => {
 
         {loaderData && (
           <>
-            <p>
-              Welcome back, {loaderData.firstName} {loaderData.lastName}!
-            </p>
+            <p>Welcome back!</p>
 
             <hr />
           </>

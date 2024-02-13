@@ -1,7 +1,8 @@
-import { and, eq, isNull, sql } from "drizzle-orm";
-import { pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core";
+import { and, eq, isNull } from "drizzle-orm";
+import { pgTable, text, uuid } from "drizzle-orm/pg-core";
 import { pbkdf2, pbkdf2Verify } from "utils/auth";
 import NeonDB from "../client.server";
+import { getTimestampFields } from "./../../../utils/db";
 
 export const UserTable = pgTable("user", {
   id: uuid("id").primaryKey().defaultRandom(),
@@ -9,13 +10,7 @@ export const UserTable = pgTable("user", {
   lastName: text("last_name").notNull(),
   email: text("email").notNull().unique(),
   passKey: text("pass_key").notNull(),
-  createdAt: timestamp("created_at")
-    .notNull()
-    .default(sql`CURRENT_TIMESTAMP`),
-  updatedAt: timestamp("updated_at")
-    .notNull()
-    .default(sql`CURRENT_TIMESTAMP`),
-  deletedAt: timestamp("deleted_at"),
+  ...getTimestampFields(),
 });
 
 export const getUserByAuthenticating = async (
@@ -23,19 +18,15 @@ export const getUserByAuthenticating = async (
   password: string,
 ) => {
   try {
-    const users = await NeonDB.getInstance()
-      .db.select()
-      .from(UserTable)
-      .where(and(eq(UserTable.email, email), isNull(UserTable.deletedAt)))
-      .limit(1)
-      .execute();
+    const user = await NeonDB.getInstance().db.query.UserTable.findFirst({
+      where: and(eq(UserTable.email, email), isNull(UserTable.deletedAt)),
+    });
+    if (!user) return null;
 
-    if (users.length !== 1) return null;
-
-    const valid = await pbkdf2Verify(users[0].passKey, password);
+    const valid = await pbkdf2Verify(user.passKey, password);
     if (!valid) return null;
 
-    return users[0];
+    return user;
   } catch (err) {
     console.error(err);
     return null;
@@ -44,16 +35,11 @@ export const getUserByAuthenticating = async (
 
 export const getUserById = async (id: string) => {
   try {
-    const users = await NeonDB.getInstance()
-      .db.select()
-      .from(UserTable)
-      .where(eq(UserTable.id, id))
-      .limit(1)
-      .execute();
+    const user = await NeonDB.getInstance().db.query.UserTable.findFirst({
+      where: eq(UserTable.id, id),
+    });
 
-    if (users.length !== 1) return null;
-
-    return users[0];
+    return user ?? null;
   } catch (err) {
     console.error(err);
     return null;

@@ -53,9 +53,6 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 
       if (!user) return null;
 
-      session.set("firstName", user.firstName);
-      session.set("lastName", user.lastName);
-
       return json(user, {
         headers: {
           "Set-Cookie": await commitSession(session),

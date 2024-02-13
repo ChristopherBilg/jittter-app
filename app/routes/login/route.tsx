@@ -42,8 +42,6 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   }
 
   session.set("id", user.id);
-  session.set("firstName", user.firstName);
-  session.set("lastName", user.lastName);
 
   // Login succeeded, send them to the home page.
   return redirect("/dashboard", {

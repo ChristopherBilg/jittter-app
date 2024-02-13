@@ -3,8 +3,6 @@ import { UserTable } from "./db/schema";
 
 type SessionData = {
   id: typeof UserTable.$inferSelect.id;
-  firstName: typeof UserTable.$inferSelect.firstName;
-  lastName: typeof UserTable.$inferSelect.lastName;
 };
 
 type SessionFlashData = {
