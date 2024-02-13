@@ -13,8 +13,6 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 
   return {
     id: session.get("id"),
-    firstName: session.get("firstName"),
-    lastName: session.get("lastName"),
   };
 };
 
@@ -24,35 +22,37 @@ const LandingRoute = () => {
   return (
     <div className="flex h-screen items-center justify-center">
       <div className="flex flex-col space-y-4">
-        <h1 className="text-4xl font-bold">Welcome to Jittter!</h1>
+        <h1 className="text-4xl font-bold">
+          Welcome {loaderData && "back "}to Jittter!
+        </h1>
 
         <hr />
 
-        {loaderData && (
+        {loaderData ? (
           <>
-            <p>
-              Welcome back, {loaderData.firstName} {loaderData.lastName}!
-            </p>
+            <Link to="/logout" className="text-blue-500 underline">
+              Logout
+            </Link>
 
-            <hr />
+            <Link to="/dashboard" className="text-blue-500 underline">
+              Dashboard
+            </Link>
+
+            <Link to="/my-account" className="text-blue-500 underline">
+              My Account
+            </Link>
+          </>
+        ) : (
+          <>
+            <Link to="/login" className="text-blue-500 underline">
+              Login
+            </Link>
+
+            <Link to="/register" className="text-blue-500 underline">
+              Register
+            </Link>
           </>
         )}
-
-        <Link to="/login" className="text-blue-500 underline">
-          Login
-        </Link>
-
-        <Link to="/register" className="text-blue-500 underline">
-          Register
-        </Link>
-
-        <Link to="/dashboard" className="text-blue-500 underline">
-          Dashboard
-        </Link>
-
-        <Link to="/my-account" className="text-blue-500 underline">
-          My Account
-        </Link>
       </div>
     </div>
   );

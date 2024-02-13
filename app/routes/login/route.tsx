@@ -5,7 +5,7 @@ import type {
 } from "@remix-run/cloudflare";
 import { json, redirect, useFetcher, useLoaderData } from "@remix-run/react";
 import { commitSession, getSession } from "~/sessions";
-import { validateCredentials } from "./validate-credentials";
+import { validate } from "./validate";
 
 export const meta: MetaFunction = () => {
   return [{ title: "Login to Jittter!" }];
@@ -28,7 +28,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 export const action = async ({ request }: ActionFunctionArgs) => {
   const session = await getSession(request.headers.get("Cookie"));
 
-  const user = await validateCredentials(request);
+  const user = await validate(request);
 
   if (!user) {
     session.flash("error", "Invalid username and/or password");
@@ -42,8 +42,6 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   }
 
   session.set("id", user.id);
-  session.set("firstName", user.firstName);
-  session.set("lastName", user.lastName);
 
   // Login succeeded, send them to the home page.
   return redirect("/dashboard", {
