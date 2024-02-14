@@ -91,7 +91,7 @@ const MobileNavigation = () => {
 
             <hr className="m-2 border-slate-300/40" />
 
-            <MobileNavLink to="/login">Sign in</MobileNavLink>
+            <MobileNavLink to="/signin">Sign in</MobileNavLink>
           </Popover.Panel>
         </Transition.Child>
       </Transition.Root>
@@ -127,8 +127,8 @@ const Header = ({ isAuthenticated }: HeaderProps) => {
                   My Dashboard
                 </NavLink>
               ) : (
-                <NavLink to="/login" className="font-bold">
-                  Login
+                <NavLink to="/signin" className="font-bold">
+                  Sign In
                 </NavLink>
               )}
             </div>

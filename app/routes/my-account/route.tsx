@@ -18,7 +18,7 @@ export const meta: MetaFunction = () => {
 };
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
-  const session = await redirectIfNotAuthenticated(request, "/login");
+  const session = await redirectIfNotAuthenticated(request, "/signin");
 
   const user = await getUserById(session.data.id!);
 
@@ -32,7 +32,7 @@ const enum FormAction {
 }
 
 export const action = async ({ request }: ActionFunctionArgs) => {
-  const session = await redirectIfNotAuthenticated(request, "/login");
+  const session = await redirectIfNotAuthenticated(request, "/signin");
 
   const formData = await request.formData();
   const _action = formData.get("_action") as FormAction;
@@ -76,7 +76,7 @@ const AccountRoute = () => {
       <div className="flex flex-col space-y-4">
         <Link to="/">Main page</Link>
         <Link to="/dashboard">Dashboard</Link>
-        <Link to="/logout">Log out</Link>
+        <Link to="/signout">Sign Out</Link>
       </div>
 
       <hr className="my-2" />

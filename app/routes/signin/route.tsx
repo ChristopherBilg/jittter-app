@@ -5,10 +5,10 @@ import type {
 } from "@remix-run/cloudflare";
 import { json, redirect, useFetcher, useLoaderData } from "@remix-run/react";
 import { commitSession, getSession } from "~/app/sessions";
-import { validate } from "./validate";
+import { validateSignIn } from "./validate";
 
 export const meta: MetaFunction = () => {
-  return [{ title: "Login to Jittter!" }];
+  return [{ title: "Welcome back to Jittter!" }];
 };
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
@@ -28,13 +28,12 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 export const action = async ({ request }: ActionFunctionArgs) => {
   const session = await getSession(request.headers.get("Cookie"));
 
-  const user = await validate(request);
+  const user = await validateSignIn(request);
 
   if (!user) {
     session.flash("error", "Invalid username and/or password");
 
-    // Redirect back to the login page with errors.
-    return redirect("/login", {
+    return redirect("/signin", {
       headers: {
         "Set-Cookie": await commitSession(session),
       },
@@ -43,7 +42,6 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 
   session.set("id", user.id);
 
-  // Login succeeded, send them to the home page.
   return redirect("/dashboard", {
     headers: {
       "Set-Cookie": await commitSession(session),
@@ -51,7 +49,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   });
 };
 
-const LoginRoute = () => {
+const SignInRoute = () => {
   const { error } = useLoaderData<typeof loader>();
   const fetcher = useFetcher();
 
@@ -92,4 +90,4 @@ const LoginRoute = () => {
   );
 };
 
-export default LoginRoute;
+export default SignInRoute;

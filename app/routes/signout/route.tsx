@@ -8,7 +8,7 @@ import { destroySession, getSession } from "~/app/sessions";
 export const meta: MetaFunction = () => {
   return [
     {
-      title: "Logout of Jittter",
+      title: "Leaving Jittter so soon?",
     },
   ];
 };
@@ -23,6 +23,6 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   });
 };
 
-const LogoutRoute = () => null;
+const SignOutRoute = () => null;
 
-export default LogoutRoute;
+export default SignOutRoute;
