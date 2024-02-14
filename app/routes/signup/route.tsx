@@ -9,7 +9,7 @@ import { commitSession, getSession } from "~/app/sessions";
 import { USER_ACCOUNT_MINIMUM_PASSWORD_LENGTH, validate } from "./validate";
 
 export const meta: MetaFunction = () => {
-  return [{ title: "Sign up with Jittter!" }];
+  return [{ title: "We're excited to have you join Jittter!" }];
 };
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {

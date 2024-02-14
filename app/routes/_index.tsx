@@ -1,15 +1,15 @@
 import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/cloudflare";
 import { useLoaderData } from "@remix-run/react";
 import { getSession } from "~/app/sessions";
-import CallToAction from "../components/Landing/CallToAction";
-import FAQs from "../components/Landing/FAQs";
-import Footer from "../components/Landing/Footer";
-import Header from "../components/Landing/Header";
-import Hero from "../components/Landing/Hero";
-import Pricing from "../components/Landing/Pricing";
-import PrimaryFeatures from "../components/Landing/PrimaryFeatures";
-import SecondaryFeatures from "../components/Landing/SecondaryFeatures";
-import Testimonials from "../components/Landing/Testimonials";
+import CallToAction from "../components/landing/CallToAction";
+import FAQs from "../components/landing/FAQs";
+import Footer from "../components/landing/Footer";
+import Header from "../components/landing/Header";
+import Hero from "../components/landing/Hero";
+import Pricing from "../components/landing/Pricing";
+import PrimaryFeatures from "../components/landing/PrimaryFeatures";
+import SecondaryFeatures from "../components/landing/SecondaryFeatures";
+import Testimonials from "../components/landing/Testimonials";
 
 export const meta: MetaFunction = () => {
   return [

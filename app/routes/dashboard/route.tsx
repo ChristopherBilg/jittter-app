@@ -5,13 +5,13 @@ import { redirectIfNotAuthenticated } from "~/app/sessions";
 export const meta: MetaFunction = () => {
   return [
     {
-      title: "Jittter Dashboard",
+      title: "Dashboard",
     },
   ];
 };
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
-  await redirectIfNotAuthenticated(request, "/login");
+  await redirectIfNotAuthenticated(request, "/signin");
 
   return null;
 };
@@ -24,7 +24,7 @@ const DashboardRoute = () => {
       <div className="flex flex-col space-y-4">
         <Link to="/">Main page</Link>
         <Link to="/my-account">My Account</Link>
-        <Link to="/logout">Log out</Link>
+        <Link to="/signout">Sign Out</Link>
       </div>
     </div>
   );

@@ -8,7 +8,7 @@ const AuthenticateUserSchema = z.object({
   password: z.string().min(AUTHENTICATE_USER_MINIMUM_PASSWORD_LENGTH),
 });
 
-export const validate = async (request: Request) => {
+export const validateSignIn = async (request: Request) => {
   const formData = await request.formData();
 
   const email = formData.get("email");

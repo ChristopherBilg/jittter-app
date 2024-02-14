@@ -1,11 +1,12 @@
 import { Link } from "@remix-run/react";
 import clsx from "clsx";
+import { ComponentPropsWithoutRef } from "react";
 import Container from "./Container";
 
 const CheckIcon = ({
   className,
   ...props
-}: React.ComponentPropsWithoutRef<"svg">) => {
+}: ComponentPropsWithoutRef<"svg">) => {
   return (
     <svg
       aria-hidden="true"

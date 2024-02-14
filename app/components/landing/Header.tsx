@@ -1,8 +1,7 @@
 import { Popover, Transition } from "@headlessui/react";
-import clsx from "clsx";
-import { Fragment } from "react";
-
 import { Link } from "@remix-run/react";
+import clsx from "clsx";
+import { Fragment, ReactNode } from "react";
 import Container from "./Container";
 import Logo from "./Logo";
 import NavLink from "./NavLink";
@@ -12,7 +11,7 @@ const MobileNavLink = ({
   children,
 }: {
   to: string;
-  children: React.ReactNode;
+  children: ReactNode;
 }) => {
   return (
     <Popover.Button as={Link} to={to} className="block w-full p-2">
@@ -91,7 +90,7 @@ const MobileNavigation = () => {
 
             <hr className="m-2 border-slate-300/40" />
 
-            <MobileNavLink to="/login">Sign in</MobileNavLink>
+            <MobileNavLink to="/signin">Sign in</MobileNavLink>
           </Popover.Panel>
         </Transition.Child>
       </Transition.Root>
@@ -127,8 +126,8 @@ const Header = ({ isAuthenticated }: HeaderProps) => {
                   My Dashboard
                 </NavLink>
               ) : (
-                <NavLink to="/login" className="font-bold">
-                  Login
+                <NavLink to="/signin" className="font-bold">
+                  Sign In
                 </NavLink>
               )}
             </div>
