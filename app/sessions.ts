@@ -1,7 +1,7 @@
 import { createCookieSessionStorage, redirect } from "@remix-run/cloudflare";
 import { UserTable } from "./db/schema";
 
-type SessionData = {
+export type SessionData = {
   id: typeof UserTable.$inferSelect.id;
 };
 

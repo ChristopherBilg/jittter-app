@@ -33,21 +33,23 @@ const CheckIcon = ({
   );
 };
 
+type PlanProps = {
+  name: string;
+  price: string;
+  description: string;
+  features: string[];
+  featured?: boolean;
+  isAuthenticated: boolean;
+};
+
 const Plan = ({
   name,
   price,
   description,
-  to,
   features,
   featured = false,
-}: {
-  name: string;
-  price: string;
-  description: string;
-  to: string;
-  features: Array<string>;
-  featured?: boolean;
-}) => {
+  isAuthenticated,
+}: PlanProps) => {
   return (
     <section
       className={clsx(
@@ -84,18 +86,32 @@ const Plan = ({
         ))}
       </ul>
 
-      <Link
-        to={to}
-        prefetch="viewport"
-        className="mt-4 inline-block rounded-lg bg-white px-8 py-3.5 font-medium text-blue-600 hover:bg-opacity-90"
-      >
-        Get Started
-      </Link>
+      {isAuthenticated ? (
+        <Link
+          to="/dashboard"
+          prefetch="viewport"
+          className="mt-4 inline-block rounded-lg bg-white px-8 py-3.5 font-medium text-blue-600 hover:bg-opacity-90"
+        >
+          My Dashboard
+        </Link>
+      ) : (
+        <Link
+          to="/signup"
+          prefetch="viewport"
+          className="mt-4 inline-block rounded-lg bg-white px-8 py-3.5 font-medium text-blue-600 hover:bg-opacity-90"
+        >
+          Get Started
+        </Link>
+      )}
     </section>
   );
 };
 
-const Pricing = () => {
+type PricingProps = {
+  isAuthenticated: boolean;
+};
+
+const Pricing = ({ isAuthenticated }: PricingProps) => {
   return (
     <section
       id="pricing"
@@ -118,8 +134,8 @@ const Pricing = () => {
             name="Starter"
             price="Free"
             description="Good for anyone who wants to see what we're about."
-            to="/signup"
             features={["Coming Soon!"]}
+            isAuthenticated={isAuthenticated}
           />
 
           <Plan
@@ -127,16 +143,16 @@ const Pricing = () => {
             name="Premium"
             price="$5"
             description="Perfect for day-to-day users that want to get more done."
-            to="/signup"
             features={["Coming Soon!"]}
+            isAuthenticated={isAuthenticated}
           />
 
           <Plan
             name="Professional"
             price="$10"
             description="For power users that want to get the most out of our software."
-            to="/signup"
             features={["Coming Soon!"]}
+            isAuthenticated={isAuthenticated}
           />
         </div>
       </Container>

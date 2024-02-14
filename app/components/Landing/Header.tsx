@@ -99,9 +99,9 @@ const MobileNavigation = () => {
   );
 };
 
-interface HeaderProps {
+type HeaderProps = {
   isAuthenticated: boolean;
-}
+};
 
 const Header = ({ isAuthenticated }: HeaderProps) => {
   return (

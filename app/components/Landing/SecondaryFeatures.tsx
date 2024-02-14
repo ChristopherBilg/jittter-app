@@ -2,13 +2,13 @@ import { Tab } from "@headlessui/react";
 import clsx from "clsx";
 import Container from "./Container";
 
-interface Feature {
+type Feature = {
   name: React.ReactNode;
   summary: string;
   description: string;
   image: string;
   icon: React.ComponentType;
-}
+};
 
 const features: Array<Feature> = [
   {

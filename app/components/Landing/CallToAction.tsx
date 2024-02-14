@@ -1,9 +1,9 @@
 import { Link } from "@remix-run/react";
 import Container from "./Container";
 
-interface CallToActionProps {
+type CallToActionProps = {
   isAuthenticated: boolean;
-}
+};
 
 const CallToAction = ({ isAuthenticated }: CallToActionProps) => {
   return (

@@ -40,7 +40,7 @@ const LandingRoute = () => {
         <SecondaryFeatures />
         <CallToAction isAuthenticated={!!loaderData?.id} />
         <Testimonials />
-        <Pricing />
+        <Pricing isAuthenticated={!!loaderData?.id} />
         <FAQs />
       </main>
 
