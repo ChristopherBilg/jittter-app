@@ -4,9 +4,13 @@ import type {
   MetaFunction,
 } from "@remix-run/cloudflare";
 import { json, redirect, useFetcher, useLoaderData } from "@remix-run/react";
+import SlimLayout from "~/app/components/common/SlimLayout";
 import { createUser } from "~/app/db/schema";
 import { commitSession, getSession } from "~/app/sessions";
-import { USER_ACCOUNT_MINIMUM_PASSWORD_LENGTH, validate } from "./validate";
+import {
+  USER_ACCOUNT_MINIMUM_PASSWORD_LENGTH,
+  validateSignUp,
+} from "./validate";
 
 export const meta: MetaFunction = () => {
   return [{ title: "We're excited to have you join Jittter!" }];
@@ -29,7 +33,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 export const action = async ({ request }: ActionFunctionArgs) => {
   const session = await getSession(request.headers.get("Cookie"));
 
-  const { errors, data } = await validate(request);
+  const { errors, data } = await validateSignUp(request);
 
   if (errors || !data) {
     return json(
@@ -58,7 +62,6 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 
   session.set("id", user.id);
 
-  // Registration succeeded, send them to the home page.
   return redirect("/dashboard", {
     headers: {
       "Set-Cookie": await commitSession(session),
@@ -71,6 +74,24 @@ const SignUpRoute = () => {
 
   const fetcher = useFetcher<typeof action>();
   const errors = fetcher.data?.errors;
+
+  const x = true;
+  if (x) {
+    return (
+      <SlimLayout
+        img={
+          <img
+            className="absolute inset-0 h-full w-full object-cover"
+            // TODO: Add image
+            src="https://picsum.photos/2000/1000?random=14"
+            alt=""
+          />
+        }
+      >
+        <p>Coming Soon!</p>
+      </SlimLayout>
+    );
+  }
 
   return (
     <div className="flex h-screen items-center justify-center">

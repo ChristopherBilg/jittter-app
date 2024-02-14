@@ -9,7 +9,7 @@ const SignUpUserSchema = z.object({
   password: z.string().min(USER_ACCOUNT_MINIMUM_PASSWORD_LENGTH),
 });
 
-export const validate = async (request: Request) => {
+export const validateSignUp = async (request: Request) => {
   const formData = await request.formData();
 
   const firstName = formData.get("firstName");
