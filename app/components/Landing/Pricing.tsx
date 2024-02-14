@@ -109,8 +109,7 @@ const Pricing = () => {
           </h2>
 
           <p className="mt-4 text-lg text-slate-400">
-            It doesn't matter what size your business is, our software won't
-            work well for you.
+            Simply choose the plan that's right for you and get started today!
           </p>
         </div>
 

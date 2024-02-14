@@ -5,7 +5,7 @@ const Hero = () => {
     <Container className="pb-16 pt-20 text-center lg:pt-32">
       <h1 className="font-display mx-auto max-w-4xl text-5xl font-medium tracking-tight text-slate-900 sm:text-7xl">
         Productivity workflows{" "}
-        <span className="relative whitespace-nowrap text-[#2563EB]">
+        <span className="relative whitespace-nowrap text-blue-600">
           made simple
         </span>{" "}
         for everyone

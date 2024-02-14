@@ -110,7 +110,7 @@ const Feature = ({
       <div
         className={clsx(
           "w-9 rounded-lg",
-          isActive ? "bg-[#2563EB]" : "bg-slate-500",
+          isActive ? "bg-blue-600" : "bg-slate-500",
         )}
       >
         <svg aria-hidden="true" className="h-9 w-9" fill="none">
@@ -121,7 +121,7 @@ const Feature = ({
       <h3
         className={clsx(
           "mt-6 text-sm font-medium",
-          isActive ? "text-[#2563EB]" : "text-slate-600",
+          isActive ? "text-blue-600" : "text-slate-600",
         )}
       >
         {feature.name}

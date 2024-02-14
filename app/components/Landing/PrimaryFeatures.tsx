@@ -58,7 +58,7 @@ const PrimaryFeatures = () => {
     <section
       id="features"
       aria-label="Features for running your books"
-      className="relative overflow-hidden bg-[#2563EB] pb-28 pt-20 sm:py-32"
+      className="relative overflow-hidden bg-blue-600 pb-28 pt-20 sm:py-32"
     >
       <img
         className="absolute left-1/2 top-1/2 max-w-none translate-x-[-44%] translate-y-[-42%]"
@@ -104,7 +104,7 @@ const PrimaryFeatures = () => {
                           className={clsx(
                             "font-display ui-not-focus-visible:outline-none text-lg outline-none",
                             selectedIndex === featureIndex
-                              ? "text-[#2563EB] lg:text-white"
+                              ? "text-blue-600 lg:text-white"
                               : "text-blue-100 hover:text-white lg:text-white",
                           )}
                         >
