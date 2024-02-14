@@ -3,8 +3,15 @@ import type {
   LoaderFunctionArgs,
   MetaFunction,
 } from "@remix-run/cloudflare";
-import { json, redirect, useFetcher, useLoaderData } from "@remix-run/react";
+import {
+  Link,
+  json,
+  redirect,
+  useFetcher,
+  useLoaderData,
+} from "@remix-run/react";
 import SlimLayout from "~/app/components/common/SlimLayout";
+import Logo from "~/app/components/landing/Logo";
 import { createUser } from "~/app/db/schema";
 import { commitSession, getSession } from "~/app/sessions";
 import {
@@ -88,7 +95,99 @@ const SignUpRoute = () => {
           />
         }
       >
-        <p>Coming Soon!</p>
+        <div className="flex">
+          <Link to="/" aria-label="Home">
+            <Logo />
+          </Link>
+        </div>
+
+        <h2 className="mt-20 text-lg font-semibold text-gray-900">
+          Get started today
+        </h2>
+
+        <p className="my-2 text-sm text-gray-700">
+          Already registered?{" "}
+          <Link
+            to="/signin"
+            className="font-medium text-blue-600 hover:underline"
+          >
+            Sign in
+          </Link>{" "}
+          to your account.
+        </p>
+
+        <hr />
+
+        <fetcher.Form method="POST" className="flex flex-col space-y-4">
+          {error && <p className="text-red-500">{error}</p>}
+
+          {errors?.firstName && (
+            <span className="text-sm text-gray-500">
+              First Name: {errors.firstName}
+            </span>
+          )}
+
+          {errors?.lastName && (
+            <span className="text-sm text-gray-500">
+              Last Name: {errors.lastName}
+            </span>
+          )}
+
+          <div className="mx-auto flex w-full justify-between">
+            <input
+              type="text"
+              name="firstName"
+              placeholder="First Name"
+              autoComplete="given-name"
+              className="mr-2 w-[50%] rounded border px-4 py-2"
+              required
+            />
+
+            <input
+              type="text"
+              name="lastName"
+              placeholder="Last Name"
+              autoComplete="family-name"
+              className="w-[50%] rounded border px-4 py-2"
+              required
+            />
+          </div>
+
+          {errors?.email && (
+            <span className="text-sm text-gray-500">Email: {errors.email}</span>
+          )}
+
+          <input
+            type="email"
+            name="email"
+            placeholder="Email"
+            autoComplete="email"
+            className="rounded border px-4 py-2"
+            required
+          />
+
+          {errors?.password && (
+            <span className="text-sm text-gray-500">
+              Password: {errors.password}
+            </span>
+          )}
+
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            autoComplete="new-password"
+            className="rounded border px-4 py-2"
+            minLength={USER_ACCOUNT_MINIMUM_PASSWORD_LENGTH}
+            required
+          />
+
+          <input
+            type="submit"
+            value={fetcher.state !== "idle" ? "Signing up..." : "Sign Up"}
+            className="mx-auto my-1 w-fit cursor-pointer rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
+          />
+        </fetcher.Form>
       </SlimLayout>
     );
   }
