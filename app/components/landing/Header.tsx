@@ -1,8 +1,7 @@
 import { Popover, Transition } from "@headlessui/react";
-import clsx from "clsx";
-import { Fragment } from "react";
-
 import { Link } from "@remix-run/react";
+import clsx from "clsx";
+import { Fragment, ReactNode } from "react";
 import Container from "./Container";
 import Logo from "./Logo";
 import NavLink from "./NavLink";
@@ -12,7 +11,7 @@ const MobileNavLink = ({
   children,
 }: {
   to: string;
-  children: React.ReactNode;
+  children: ReactNode;
 }) => {
   return (
     <Popover.Button as={Link} to={to} className="block w-full p-2">

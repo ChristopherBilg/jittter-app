@@ -71,7 +71,7 @@ export const ErrorBoundary = () => {
 };
 
 const App = () => (
-  <html lang="en">
+  <html lang="en" className="h-full scroll-smooth bg-white antialiased">
     <head>
       <meta charSet="utf-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -80,7 +80,7 @@ const App = () => (
       <Links />
     </head>
 
-    <body>
+    <body className="flex h-full flex-col">
       <Outlet />
       <ScrollRestoration />
       <Scripts />

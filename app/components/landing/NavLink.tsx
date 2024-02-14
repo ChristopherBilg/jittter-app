@@ -1,5 +1,6 @@
 import { Link } from "@remix-run/react";
 import clsx from "clsx";
+import { ReactNode } from "react";
 
 const NavLink = ({
   to,
@@ -7,7 +8,7 @@ const NavLink = ({
   className,
 }: {
   to: string;
-  children: React.ReactNode;
+  children: ReactNode;
   className?: string;
 }) => {
   return (

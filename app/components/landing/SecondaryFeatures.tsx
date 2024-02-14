@@ -1,13 +1,14 @@
 import { Tab } from "@headlessui/react";
 import clsx from "clsx";
+import { ComponentPropsWithoutRef, ComponentType, ReactNode } from "react";
 import Container from "./Container";
 
 type Feature = {
-  name: React.ReactNode;
+  name: ReactNode;
   summary: string;
   description: string;
   image: string;
-  icon: React.ComponentType;
+  icon: ComponentType;
 };
 
 const features: Array<Feature> = [
@@ -98,7 +99,7 @@ const Feature = ({
   isActive,
   className,
   ...props
-}: React.ComponentPropsWithoutRef<"div"> & {
+}: ComponentPropsWithoutRef<"div"> & {
   feature: Feature;
   isActive: boolean;
 }) => {
