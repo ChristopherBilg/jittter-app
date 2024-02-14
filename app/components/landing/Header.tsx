@@ -48,7 +48,11 @@ const MobileNavIcon = ({ open }: { open: boolean }) => {
   );
 };
 
-const MobileNavigation = () => {
+type MobileNavigationProps = {
+  isAuthenticated: boolean;
+};
+
+const MobileNavigation = ({ isAuthenticated }: MobileNavigationProps) => {
   return (
     <Popover>
       <Popover.Button
@@ -90,7 +94,11 @@ const MobileNavigation = () => {
 
             <hr className="m-2 border-slate-300/40" />
 
-            <MobileNavLink to="/signin">Sign in</MobileNavLink>
+            {isAuthenticated ? (
+              <MobileNavLink to="/dashboard">Dashboard</MobileNavLink>
+            ) : (
+              <MobileNavLink to="/signin">Sign in</MobileNavLink>
+            )}
           </Popover.Panel>
         </Transition.Child>
       </Transition.Root>
@@ -133,7 +141,7 @@ const Header = ({ isAuthenticated }: HeaderProps) => {
             </div>
 
             <div className="-mr-1 md:hidden">
-              <MobileNavigation />
+              <MobileNavigation isAuthenticated={isAuthenticated} />
             </div>
           </div>
         </nav>
