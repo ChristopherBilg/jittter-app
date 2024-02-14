@@ -6,7 +6,59 @@ type FAQ = {
 };
 
 // TODO: Add 9 FAQs, 3 arrays of 3 FAQs each
-const faqs: FAQ[][] = [];
+const faqs: FAQ[][] = [
+  [
+    {
+      question: "What is Jittter?",
+      answer:
+        "Jittter is a productivity tool that helps you manage your tasks, notes, and calendar in one place.",
+    },
+    {
+      question: "How does Jittter work?",
+      answer:
+        "Jittter is a web-based application that you can access from any device. It's designed to be simple and intuitive to use.",
+    },
+    {
+      question: "What are the benefits of using Jittter?",
+      answer:
+        "Jittter helps you stay organized and focused, so you can be more productive and less stressed.",
+    },
+  ],
+  [
+    {
+      question: "How much does Jittter cost?",
+      answer:
+        "Jittter is free to use, with optional premium features available for a monthly subscription.",
+    },
+    {
+      question: "What are the premium features?",
+      answer:
+        "Premium features include advanced task management, increased storage, and more.",
+    },
+    {
+      question: "Is Jittter secure?",
+      answer:
+        "Yes, Jittter takes security and privacy seriously. We use industry-standard encryption and security practices to protect your data.",
+    },
+  ],
+  [
+    {
+      question: "Can I import/export my data from/to other applications?",
+      answer:
+        "Yes, our platform supports data import and export functionality, making it easy to integrate with other applications or migrate your data as needed.",
+    },
+    {
+      question: "Can I use Jittter on my phone?",
+      answer:
+        "Yes, Jittter is designed to work on any device, including phones and tablets.",
+    },
+    {
+      question: "How can I get help with Jittter?",
+      answer:
+        "You can contact our support team at any time for help with using Jittter.",
+    },
+  ],
+];
 
 const FAQs = () => {
   return (

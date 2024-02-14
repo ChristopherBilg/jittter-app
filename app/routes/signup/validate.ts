@@ -1,12 +1,12 @@
 import { z } from "zod";
 
-export const REGISTER_USER_MINIMUM_PASSWORD_LENGTH = 8;
+export const USER_ACCOUNT_MINIMUM_PASSWORD_LENGTH = 8;
 
-const RegisterUserSchema = z.object({
+const SignUpUserSchema = z.object({
   firstName: z.string().min(1),
   lastName: z.string().min(1),
   email: z.string().email(),
-  password: z.string().min(REGISTER_USER_MINIMUM_PASSWORD_LENGTH),
+  password: z.string().min(USER_ACCOUNT_MINIMUM_PASSWORD_LENGTH),
 });
 
 export const validate = async (request: Request) => {
@@ -17,7 +17,7 @@ export const validate = async (request: Request) => {
   const email = formData.get("email");
   const password = formData.get("password");
 
-  const result = RegisterUserSchema.safeParse({
+  const result = SignUpUserSchema.safeParse({
     firstName,
     lastName,
     email,

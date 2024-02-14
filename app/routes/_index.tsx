@@ -32,13 +32,13 @@ const LandingRoute = () => {
 
   return (
     <>
-      <Header isAuthenticated={!!loaderData} />
+      <Header isAuthenticated={!!loaderData?.id} />
 
       <main>
         <Hero />
         <PrimaryFeatures />
         <SecondaryFeatures />
-        <CallToAction />
+        <CallToAction isAuthenticated={!!loaderData?.id} />
         <Testimonials />
         <Pricing />
         <FAQs />
