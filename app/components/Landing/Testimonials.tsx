@@ -9,8 +9,74 @@ type Testimonial = {
   };
 };
 
-// TODO: Add 6 testimonials, 3 arrays of 2 testimonials each
-const testimonials: Testimonial[][] = [];
+const testimonials: Testimonial[][] = [
+  [
+    {
+      content:
+        "Thanks to this tool, my workflow is organized and efficient, leading to a significant productivity boost!",
+      author: {
+        name: "Rachel Matthews",
+        role: "Freelance Graphic Designer",
+        // TODO: Add image
+        image: "https://picsum.photos/2000/1000?random=8",
+      },
+    },
+    {
+      content:
+        "This SaaS product has been a game-changer, streamlining our processes and making team collaboration seamless.",
+      author: {
+        name: "Mark Donovan",
+        role: "Marketing Agency Owner",
+        // TODO: Add image
+        image: "https://picsum.photos/2000/1000?random=9",
+      },
+    },
+  ],
+  [
+    {
+      content:
+        "Managing my business has become a breeze with this tool. It's intuitive and has transformed my time management strategies.",
+      author: {
+        name: "Sarah Lopez",
+        role: "Solopreneur and Consultant",
+        // TODO: Add image
+        image: "https://picsum.photos/2000/1000?random=10",
+      },
+    },
+    {
+      content:
+        "Finally, a tool that combines simplicity with functionality! It has revolutionized how I manage my tasks and projects.",
+      author: {
+        name: "Jason Harper",
+        role: "Digital Marketing Specialist",
+        // TODO: Add image
+        image: "https://picsum.photos/2000/1000?random=11",
+      },
+    },
+  ],
+  [
+    {
+      content:
+        "I can't imagine managing my projects without this tool now. It effortlessly keeps everything organized and ensures nothing falls through the cracks.",
+      author: {
+        name: "Emily Saunders",
+        role: "Project Manager",
+        // TODO: Add image
+        image: "https://picsum.photos/2000/1000?random=12",
+      },
+    },
+    {
+      content:
+        "This tool is indispensable for simplifying my hectic schedule. It's a must-have for any busy professional looking to streamline their workflow.",
+      author: {
+        name: "Ethan Hunter",
+        role: "Software Developer",
+        // TODO: Add image
+        image: "https://picsum.photos/2000/1000?random=13",
+      },
+    },
+  ],
+];
 
 const QuoteIcon = (props: React.ComponentPropsWithoutRef<"svg">) => {
   return (

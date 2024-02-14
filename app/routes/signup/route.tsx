@@ -6,10 +6,10 @@ import type {
 import { json, redirect, useFetcher, useLoaderData } from "@remix-run/react";
 import { createUser } from "~/app/db/schema";
 import { commitSession, getSession } from "~/app/sessions";
-import { REGISTER_USER_MINIMUM_PASSWORD_LENGTH, validate } from "./validate";
+import { USER_ACCOUNT_MINIMUM_PASSWORD_LENGTH, validate } from "./validate";
 
 export const meta: MetaFunction = () => {
-  return [{ title: "Register for Jittter!" }];
+  return [{ title: "Sign up with Jittter!" }];
 };
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
@@ -49,7 +49,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   if (!user) {
     session.flash("error", "An error occurred while creating your account.");
 
-    return redirect("/register", {
+    return redirect("/signup", {
       headers: {
         "Set-Cookie": await commitSession(session),
       },
@@ -66,7 +66,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   });
 };
 
-const RegisterRoute = () => {
+const SignUpRoute = () => {
   const { error } = useLoaderData<typeof loader>();
 
   const fetcher = useFetcher<typeof action>();
@@ -76,7 +76,7 @@ const RegisterRoute = () => {
     <div className="flex h-screen items-center justify-center">
       <fetcher.Form method="POST" className="flex flex-col space-y-4">
         <h1 className="text-center text-4xl font-bold">
-          Register for Jittter!
+          Sign up with Jittter!
         </h1>
 
         <hr />
@@ -140,13 +140,13 @@ const RegisterRoute = () => {
           placeholder="Password"
           autoComplete="new-password"
           className="rounded border px-4 py-2"
-          minLength={REGISTER_USER_MINIMUM_PASSWORD_LENGTH}
+          minLength={USER_ACCOUNT_MINIMUM_PASSWORD_LENGTH}
           required
         />
 
         <input
           type="submit"
-          value={fetcher.state !== "idle" ? "Registering..." : "Register"}
+          value={fetcher.state !== "idle" ? "Signing up..." : "Sign Up"}
           className="mx-auto my-1 w-fit rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
         />
       </fetcher.Form>
@@ -154,4 +154,4 @@ const RegisterRoute = () => {
   );
 };
 
-export default RegisterRoute;
+export default SignUpRoute;

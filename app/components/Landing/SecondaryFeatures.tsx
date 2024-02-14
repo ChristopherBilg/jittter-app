@@ -17,7 +17,7 @@ const features: Array<Feature> = [
     description:
       "Jittter is designed to work on any device, so you can access your business from anywhere.",
     // TODO: Add image
-    image: "",
+    image: "https://picsum.photos/2000/1000?random=5",
     icon: function MobileFirstIcon() {
       return (
         <svg
@@ -44,7 +44,7 @@ const features: Array<Feature> = [
     description:
       "Focusing heavily on the user experience, we built Jittter from the ground up for simplicity.",
     // TODO: Add image
-    image: "",
+    image: "https://picsum.photos/2000/1000?random=6",
     icon: function SimpleEaseOfUseIcon() {
       return (
         <svg
@@ -71,7 +71,7 @@ const features: Array<Feature> = [
     description:
       "We are simply here to help you manage it. Whenever you choose to leave, you can take your data with you.",
     // TODO: Add image
-    image: "",
+    image: "https://picsum.photos/2000/1000?random=7",
     icon: function DataThatYouOwnIcon() {
       return (
         <svg
@@ -173,7 +173,7 @@ const FeaturesDesktop = () => {
                 feature={{
                   ...feature,
                   name: (
-                    <Tab className="ui-not-focus-visible:outline-none">
+                    <Tab className="ui-not-focus-visible:outline-none outline-none">
                       <span className="absolute inset-0" />
                       {feature.name}
                     </Tab>

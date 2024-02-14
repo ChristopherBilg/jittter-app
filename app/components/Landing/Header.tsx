@@ -8,14 +8,14 @@ import Logo from "./Logo";
 import NavLink from "./NavLink";
 
 const MobileNavLink = ({
-  href,
+  to,
   children,
 }: {
-  href: string;
+  to: string;
   children: React.ReactNode;
 }) => {
   return (
-    <Popover.Button as={Link} to={href} className="block w-full p-2">
+    <Popover.Button as={Link} to={to} className="block w-full p-2">
       {children}
     </Popover.Button>
   );
@@ -85,13 +85,13 @@ const MobileNavigation = () => {
             as="div"
             className="absolute inset-x-0 top-full mt-4 flex origin-top flex-col rounded-2xl bg-white p-4 text-lg tracking-tight text-slate-900 shadow-xl ring-1 ring-slate-900/5"
           >
-            <MobileNavLink href="#features">Features</MobileNavLink>
-            <MobileNavLink href="#testimonials">Testimonials</MobileNavLink>
-            <MobileNavLink href="#pricing">Pricing</MobileNavLink>
+            <MobileNavLink to="#features">Features</MobileNavLink>
+            <MobileNavLink to="#testimonials">Testimonials</MobileNavLink>
+            <MobileNavLink to="#pricing">Pricing</MobileNavLink>
 
             <hr className="m-2 border-slate-300/40" />
 
-            <MobileNavLink href="/login">Sign in</MobileNavLink>
+            <MobileNavLink to="/login">Sign in</MobileNavLink>
           </Popover.Panel>
         </Transition.Child>
       </Transition.Root>
@@ -114,20 +114,20 @@ const Header = ({ isAuthenticated }: HeaderProps) => {
             </Link>
 
             <div className="hidden md:flex md:gap-x-6">
-              <NavLink href="#features">Features</NavLink>
-              <NavLink href="#testimonials">Testimonials</NavLink>
-              <NavLink href="#pricing">Pricing</NavLink>
+              <NavLink to="#features">Features</NavLink>
+              <NavLink to="#testimonials">Testimonials</NavLink>
+              <NavLink to="#pricing">Pricing</NavLink>
             </div>
           </div>
 
           <div className="flex items-center gap-x-5 md:gap-x-8">
             <div className="hidden md:block">
               {isAuthenticated ? (
-                <NavLink href="/dashboard" className="font-bold">
+                <NavLink to="/dashboard" className="font-bold">
                   My Dashboard
                 </NavLink>
               ) : (
-                <NavLink href="/login" className="font-bold">
+                <NavLink to="/login" className="font-bold">
                   Login
                 </NavLink>
               )}

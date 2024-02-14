@@ -9,28 +9,28 @@ const features = [
     description:
       "Journals are a great way to keep track of your day-to-day activities. You can use them to record your thoughts, tasks, and experiences, and they can help you to stay organized and focused.",
     // TODO: Add image
-    image: "",
+    image: "https://picsum.photos/2000/1000?random=1",
   },
   {
     title: "Notes",
     description:
       "Notes are a great way to keep track of important information.",
     // TODO: Add image
-    image: "",
+    image: "https://picsum.photos/2000/1000?random=2",
   },
   {
-    title: "Reminders / Notifications",
+    title: "Reminders",
     description:
       "We all need a little help remembering things sometimes. Jittter can help you stay on top of your tasks and appointments with timely reminders and notifications.",
     // TODO: Add image
-    image: "",
+    image: "https://picsum.photos/2000/1000?random=3",
   },
   {
     title: "Recurring Tasks",
     description:
       "Recurring tasks are tasks that need to be done on a regular basis, such as paying bills or taking out the trash. While doing them might not be fun, they are necessary to keep your life running smoothly.",
     // TODO: Add image
-    image: "",
+    image: "https://picsum.photos/2000/1000?random=4",
   },
 ];
 
@@ -82,7 +82,7 @@ const PrimaryFeatures = () => {
 
         <Tab.Group
           as="div"
-          className="mt-16 grid grid-cols-1 items-center gap-y-2 pt-10 sm:gap-y-6 md:mt-20 lg:grid-cols-12 lg:pt-0"
+          className="mt-16 grid select-none grid-cols-1 items-center gap-y-2 pt-10 sm:gap-y-6 md:mt-20 lg:grid-cols-12 lg:pt-0"
           vertical={tabOrientation === "vertical"}
         >
           {({ selectedIndex }) => (
@@ -102,7 +102,7 @@ const PrimaryFeatures = () => {
                       <h3>
                         <Tab
                           className={clsx(
-                            "font-display ui-not-focus-visible:outline-none text-lg",
+                            "font-display ui-not-focus-visible:outline-none text-lg outline-none",
                             selectedIndex === featureIndex
                               ? "text-[#2563EB] lg:text-white"
                               : "text-blue-100 hover:text-white lg:text-white",

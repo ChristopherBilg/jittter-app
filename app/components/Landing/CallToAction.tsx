@@ -1,7 +1,11 @@
-import Button from "./Button";
+import { Link } from "@remix-run/react";
 import Container from "./Container";
 
-const CallToAction = () => {
+interface CallToActionProps {
+  isAuthenticated: boolean;
+}
+
+const CallToAction = ({ isAuthenticated }: CallToActionProps) => {
   return (
     <section className="relative overflow-hidden bg-blue-600 py-32">
       <img
@@ -12,7 +16,6 @@ const CallToAction = () => {
         height={0}
       />
 
-      {/* TODO: Clean up the UI for this component. */}
       <Container className="relative">
         <div className="mx-auto max-w-lg text-center">
           <h2 className="font-display text-3xl tracking-tight text-white sm:text-4xl">
@@ -24,9 +27,23 @@ const CallToAction = () => {
             your journey today.
           </p>
 
-          <Button to="/register" variant="solid" className="mt-10">
-            Register Now
-          </Button>
+          {isAuthenticated ? (
+            <Link
+              to="/dashboard"
+              prefetch="viewport"
+              className="mt-8 inline-block rounded-lg bg-white px-8 py-3.5 font-medium text-blue-600 hover:bg-opacity-90"
+            >
+              My Dashboard
+            </Link>
+          ) : (
+            <Link
+              to="/signup"
+              prefetch="viewport"
+              className="mt-8 inline-block rounded-lg bg-white px-8 py-3.5 font-medium text-blue-600 hover:bg-opacity-90"
+            >
+              Sign Up
+            </Link>
+          )}
         </div>
       </Container>
     </section>

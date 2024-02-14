@@ -1,5 +1,5 @@
+import { Link } from "@remix-run/react";
 import clsx from "clsx";
-import Button from "./Button";
 import Container from "./Container";
 
 const CheckIcon = ({
@@ -37,14 +37,14 @@ const Plan = ({
   name,
   price,
   description,
-  href,
+  to,
   features,
   featured = false,
 }: {
   name: string;
   price: string;
   description: string;
-  href: string;
+  to: string;
   features: Array<string>;
   featured?: boolean;
 }) => {
@@ -84,20 +84,17 @@ const Plan = ({
         ))}
       </ul>
 
-      <Button
-        to={href}
-        variant={featured ? "solid" : "outline"}
-        color="white"
-        className="mt-8"
-        aria-label={`Get started with the ${name} plan for ${price}`}
+      <Link
+        to={to}
+        prefetch="viewport"
+        className="mt-4 inline-block rounded-lg bg-white px-8 py-3.5 font-medium text-blue-600 hover:bg-opacity-90"
       >
-        Get started
-      </Button>
+        Get Started
+      </Link>
     </section>
   );
 };
 
-// TODO: Update all of the information in this component.
 const Pricing = () => {
   return (
     <section
@@ -120,47 +117,27 @@ const Pricing = () => {
         <div className="-mx-4 mt-16 grid max-w-2xl grid-cols-1 gap-y-10 sm:mx-auto lg:-mx-8 lg:max-w-none lg:grid-cols-3 xl:mx-0 xl:gap-x-8">
           <Plan
             name="Starter"
-            price="$9"
-            description="Good for anyone who is self-employed and just getting started."
-            href="/register"
-            features={[
-              "Send 10 quotes and invoices",
-              "Connect up to 2 bank accounts",
-              "Track up to 15 expenses per month",
-              "Manual payroll support",
-              "Export up to 3 reports",
-            ]}
+            price="Free"
+            description="Good for anyone who wants to see what we're about."
+            to="/signup"
+            features={["Coming Soon!"]}
           />
 
           <Plan
             featured
-            name="Small business"
-            price="$15"
-            description="Perfect for small / medium sized businesses."
-            href="/register"
-            features={[
-              "Send 25 quotes and invoices",
-              "Connect up to 5 bank accounts",
-              "Track up to 50 expenses per month",
-              "Automated payroll support",
-              "Export up to 12 reports",
-              "Bulk reconcile transactions",
-              "Track in multiple currencies",
-            ]}
+            name="Premium"
+            price="$5"
+            description="Perfect for day-to-day users that want to get more done."
+            to="/signup"
+            features={["Coming Soon!"]}
           />
 
           <Plan
-            name="Enterprise"
-            price="$39"
-            description="For even the biggest enterprise companies."
-            href="/register"
-            features={[
-              "Send unlimited quotes and invoices",
-              "Connect up to 15 bank accounts",
-              "Track up to 200 expenses per month",
-              "Automated payroll support",
-              "Export up to 25 reports, including TPS",
-            ]}
+            name="Professional"
+            price="$10"
+            description="For power users that want to get the most out of our software."
+            to="/signup"
+            features={["Coming Soon!"]}
           />
         </div>
       </Container>
