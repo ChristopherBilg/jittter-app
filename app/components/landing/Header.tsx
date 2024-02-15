@@ -6,13 +6,12 @@ import Container from "./Container";
 import Logo from "./Logo";
 import NavLink from "./NavLink";
 
-const MobileNavLink = ({
-  to,
-  children,
-}: {
+type MobileNavLinkProps = {
   to: string;
   children: ReactNode;
-}) => {
+};
+
+const MobileNavLink = ({ to, children }: MobileNavLinkProps) => {
   return (
     <Popover.Button as={Link} to={to} className="block w-full p-2">
       {children}
@@ -20,7 +19,11 @@ const MobileNavLink = ({
   );
 };
 
-const MobileNavIcon = ({ open }: { open: boolean }) => {
+type MobileNavIconProps = {
+  open: boolean;
+};
+
+const MobileNavIcon = ({ open }: MobileNavIconProps) => {
   return (
     <svg
       aria-hidden="true"
