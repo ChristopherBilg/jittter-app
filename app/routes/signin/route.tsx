@@ -118,7 +118,7 @@ const SignInRoute = () => {
 
         <input
           type="submit"
-          value={fetcher.state !== "idle" ? "Logging in..." : "Login"}
+          value={fetcher.state !== "idle" ? "Signing in..." : "Sign In"}
           className="mx-auto my-1 w-fit cursor-pointer rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
         />
       </fetcher.Form>
