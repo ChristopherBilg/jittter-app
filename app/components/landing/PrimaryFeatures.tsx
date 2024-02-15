@@ -62,7 +62,7 @@ const PrimaryFeatures = () => {
     >
       <img
         className="absolute left-1/2 top-1/2 max-w-none translate-x-[-44%] translate-y-[-42%]"
-        src={""}
+        src=""
         alt=""
         width={0}
         height={0}

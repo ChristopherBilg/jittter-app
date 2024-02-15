@@ -134,7 +134,7 @@ const AccountRoute = () => {
               to="/dashboard"
               className="-m-1.5 rounded-md p-1.5 text-gray-700 hover:bg-gray-100"
             >
-              <span className="">My Dashboard</span>
+              <span>My Dashboard</span>
             </Link>
           </div>
         </div>
@@ -298,7 +298,7 @@ const AccountRoute = () => {
                           placeholder="Change password"
                           autoComplete="new-password"
                           className="mr-2 rounded border px-4 py-2"
-                          defaultValue={""}
+                          defaultValue=""
                           disabled
                           required
                         />
