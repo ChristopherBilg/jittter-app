@@ -11,6 +11,7 @@ import {
   useRouteError,
 } from "@remix-run/react";
 import stylesheet from "~/app/tailwind.css";
+import ErrorLayout from "./components/error/ErrorLayout";
 
 export const meta: MetaFunction = () => {
   return [
@@ -44,13 +45,20 @@ export const ErrorBoundary = () => {
 
   if (isRouteErrorResponse(error)) {
     return (
-      <div>
-        <h1>
-          {error.status} {error.statusText}
-        </h1>
+      <html lang="en" className="h-full scroll-smooth bg-white antialiased">
+        <head>
+          <meta charSet="utf-8" />
+          <meta name="viewport" content="width=device-width, initial-scale=1" />
+          <title>{`${error.status} Error - ${error.statusText}`}</title>
 
-        <p>{error.data}</p>
-      </div>
+          <Meta />
+          <Links />
+        </head>
+
+        <body className="flex h-full flex-col">
+          <ErrorLayout error={error} />
+        </body>
+      </html>
     );
   } else if (error instanceof Error) {
     return (
