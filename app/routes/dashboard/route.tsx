@@ -23,7 +23,7 @@ const DashboardRoute = () => {
 
       <div className="flex flex-col space-y-4">
         <Link to="/">Main page</Link>
-        <Link to="/my-account">My Account</Link>
+        <Link to="/account">Account Settings</Link>
         <Link to="/signout">Sign Out</Link>
       </div>
     </div>
