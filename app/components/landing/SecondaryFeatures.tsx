@@ -11,7 +11,7 @@ type Feature = {
   icon: ComponentType;
 };
 
-const features: Array<Feature> = [
+const features: Feature[] = [
   {
     name: "Mobile First",
     summary: "Access your business from anywhere, on any device.",

@@ -128,6 +128,15 @@ const AccountRoute = () => {
               </Link>
             ))}
           </nav>
+
+          <div className="flex flex-1 items-center justify-end gap-x-8">
+            <Link
+              to="/dashboard"
+              className="-m-1.5 rounded-md p-1.5 text-gray-700 hover:bg-gray-100"
+            >
+              <span className="">My Dashboard</span>
+            </Link>
+          </div>
         </div>
 
         <Dialog

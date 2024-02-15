@@ -5,7 +5,6 @@ type FAQ = {
   answer: string;
 };
 
-// TODO: Add 9 FAQs, 3 arrays of 3 FAQs each
 const faqs: FAQ[][] = [
   [
     {
