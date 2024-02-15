@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const USER_ACCOUNT_MINIMUM_PASSWORD_LENGTH = 8;
+export const USER_ACCOUNT_MINIMUM_PASSWORD_LENGTH = 10;
 
 const SignUpUserSchema = z.object({
   firstName: z.string().min(1),
