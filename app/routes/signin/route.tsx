@@ -63,7 +63,7 @@ const SignInRoute = () => {
 
   return (
     <SlimLayout
-      img={
+      background={
         <img
           className="absolute inset-0 h-full w-full object-cover"
           // TODO: Add image

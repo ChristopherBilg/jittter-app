@@ -1,11 +1,11 @@
 import { ReactNode } from "react";
 
 type SlimLayoutProps = {
-  img: ReactNode;
+  background: ReactNode;
   children: ReactNode;
 };
 
-const SlimLayout = ({ img, children }: SlimLayoutProps) => {
+const SlimLayout = ({ background, children }: SlimLayoutProps) => {
   return (
     <>
       <div className="relative flex min-h-full shrink-0 justify-center md:px-12 lg:px-0">
@@ -16,7 +16,7 @@ const SlimLayout = ({ img, children }: SlimLayoutProps) => {
         </div>
 
         <div className="hidden sm:contents lg:relative lg:block lg:flex-1">
-          {img}
+          {background}
         </div>
       </div>
     </>
