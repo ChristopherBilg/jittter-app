@@ -2,7 +2,7 @@
   "short_name": "Jittter",
   "name": "Jittter",
   "description": "Weather forecast information",
-  "id": "/?source=pwa",
+  "id": "/dashboard?source=pwa",
   "start_url": "/dashboard?source=pwa",
   "background_color": "#2563EB",
   "theme_color": "#2563EB",
