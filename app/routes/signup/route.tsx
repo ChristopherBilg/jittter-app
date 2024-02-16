@@ -14,10 +14,8 @@ import SlimLayout from "~/app/components/common/SlimLayout";
 import Logo from "~/app/components/landing/Logo";
 import { createUser } from "~/app/db/schema";
 import { commitSession, getSession } from "~/app/sessions";
-import {
-  USER_ACCOUNT_MINIMUM_PASSWORD_LENGTH,
-  validateSignUp,
-} from "./validate";
+import { validateSignUp } from "./validate";
+import { USER_ACCOUNT_MINIMUM_PASSWORD_LENGTH } from "~/app/utils/constant";
 
 export const meta: MetaFunction = () => {
   return [{ title: "We're excited to have you join Jittter!" }];

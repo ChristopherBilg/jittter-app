@@ -8,14 +8,19 @@ import {
   ActionFunctionArgs,
   LoaderFunctionArgs,
   MetaFunction,
-  json,
 } from "@remix-run/cloudflare";
 import { Link, useFetcher, useLoaderData } from "@remix-run/react";
 import clsx from "clsx";
 import { useState } from "react";
-import { getUserById, updateUser } from "~/app/db/models/user";
-import { commitSession, redirectIfNotAuthenticated } from "~/app/sessions";
+import {
+  getUserById,
+  updateUser,
+  updateUserAuthentication,
+} from "~/app/db/models/user";
+import { redirectIfNotAuthenticated } from "~/app/sessions";
+import { USER_ACCOUNT_MINIMUM_PASSWORD_LENGTH } from "~/app/utils/constant";
 import { exhaustiveMatchingGuard } from "~/app/utils/misc";
+import { validateUpdateName, validateUpdatePassword } from "./validate";
 
 export const meta: MetaFunction = () => {
   return [
@@ -49,26 +54,31 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   switch (_action) {
     case FormAction.UpdateName: {
       const id = String(session.get("id"));
-      const firstName = String(formData.get("firstName"));
-      const lastName = String(formData.get("lastName"));
 
-      if (!firstName || !lastName) return null;
+      const validateResult = await validateUpdateName(formData);
+      if (!validateResult) return null;
 
-      const user = await updateUser(id, {
+      const { firstName, lastName } = validateResult;
+
+      await updateUser(id, {
         firstName,
         lastName,
       });
 
-      if (!user) return null;
-
-      return json(user, {
-        headers: {
-          "Set-Cookie": await commitSession(session),
-        },
-      });
+      return null;
     }
     case FormAction.UpdatePassword: {
-      // TODO: Implement password updating
+      const id = String(session.get("id"));
+
+      const validateResult = await validateUpdatePassword(formData);
+
+      console.log("validateResult", validateResult);
+
+      if (!validateResult) return null;
+
+      const { password } = validateResult;
+
+      await updateUserAuthentication(id, password);
 
       return null;
     }
@@ -299,7 +309,7 @@ const AccountRoute = () => {
                           autoComplete="new-password"
                           className="mr-2 rounded border px-4 py-2"
                           defaultValue=""
-                          disabled
+                          minLength={USER_ACCOUNT_MINIMUM_PASSWORD_LENGTH}
                           required
                         />
                       </div>

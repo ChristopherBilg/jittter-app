@@ -52,7 +52,7 @@ export const createUser = async (
   email: string,
   password: string,
 ) => {
-  const key = await pbkdf2(password);
+  const passKey = await pbkdf2(password);
 
   try {
     const newUsers = await NeonDB.getInstance()
@@ -61,7 +61,7 @@ export const createUser = async (
         firstName,
         lastName,
         email,
-        passKey: key,
+        passKey,
       })
       .returning();
 
@@ -81,7 +81,29 @@ export const updateUser = async (
   try {
     const updatedUsers = await NeonDB.getInstance()
       .db.update(UserTable)
-      .set(user)
+      .set({ ...user, updatedAt: new Date() })
+      .where(eq(UserTable.id, id))
+      .returning();
+
+    if (updatedUsers.length !== 1) return null;
+
+    return updatedUsers[0];
+  } catch (err) {
+    console.error(err);
+    return null;
+  }
+};
+
+export const updateUserAuthentication = async (
+  id: string,
+  password: string,
+) => {
+  const passKey = await pbkdf2(password);
+
+  try {
+    const updatedUsers = await NeonDB.getInstance()
+      .db.update(UserTable)
+      .set({ passKey, updatedAt: new Date() })
       .where(eq(UserTable.id, id))
       .returning();
 

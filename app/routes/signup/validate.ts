@@ -1,6 +1,5 @@
 import { z } from "zod";
-
-export const USER_ACCOUNT_MINIMUM_PASSWORD_LENGTH = 10;
+import { USER_ACCOUNT_MINIMUM_PASSWORD_LENGTH } from "~/app/utils/constant";
 
 const SignUpUserSchema = z.object({
   firstName: z.string().min(1),
@@ -38,10 +37,10 @@ export const validateSignUp = async (request: Request) => {
     };
   } else {
     data = {
-      firstName: String(firstName),
-      lastName: String(lastName),
-      email: String(email),
-      password: String(password),
+      firstName: String(result.data.firstName),
+      lastName: String(result.data.lastName),
+      email: String(result.data.email),
+      password: String(result.data.password),
     };
   }
 
