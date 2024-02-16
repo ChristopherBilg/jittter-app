@@ -135,7 +135,7 @@ const SignUpRoute = () => {
             name="firstName"
             placeholder="First Name"
             autoComplete="given-name"
-            className="mr-2 w-[50%] rounded border px-4 py-2"
+            className="mr-2 w-1/2 rounded border px-4 py-2"
             required
           />
 
@@ -144,7 +144,7 @@ const SignUpRoute = () => {
             name="lastName"
             placeholder="Last Name"
             autoComplete="family-name"
-            className="w-[50%] rounded border px-4 py-2"
+            className="w-1/2 rounded border px-4 py-2"
             required
           />
         </div>
@@ -170,15 +170,27 @@ const SignUpRoute = () => {
           </span>
         )}
 
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          autoComplete="new-password"
-          className="rounded border px-4 py-2"
-          minLength={USER_ACCOUNT_MINIMUM_PASSWORD_LENGTH}
-          required
-        />
+        <div className="mx-auto flex w-full justify-between">
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            autoComplete="new-password"
+            className="mr-2 w-1/2 rounded border px-4 py-2"
+            minLength={USER_ACCOUNT_MINIMUM_PASSWORD_LENGTH}
+            required
+          />
+
+          <input
+            type="password"
+            name="confirmPassword"
+            placeholder="Confirm Password"
+            autoComplete="new-password"
+            className="w-1/2 rounded border px-4 py-2"
+            minLength={USER_ACCOUNT_MINIMUM_PASSWORD_LENGTH}
+            required
+          />
+        </div>
 
         <input
           type="submit"

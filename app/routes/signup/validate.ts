@@ -1,12 +1,23 @@
 import { z } from "zod";
 import { USER_ACCOUNT_MINIMUM_PASSWORD_LENGTH } from "~/app/utils/constant";
 
-const SignUpUserSchema = z.object({
-  firstName: z.string().min(1),
-  lastName: z.string().min(1),
-  email: z.string().email(),
-  password: z.string().min(USER_ACCOUNT_MINIMUM_PASSWORD_LENGTH),
-});
+const SignUpUserSchema = z
+  .object({
+    firstName: z.string().min(1),
+    lastName: z.string().min(1),
+    email: z.string().email(),
+    password: z.string().min(USER_ACCOUNT_MINIMUM_PASSWORD_LENGTH),
+    confirmPassword: z.string().min(USER_ACCOUNT_MINIMUM_PASSWORD_LENGTH),
+  })
+  .superRefine(({ password, confirmPassword }, ctx) => {
+    if (password !== confirmPassword) {
+      ctx.addIssue({
+        code: "custom",
+        path: ["password"],
+        message: "The passwords did not match",
+      });
+    }
+  });
 
 export const validateSignUp = async (request: Request) => {
   const formData = await request.formData();
@@ -15,12 +26,14 @@ export const validateSignUp = async (request: Request) => {
   const lastName = formData.get("lastName");
   const email = formData.get("email");
   const password = formData.get("password");
+  const confirmPassword = formData.get("confirmPassword");
 
   const result = SignUpUserSchema.safeParse({
     firstName,
     lastName,
     email,
     password,
+    confirmPassword,
   });
 
   let data;

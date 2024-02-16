@@ -82,7 +82,7 @@ const Plan = ({
         {features.map((feature) => (
           <li key={feature} className="flex">
             <CheckIcon className={featured ? "text-white" : "text-slate-400"} />
-            <span className="ml-4">{feature}</span>
+            <span className="ml-4 self-center">{feature}</span>
           </li>
         ))}
       </ul>
@@ -144,7 +144,7 @@ const Pricing = ({ isAuthenticated }: PricingProps) => {
             name="Premium"
             price="$5"
             description="Perfect for day-to-day users that want to get more done."
-            features={["Coming Soon!"]}
+            features={["Everything in Premium", "Coming Soon!"]}
             isAuthenticated={isAuthenticated}
           />
 
@@ -152,7 +152,7 @@ const Pricing = ({ isAuthenticated }: PricingProps) => {
             name="Professional"
             price="$10"
             description="For power users that want to get the most out of our software."
-            features={["Coming Soon!"]}
+            features={["Everything in Professional", "Coming Soon!"]}
             isAuthenticated={isAuthenticated}
           />
         </div>
