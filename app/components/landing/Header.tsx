@@ -51,6 +51,35 @@ const MobileNavIcon = ({ open }: MobileNavIconProps) => {
   );
 };
 
+type NavigationLink = {
+  to: string;
+  label: string;
+  isInMobileMenu: boolean;
+};
+
+const navigationLinks: NavigationLink[] = [
+  {
+    to: "#features",
+    label: "Features",
+    isInMobileMenu: true,
+  },
+  {
+    to: "#testimonials",
+    label: "Testimonials",
+    isInMobileMenu: true,
+  },
+  {
+    to: "#pricing",
+    label: "Pricing",
+    isInMobileMenu: true,
+  },
+  {
+    to: "/contact-us",
+    label: "Contact us",
+    isInMobileMenu: true,
+  },
+];
+
 type MobileNavigationProps = {
   isAuthenticated: boolean;
 };
@@ -91,9 +120,13 @@ const MobileNavigation = ({ isAuthenticated }: MobileNavigationProps) => {
             as="div"
             className="absolute inset-x-0 top-full mt-4 flex origin-top flex-col rounded-2xl bg-white p-4 text-lg tracking-tight text-slate-900 shadow-xl ring-1 ring-slate-900/5"
           >
-            <MobileNavLink to="#features">Features</MobileNavLink>
-            <MobileNavLink to="#testimonials">Testimonials</MobileNavLink>
-            <MobileNavLink to="#pricing">Pricing</MobileNavLink>
+            {navigationLinks
+              .filter((link) => link.isInMobileMenu)
+              .map((link) => (
+                <MobileNavLink key={link.to} to={link.to}>
+                  {link.label}
+                </MobileNavLink>
+              ))}
 
             <hr className="m-2 border-slate-300/40" />
 
@@ -124,9 +157,11 @@ const Header = ({ isAuthenticated }: HeaderProps) => {
             </Link>
 
             <div className="hidden md:flex md:gap-x-6">
-              <NavLink to="#features">Features</NavLink>
-              <NavLink to="#testimonials">Testimonials</NavLink>
-              <NavLink to="#pricing">Pricing</NavLink>
+              {navigationLinks.map((link) => (
+                <NavLink key={link.to} to={link.to}>
+                  {link.label}
+                </NavLink>
+              ))}
             </div>
           </div>
 
