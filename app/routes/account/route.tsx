@@ -73,9 +73,9 @@ export const action = async ({ request }: ActionFunctionArgs) => {
       const validateResult = await validateUpdatePassword(formData);
       if (!validateResult) return null;
 
-      const { password } = validateResult;
+      const { newPassword } = validateResult;
 
-      await updateUserAuthentication(id, password);
+      await updateUserAuthentication(id, newPassword);
 
       return null;
     }
@@ -302,9 +302,20 @@ const AccountRoute = () => {
                         <input
                           type="password"
                           name="newPassword"
-                          placeholder="Change password"
+                          placeholder="New password"
                           autoComplete="new-password"
-                          className="mr-2 rounded border px-4 py-2"
+                          className="mr-2 w-1/2 rounded border px-4 py-2"
+                          defaultValue=""
+                          minLength={USER_ACCOUNT_MINIMUM_PASSWORD_LENGTH}
+                          required
+                        />
+
+                        <input
+                          type="password"
+                          name="confirmNewPassword"
+                          placeholder="Confirm new password"
+                          autoComplete="new-password"
+                          className="w-1/2 rounded border px-4 py-2"
                           defaultValue=""
                           minLength={USER_ACCOUNT_MINIMUM_PASSWORD_LENGTH}
                           required

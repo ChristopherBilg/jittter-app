@@ -93,7 +93,7 @@ const PrimaryFeatures = () => {
                     <div
                       key={feature.title}
                       className={clsx(
-                        "group relative rounded-full px-4 py-1 lg:rounded-l-xl lg:rounded-r-none lg:p-6",
+                        "group relative rounded-full px-4 py-1 lg:rounded-l-xl lg:rounded-r-xl lg:p-6",
                         selectedIndex === featureIndex
                           ? "bg-white lg:bg-white/10 lg:ring-1 lg:ring-inset lg:ring-white/10"
                           : "hover:bg-white/10 lg:hover:bg-white/5",
@@ -128,11 +128,11 @@ const PrimaryFeatures = () => {
                 </Tab.List>
               </div>
 
-              <Tab.Panels className="lg:col-span-7">
+              <Tab.Panels className="self-baseline lg:col-span-7">
                 {features.map((feature) => (
                   <Tab.Panel key={feature.title} unmount={false}>
                     <div className="relative sm:px-6 lg:hidden">
-                      <div className="absolute -inset-x-4 bottom-[-4.25rem] top-[-6.5rem] bg-white/10 ring-1 ring-inset ring-white/10 sm:inset-x-0 sm:rounded-t-xl" />
+                      <div className="absolute -inset-x-4 bottom-[-2.25rem] top-[-6.5rem] bg-white/10 ring-1 ring-inset ring-white/10 sm:inset-x-0 sm:rounded-xl" />
 
                       <p className="relative mx-auto max-w-2xl text-base text-white sm:text-center">
                         {feature.description}

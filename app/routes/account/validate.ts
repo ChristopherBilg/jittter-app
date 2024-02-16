@@ -23,20 +23,33 @@ export const validateUpdateName = async (formData: FormData) => {
   };
 };
 
-const UpdatePasswordSchema = z.object({
-  password: z.string().min(USER_ACCOUNT_MINIMUM_PASSWORD_LENGTH),
-});
+const UpdatePasswordSchema = z
+  .object({
+    newPassword: z.string().min(USER_ACCOUNT_MINIMUM_PASSWORD_LENGTH),
+    confirmNewPassword: z.string().min(USER_ACCOUNT_MINIMUM_PASSWORD_LENGTH),
+  })
+  .superRefine(({ newPassword, confirmNewPassword }, ctx) => {
+    if (newPassword !== confirmNewPassword) {
+      ctx.addIssue({
+        code: "custom",
+        path: ["newPassword"],
+        message: "The passwords did not match",
+      });
+    }
+  });
 
 export const validateUpdatePassword = async (formData: FormData) => {
-  const password = formData.get("newPassword");
+  const newPassword = formData.get("newPassword");
+  const confirmNewPassword = formData.get("confirmNewPassword");
 
   const result = UpdatePasswordSchema.safeParse({
-    password,
+    newPassword,
+    confirmNewPassword,
   });
 
   if (!result.success) return null;
 
   return {
-    password: result.data.password,
+    newPassword: result.data.newPassword,
   };
 };
