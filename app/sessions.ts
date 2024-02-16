@@ -6,6 +6,7 @@ export type SessionData = {
 };
 
 type SessionFlashData = {
+  success: string;
   error: string;
 };
 

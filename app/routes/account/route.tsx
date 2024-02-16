@@ -71,9 +71,6 @@ export const action = async ({ request }: ActionFunctionArgs) => {
       const id = String(session.get("id"));
 
       const validateResult = await validateUpdatePassword(formData);
-
-      console.log("validateResult", validateResult);
-
       if (!validateResult) return null;
 
       const { password } = validateResult;

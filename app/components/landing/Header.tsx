@@ -2,8 +2,8 @@ import { Popover, Transition } from "@headlessui/react";
 import { Link } from "@remix-run/react";
 import clsx from "clsx";
 import { Fragment, ReactNode } from "react";
+import Logo from "../common/Logo";
 import Container from "./Container";
-import Logo from "./Logo";
 import NavLink from "./NavLink";
 
 type MobileNavLinkProps = {
