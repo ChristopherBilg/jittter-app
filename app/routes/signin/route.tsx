@@ -10,8 +10,8 @@ import {
   useFetcher,
   useLoaderData,
 } from "@remix-run/react";
+import Logo from "~/app/components/common/Logo";
 import SlimLayout from "~/app/components/common/SlimLayout";
-import Logo from "~/app/components/landing/Logo";
 import { commitSession, getSession } from "~/app/sessions";
 import { validateSignIn } from "./validate";
 

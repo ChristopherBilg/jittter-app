@@ -1,26 +1,25 @@
 import { z } from "zod";
-import { USER_ACCOUNT_MINIMUM_PASSWORD_LENGTH } from "~/app/utils/constant";
 
-const SignUpUserSchema = z.object({
+const SendMessageSchema = z.object({
   firstName: z.string().min(1),
   lastName: z.string().min(1),
   email: z.string().email(),
-  password: z.string().min(USER_ACCOUNT_MINIMUM_PASSWORD_LENGTH),
+  message: z.string().min(1).max(1000),
 });
 
-export const validateSignUp = async (request: Request) => {
+export const validateSendMessage = async (request: Request) => {
   const formData = await request.formData();
 
   const firstName = formData.get("firstName");
   const lastName = formData.get("lastName");
   const email = formData.get("email");
-  const password = formData.get("password");
+  const message = formData.get("message");
 
-  const result = SignUpUserSchema.safeParse({
+  const result = SendMessageSchema.safeParse({
     firstName,
     lastName,
     email,
-    password,
+    message,
   });
 
   let data;
@@ -33,14 +32,14 @@ export const validateSignUp = async (request: Request) => {
       firstName: formattedErrors.firstName?._errors,
       lastName: formattedErrors.lastName?._errors,
       email: formattedErrors.email?._errors,
-      password: formattedErrors.password?._errors,
+      message: formattedErrors.message?._errors,
     };
   } else {
     data = {
       firstName: String(result.data.firstName),
       lastName: String(result.data.lastName),
       email: String(result.data.email),
-      password: String(result.data.password),
+      message: String(result.data.message),
     };
   }
 

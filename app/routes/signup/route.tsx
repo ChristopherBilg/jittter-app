@@ -10,14 +10,12 @@ import {
   useFetcher,
   useLoaderData,
 } from "@remix-run/react";
+import Logo from "~/app/components/common/Logo";
 import SlimLayout from "~/app/components/common/SlimLayout";
-import Logo from "~/app/components/landing/Logo";
 import { createUser } from "~/app/db/schema";
 import { commitSession, getSession } from "~/app/sessions";
-import {
-  USER_ACCOUNT_MINIMUM_PASSWORD_LENGTH,
-  validateSignUp,
-} from "./validate";
+import { USER_ACCOUNT_MINIMUM_PASSWORD_LENGTH } from "~/app/utils/constant";
+import { validateSignUp } from "./validate";
 
 export const meta: MetaFunction = () => {
   return [{ title: "We're excited to have you join Jittter!" }];
@@ -119,15 +117,15 @@ const SignUpRoute = () => {
       <fetcher.Form method="POST" className="flex flex-col space-y-4">
         {error && <p className="text-red-500">{error}</p>}
 
-        {errors?.firstName && (
+        {Array.isArray(errors?.firstName) && (
           <span className="text-sm text-gray-500">
-            First Name: {errors.firstName}
+            First Name: {errors.firstName?.[0]}
           </span>
         )}
 
-        {errors?.lastName && (
+        {Array.isArray(errors?.lastName) && (
           <span className="text-sm text-gray-500">
-            Last Name: {errors.lastName}
+            Last Name: {errors.lastName?.[0]}
           </span>
         )}
 
@@ -151,8 +149,10 @@ const SignUpRoute = () => {
           />
         </div>
 
-        {errors?.email && (
-          <span className="text-sm text-gray-500">Email: {errors.email}</span>
+        {Array.isArray(errors?.email) && (
+          <span className="text-sm text-gray-500">
+            Email: {errors.email?.[0]}
+          </span>
         )}
 
         <input
@@ -164,9 +164,9 @@ const SignUpRoute = () => {
           required
         />
 
-        {errors?.password && (
+        {Array.isArray(errors?.password) && (
           <span className="text-sm text-gray-500">
-            Password: {errors.password}
+            Password: {errors.password?.[0]}
           </span>
         )}
 

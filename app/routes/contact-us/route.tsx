@@ -1,6 +1,16 @@
-import { ChevronDownIcon } from "@heroicons/react/24/outline";
-import { MetaFunction } from "@remix-run/cloudflare";
-import { useFetcher } from "@remix-run/react";
+import {
+  ActionFunctionArgs,
+  LoaderFunctionArgs,
+  MetaFunction,
+  json,
+} from "@remix-run/cloudflare";
+import { Link, useFetcher, useLoaderData } from "@remix-run/react";
+import { useEffect, useRef } from "react";
+import Logo from "~/app/components/common/Logo";
+import SlimLayout from "~/app/components/common/SlimLayout";
+import { createContactUsMessage } from "~/app/db/models/contact-us";
+import { commitSession, getSession } from "~/app/sessions";
+import { validateSendMessage } from "./validate";
 
 export const meta: MetaFunction = () => {
   return [
@@ -10,183 +20,184 @@ export const meta: MetaFunction = () => {
   ];
 };
 
+export const loader = async ({ request }: LoaderFunctionArgs) => {
+  const session = await getSession(request.headers.get("Cookie"));
+
+  const data = {
+    error: session.get("error"),
+    success: session.get("success"),
+  };
+
+  return json(data, {
+    headers: {
+      "Set-Cookie": await commitSession(session),
+    },
+  });
+};
+
+export const action = async ({ request }: ActionFunctionArgs) => {
+  const session = await getSession(request.headers.get("Cookie"));
+
+  const { errors, data } = await validateSendMessage(request);
+
+  if (errors || !data) {
+    return json(
+      { errors },
+      {
+        headers: {
+          "Set-Cookie": await commitSession(session),
+        },
+      },
+    );
+  }
+
+  const { firstName, lastName, email, message } = data;
+
+  const sentMessage = await createContactUsMessage(
+    firstName,
+    lastName,
+    email,
+    message,
+  );
+
+  if (sentMessage) {
+    session.flash("success", "Your message has been sent successfully.");
+  } else {
+    session.flash("error", "An error occurred while sending your message.");
+  }
+
+  return json(
+    {
+      errors,
+      data,
+    },
+    {
+      headers: {
+        "Set-Cookie": await commitSession(session),
+      },
+    },
+  );
+};
+
 const ContactUsRoute = () => {
-  const fetcher = useFetcher();
+  const { error, success } = useLoaderData<typeof loader>();
+
+  const fetcher = useFetcher<typeof action>();
+  const errors = fetcher.data?.errors;
+
+  const formRef = useRef<HTMLFormElement>(null);
+  useEffect(
+    function resetFormOnSuccess() {
+      if (fetcher.state === "idle" && !fetcher.data?.errors) {
+        formRef.current?.reset();
+      }
+    },
+    [fetcher.state, fetcher.data],
+  );
 
   return (
-    <div className="isolate bg-white px-6 py-24 sm:py-32 lg:px-8">
-      <div
-        className="absolute inset-x-0 top-[-10rem] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[-20rem]"
-        aria-hidden="true"
-      >
-        <div
-          className="relative left-1/2 -z-10 aspect-[1155/678] w-[36.125rem] max-w-none -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-40rem)] sm:w-[72.1875rem]"
-          style={{
-            clipPath:
-              "polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)",
-          }}
+    <SlimLayout
+      background={
+        <img
+          className="absolute inset-0 h-full w-full object-cover"
+          // TODO: Add image
+          src="https://picsum.photos/2000/1000?random=16"
+          alt=""
         />
+      }
+    >
+      <div className="flex">
+        <Link to="/" aria-label="Home">
+          <Logo />
+        </Link>
       </div>
 
-      <div className="mx-auto max-w-2xl text-center">
-        <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-          Contact Us
-        </h2>
+      <h2 className="mt-20 text-lg font-semibold text-gray-900">Contact Us</h2>
 
-        <p className="mt-2 text-lg leading-8 text-gray-600">
-          Please let us know how we can help. We'll get back to you as soon as
-          possible.
-        </p>
-      </div>
+      <p className="my-2 text-sm text-gray-700">
+        Please let us know how we can help. We'll get back to you as soon as
+        possible.
+      </p>
 
-      <fetcher.Form method="POST" className="mx-auto mt-16 max-w-xl sm:mt-20">
-        <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
-          <div>
-            <label
-              htmlFor="first-name"
-              className="block text-sm font-semibold leading-6 text-gray-900"
-            >
-              First name
-            </label>
+      <hr />
 
-            <div className="mt-2.5">
-              <input
-                type="text"
-                name="first-name"
-                id="first-name"
-                autoComplete="given-name"
-                className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
-              />
-            </div>
-          </div>
+      <fetcher.Form
+        method="POST"
+        className="flex flex-col space-y-4"
+        ref={formRef}
+      >
+        {success && <p className="text-green-500">{success}</p>}
+        {error && <p className="text-red-500">{error}</p>}
 
-          <div>
-            <label
-              htmlFor="last-name"
-              className="block text-sm font-semibold leading-6 text-gray-900"
-            >
-              Last name
-            </label>
+        {Array.isArray(errors?.firstName) && (
+          <span className="text-sm text-gray-500">
+            First Name: {errors.firstName?.[0]}
+          </span>
+        )}
 
-            <div className="mt-2.5">
-              <input
-                type="text"
-                name="last-name"
-                id="last-name"
-                autoComplete="family-name"
-                className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
-              />
-            </div>
-          </div>
+        {Array.isArray(errors?.lastName) && (
+          <span className="text-sm text-gray-500">
+            Last Name: {errors.lastName?.[0]}
+          </span>
+        )}
 
-          <div className="sm:col-span-2">
-            <label
-              htmlFor="company"
-              className="block text-sm font-semibold leading-6 text-gray-900"
-            >
-              Company
-            </label>
+        <div className="mx-auto flex w-full justify-between">
+          <input
+            type="text"
+            name="firstName"
+            placeholder="First Name"
+            autoComplete="given-name"
+            className="mr-2 w-[50%] rounded border px-4 py-2"
+            required
+          />
 
-            <div className="mt-2.5">
-              <input
-                type="text"
-                name="company"
-                id="company"
-                autoComplete="organization"
-                className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
-              />
-            </div>
-          </div>
-
-          <div className="sm:col-span-2">
-            <label
-              htmlFor="email"
-              className="block text-sm font-semibold leading-6 text-gray-900"
-            >
-              Email
-            </label>
-
-            <div className="mt-2.5">
-              <input
-                type="email"
-                name="email"
-                id="email"
-                autoComplete="email"
-                className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
-              />
-            </div>
-          </div>
-
-          <div className="sm:col-span-2">
-            <label
-              htmlFor="phone-number"
-              className="block text-sm font-semibold leading-6 text-gray-900"
-            >
-              Phone number
-            </label>
-
-            <div className="relative mt-2.5">
-              <div className="absolute inset-y-0 left-0 flex items-center">
-                <label htmlFor="country" className="sr-only">
-                  Country
-                </label>
-
-                <select
-                  id="country"
-                  name="country"
-                  className="h-full rounded-md border-0 bg-transparent bg-none py-0 pl-4 pr-9 text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm"
-                >
-                  <option>US</option>
-                  <option>CA</option>
-                  <option>EU</option>
-                </select>
-
-                <ChevronDownIcon
-                  className="pointer-events-none absolute right-3 top-0 h-full w-5 text-gray-400"
-                  aria-hidden="true"
-                />
-              </div>
-
-              <input
-                type="tel"
-                name="phone-number"
-                id="phone-number"
-                autoComplete="tel"
-                className="block w-full rounded-md border-0 px-3.5 py-2 pl-20 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
-              />
-            </div>
-          </div>
-
-          <div className="sm:col-span-2">
-            <label
-              htmlFor="message"
-              className="block text-sm font-semibold leading-6 text-gray-900"
-            >
-              Message
-            </label>
-
-            <div className="mt-2.5">
-              <textarea
-                name="message"
-                id="message"
-                rows={4}
-                className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
-                defaultValue={""}
-              />
-            </div>
-          </div>
+          <input
+            type="text"
+            name="lastName"
+            placeholder="Last Name"
+            autoComplete="family-name"
+            className="w-[50%] rounded border px-4 py-2"
+            required
+          />
         </div>
 
-        <div className="mt-10">
-          <button
-            type="submit"
-            className="block w-full rounded-md bg-blue-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
-          >
-            Let's talk
-          </button>
-        </div>
+        {Array.isArray(errors?.email) && (
+          <span className="text-sm text-gray-500">
+            Email: {errors.email?.[0]}
+          </span>
+        )}
+
+        <input
+          type="email"
+          name="email"
+          placeholder="Email"
+          autoComplete="email"
+          className="rounded border px-4 py-2"
+          required
+        />
+
+        {Array.isArray(errors?.message) && (
+          <span className="text-sm text-gray-500">
+            Message: {errors.message?.[0]}
+          </span>
+        )}
+
+        <textarea
+          name="message"
+          placeholder="Message"
+          className="min-h-40 rounded border px-4 py-2"
+          required
+        />
+
+        <input
+          type="submit"
+          value={
+            fetcher.state !== "idle" ? "Sending Message..." : "Send Message"
+          }
+          className="mx-auto my-1 w-fit cursor-pointer rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
+        />
       </fetcher.Form>
-    </div>
+    </SlimLayout>
   );
 };
 

@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { getUserByAuthenticating } from "~/app/db/schema";
-import { USER_ACCOUNT_MINIMUM_PASSWORD_LENGTH } from "../signup/validate";
+import { USER_ACCOUNT_MINIMUM_PASSWORD_LENGTH } from "~/app/utils/constant";
 
 const AuthenticateUserSchema = z.object({
   email: z.string().email(),
@@ -20,5 +20,8 @@ export const validateSignIn = async (request: Request) => {
 
   if (!result.success) return null;
 
-  return getUserByAuthenticating(String(email), String(password));
+  return getUserByAuthenticating(
+    String(result.data.email),
+    String(result.data.password),
+  );
 };
