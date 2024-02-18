@@ -13,6 +13,9 @@ export const meta: MetaFunction = () => {
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   await redirectIfNotAuthenticated(request, "/signin");
 
+  // TODO: Remove temporary redirectonce we have a real dashboard
+  // return redirect("/reminders", 307);
+
   return null;
 };
 
@@ -23,6 +26,7 @@ const DashboardRoute = () => {
 
       <div className="flex flex-col space-y-4">
         <Link to="/">Main page</Link>
+        <Link to="/reminders">Reminders</Link>
         <Link to="/account">Account Settings</Link>
         <Link to="/signout">Sign Out</Link>
       </div>

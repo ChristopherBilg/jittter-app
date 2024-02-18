@@ -135,7 +135,7 @@ const Pricing = ({ isAuthenticated }: PricingProps) => {
             name="Starter"
             price="Free"
             description="Good for anyone who wants to see what we're about."
-            features={["Coming Soon!"]}
+            features={["Unlimited reminders"]}
             isAuthenticated={isAuthenticated}
           />
 
@@ -144,7 +144,7 @@ const Pricing = ({ isAuthenticated }: PricingProps) => {
             name="Premium"
             price="$5"
             description="Perfect for day-to-day users that want to get more done."
-            features={["Everything in Premium", "Coming Soon!"]}
+            features={["Everything in Premium"]}
             isAuthenticated={isAuthenticated}
           />
 
@@ -152,7 +152,7 @@ const Pricing = ({ isAuthenticated }: PricingProps) => {
             name="Professional"
             price="$10"
             description="For power users that want to get the most out of our software."
-            features={["Everything in Professional", "Coming Soon!"]}
+            features={["Everything in Professional"]}
             isAuthenticated={isAuthenticated}
           />
         </div>

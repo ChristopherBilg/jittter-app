@@ -67,13 +67,13 @@ const SignInRoute = () => {
         <img
           className="absolute inset-0 h-full w-full object-cover"
           // TODO: Add image
-          src="https://picsum.photos/2000/1000?random=14"
+          src="https://picsum.photos/2000/1000.webp?random=14"
           alt=""
         />
       }
     >
       <div className="flex">
-        <Link to="/" aria-label="Home">
+        <Link to="/" prefetch="viewport" aria-label="Home">
           <Logo />
         </Link>
       </div>
@@ -86,6 +86,7 @@ const SignInRoute = () => {
         Don't have an account?{" "}
         <Link
           to="/signup"
+          prefetch="viewport"
           className="font-medium text-blue-600 hover:underline"
         >
           Sign up
