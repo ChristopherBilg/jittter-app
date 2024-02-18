@@ -43,6 +43,13 @@
       "when": 1708111688400,
       "tag": "0005_quiet_rick_jones",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "5",
+      "when": 1708270625766,
+      "tag": "0006_graceful_guardian",
+      "breakpoints": true
     }
   ]
 }

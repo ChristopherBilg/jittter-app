@@ -92,7 +92,7 @@ const SignUpRoute = () => {
       }
     >
       <div className="flex">
-        <Link to="/" aria-label="Home">
+        <Link to="/" prefetch="viewport" aria-label="Home">
           <Logo />
         </Link>
       </div>
@@ -105,6 +105,7 @@ const SignUpRoute = () => {
         Already registered?{" "}
         <Link
           to="/signin"
+          prefetch="viewport"
           className="font-medium text-blue-600 hover:underline"
         >
           Sign in

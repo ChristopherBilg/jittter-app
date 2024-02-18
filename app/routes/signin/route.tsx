@@ -73,7 +73,7 @@ const SignInRoute = () => {
       }
     >
       <div className="flex">
-        <Link to="/" aria-label="Home">
+        <Link to="/" prefetch="viewport" aria-label="Home">
           <Logo />
         </Link>
       </div>
@@ -86,6 +86,7 @@ const SignInRoute = () => {
         Don't have an account?{" "}
         <Link
           to="/signup"
+          prefetch="viewport"
           className="font-medium text-blue-600 hover:underline"
         >
           Sign up
