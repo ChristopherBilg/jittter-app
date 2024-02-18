@@ -9,28 +9,28 @@ const features = [
     description:
       "Journals are a great way to keep track of your day-to-day activities. You can use them to record your thoughts, tasks, and experiences, and they can help you to stay organized and focused.",
     // TODO: Add image
-    image: "https://picsum.photos/2000/1000?random=1",
+    image: "https://picsum.photos/2000/1000.webp?random=1",
   },
   {
     title: "Notes",
     description:
       "Notes are a great way to keep track of important information.",
     // TODO: Add image
-    image: "https://picsum.photos/2000/1000?random=2",
+    image: "https://picsum.photos/2000/1000.webp?random=2",
   },
   {
     title: "Reminders",
     description:
       "We all need a little help remembering things sometimes. Jittter can help you stay on top of your tasks and appointments with timely reminders and notifications.",
     // TODO: Add image
-    image: "https://picsum.photos/2000/1000?random=3",
+    image: "https://picsum.photos/2000/1000.webp?random=3",
   },
   {
     title: "Recurring Tasks",
     description:
       "Recurring tasks are tasks that need to be done on a regular basis, such as paying bills or taking out the trash. While doing them might not be fun, they are necessary to keep your life running smoothly.",
     // TODO: Add image
-    image: "https://picsum.photos/2000/1000?random=4",
+    image: "https://picsum.photos/2000/1000.webp?random=4",
   },
 ];
 

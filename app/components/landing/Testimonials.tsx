@@ -19,7 +19,7 @@ const testimonials: Testimonial[][] = [
         name: "Rachel Matthews",
         role: "Freelance Graphic Designer",
         // TODO: Add image
-        image: "https://picsum.photos/2000/1000?random=8",
+        image: "https://picsum.photos/2000/1000.webp?random=8",
       },
     },
     {
@@ -29,7 +29,7 @@ const testimonials: Testimonial[][] = [
         name: "Mark Donovan",
         role: "Marketing Agency Owner",
         // TODO: Add image
-        image: "https://picsum.photos/2000/1000?random=9",
+        image: "https://picsum.photos/2000/1000.webp?random=9",
       },
     },
   ],
@@ -41,7 +41,7 @@ const testimonials: Testimonial[][] = [
         name: "Sarah Lopez",
         role: "Solopreneur and Consultant",
         // TODO: Add image
-        image: "https://picsum.photos/2000/1000?random=10",
+        image: "https://picsum.photos/2000/1000.webp?random=10",
       },
     },
     {
@@ -51,7 +51,7 @@ const testimonials: Testimonial[][] = [
         name: "Jason Harper",
         role: "Digital Marketing Specialist",
         // TODO: Add image
-        image: "https://picsum.photos/2000/1000?random=11",
+        image: "https://picsum.photos/2000/1000.webp?random=11",
       },
     },
   ],
@@ -63,7 +63,7 @@ const testimonials: Testimonial[][] = [
         name: "Emily Saunders",
         role: "Project Manager",
         // TODO: Add image
-        image: "https://picsum.photos/2000/1000?random=12",
+        image: "https://picsum.photos/2000/1000.webp?random=12",
       },
     },
     {
@@ -73,7 +73,7 @@ const testimonials: Testimonial[][] = [
         name: "Ethan Hunter",
         role: "Software Developer",
         // TODO: Add image
-        image: "https://picsum.photos/2000/1000?random=13",
+        image: "https://picsum.photos/2000/1000.webp?random=13",
       },
     },
   ],

@@ -86,7 +86,7 @@ const SignUpRoute = () => {
         <img
           className="absolute inset-0 h-full w-full object-cover"
           // TODO: Add image
-          src="https://picsum.photos/2000/1000?random=15"
+          src="https://picsum.photos/2000/1000.webp?random=15"
           alt=""
         />
       }
