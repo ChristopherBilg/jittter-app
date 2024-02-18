@@ -152,6 +152,7 @@ const FeaturesMobile = () => {
                 className="w-full"
                 src={feature.image}
                 alt=""
+                loading="lazy"
                 sizes="52.75rem"
               />
             </div>
@@ -204,6 +205,7 @@ const FeaturesDesktop = () => {
                       className="w-full"
                       src={feature.image}
                       alt=""
+                      loading="lazy"
                       sizes="52.75rem"
                     />
                   </div>

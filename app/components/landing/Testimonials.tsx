@@ -137,6 +137,7 @@ const Testimonials = () => {
                             className="h-14 w-14 object-cover"
                             src={testimonial.author.image}
                             alt=""
+                            loading="lazy"
                             width={56}
                             height={56}
                           />

@@ -41,8 +41,8 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 };
 
 const enum FormAction {
-  UpdateName = "updateNames",
-  UpdatePassword = "updatePassword",
+  UpdateName = "update-name",
+  UpdatePassword = "update-password",
 }
 
 export const action = async ({ request }: ActionFunctionArgs) => {
@@ -79,9 +79,8 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 
       return null;
     }
-    default: {
+    default:
       return exhaustiveMatchingGuard(_action);
-    }
   }
 };
 
