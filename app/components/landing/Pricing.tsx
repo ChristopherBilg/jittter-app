@@ -140,14 +140,16 @@ const Pricing = () => {
             name="Premium"
             price="$5"
             description="Perfect for day-to-day users that want to get more done."
-            features={["Everything in Premium"]}
+            features={["Everything in Free"]}
+            isAuthenticated={isAuthenticated}
           />
 
           <Plan
             name="Professional"
             price="$10"
             description="For power users that want to get the most out of our software."
-            features={["Everything in Professional"]}
+            features={["Everything in Premium"]}
+            isAuthenticated={isAuthenticated}
           />
         </div>
       </Container>
