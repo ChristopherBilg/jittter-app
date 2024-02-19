@@ -44,7 +44,7 @@ const testimonials: Testimonial[][] = [
         role: "Solopreneur and Consultant",
         // TODO: Add image
         image:
-          "https://fastly.picsum.photos/id/848/2000/1000.webp?hmac=o_0aemkoxuFON7OEQ6ubIcw_5lqkZTIcmEBRwjJdivY0",
+          "https://fastly.picsum.photos/id/848/2000/1000.webp?hmac=o_0aemkoxuFON7OEQ6ubIcw_5lqkZTIcmEBRwjJdivY",
       },
     },
     {
@@ -55,7 +55,7 @@ const testimonials: Testimonial[][] = [
         role: "Digital Marketing Specialist",
         // TODO: Add image
         image:
-          "https://fastly.picsum.photos/id/848/2000/1000.webp?hmac=o_0aemkoxuFON7OEQ6ubIcw_5lqkZTIcmEBRwjJdivY1",
+          "https://fastly.picsum.photos/id/848/2000/1000.webp?hmac=o_0aemkoxuFON7OEQ6ubIcw_5lqkZTIcmEBRwjJdivY",
       },
     },
   ],
@@ -68,7 +68,7 @@ const testimonials: Testimonial[][] = [
         role: "Project Manager",
         // TODO: Add image
         image:
-          "https://fastly.picsum.photos/id/848/2000/1000.webp?hmac=o_0aemkoxuFON7OEQ6ubIcw_5lqkZTIcmEBRwjJdivY2",
+          "https://fastly.picsum.photos/id/848/2000/1000.webp?hmac=o_0aemkoxuFON7OEQ6ubIcw_5lqkZTIcmEBRwjJdivY",
       },
     },
     {
@@ -79,7 +79,7 @@ const testimonials: Testimonial[][] = [
         role: "Software Developer",
         // TODO: Add image
         image:
-          "https://fastly.picsum.photos/id/848/2000/1000.webp?hmac=o_0aemkoxuFON7OEQ6ubIcw_5lqkZTIcmEBRwjJdivY3",
+          "https://fastly.picsum.photos/id/848/2000/1000.webp?hmac=o_0aemkoxuFON7OEQ6ubIcw_5lqkZTIcmEBRwjJdivY",
       },
     },
   ],
