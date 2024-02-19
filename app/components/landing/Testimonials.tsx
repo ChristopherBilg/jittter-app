@@ -19,7 +19,8 @@ const testimonials: Testimonial[][] = [
         name: "Rachel Matthews",
         role: "Freelance Graphic Designer",
         // TODO: Add image
-        image: "https://picsum.photos/2000/1000.webp?random=8",
+        image:
+          "https://fastly.picsum.photos/id/848/2000/1000.webp?hmac=o_0aemkoxuFON7OEQ6ubIcw_5lqkZTIcmEBRwjJdivY",
       },
     },
     {
@@ -29,7 +30,8 @@ const testimonials: Testimonial[][] = [
         name: "Mark Donovan",
         role: "Marketing Agency Owner",
         // TODO: Add image
-        image: "https://picsum.photos/2000/1000.webp?random=9",
+        image:
+          "https://fastly.picsum.photos/id/848/2000/1000.webp?hmac=o_0aemkoxuFON7OEQ6ubIcw_5lqkZTIcmEBRwjJdivY",
       },
     },
   ],
@@ -41,7 +43,8 @@ const testimonials: Testimonial[][] = [
         name: "Sarah Lopez",
         role: "Solopreneur and Consultant",
         // TODO: Add image
-        image: "https://picsum.photos/2000/1000.webp?random=10",
+        image:
+          "https://fastly.picsum.photos/id/848/2000/1000.webp?hmac=o_0aemkoxuFON7OEQ6ubIcw_5lqkZTIcmEBRwjJdivY0",
       },
     },
     {
@@ -51,7 +54,8 @@ const testimonials: Testimonial[][] = [
         name: "Jason Harper",
         role: "Digital Marketing Specialist",
         // TODO: Add image
-        image: "https://picsum.photos/2000/1000.webp?random=11",
+        image:
+          "https://fastly.picsum.photos/id/848/2000/1000.webp?hmac=o_0aemkoxuFON7OEQ6ubIcw_5lqkZTIcmEBRwjJdivY1",
       },
     },
   ],
@@ -63,7 +67,8 @@ const testimonials: Testimonial[][] = [
         name: "Emily Saunders",
         role: "Project Manager",
         // TODO: Add image
-        image: "https://picsum.photos/2000/1000.webp?random=12",
+        image:
+          "https://fastly.picsum.photos/id/848/2000/1000.webp?hmac=o_0aemkoxuFON7OEQ6ubIcw_5lqkZTIcmEBRwjJdivY2",
       },
     },
     {
@@ -73,7 +78,8 @@ const testimonials: Testimonial[][] = [
         name: "Ethan Hunter",
         role: "Software Developer",
         // TODO: Add image
-        image: "https://picsum.photos/2000/1000.webp?random=13",
+        image:
+          "https://fastly.picsum.photos/id/848/2000/1000.webp?hmac=o_0aemkoxuFON7OEQ6ubIcw_5lqkZTIcmEBRwjJdivY3",
       },
     },
   ],
@@ -137,6 +143,7 @@ const Testimonials = () => {
                             className="h-14 w-14 object-cover"
                             src={testimonial.author.image}
                             alt=""
+                            loading="lazy"
                             width={56}
                             height={56}
                           />

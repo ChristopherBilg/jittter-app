@@ -29,6 +29,8 @@ const redirectIfNotAuthenticated = async (request: Request, route: string) => {
 
   if (!session.has("id")) throw redirect(route, 302);
 
+  // TODO: Check that the user exists in the database and then return { session, user }
+
   return session;
 };
 

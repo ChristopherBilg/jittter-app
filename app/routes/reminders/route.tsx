@@ -4,8 +4,13 @@ import {
   redirect,
 } from "@remix-run/cloudflare";
 import { useFetcher, useLoaderData } from "@remix-run/react";
-import { createReminder, getRemindersByUserId } from "~/app/db/schema";
+import {
+  createReminder,
+  deleteReminderById,
+  getRemindersByUserId,
+} from "~/app/db/schema";
 import { redirectIfNotAuthenticated } from "~/app/sessions";
+import { exhaustiveMatchingGuard } from "~/app/utils/misc";
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const session = await redirectIfNotAuthenticated(request, "/login");
@@ -20,15 +25,39 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   };
 };
 
+const enum FormAction {
+  CreateReminder = "create-reminder",
+  DeleteAllReminders = "delete-all-reminders",
+}
+
 export const action = async ({ request }: ActionFunctionArgs) => {
   const session = await redirectIfNotAuthenticated(request, "/login");
 
   const userId = session.get("id");
-  if (!userId) return redirect("/logout");
+  if (!userId) return null;
 
-  await createReminder(userId);
+  const formData = await request.formData();
+  const _action = formData.get("_action") as FormAction;
 
-  return null;
+  switch (_action) {
+    case FormAction.CreateReminder: {
+      // TODO: Create a reminder using optimistic UI
+      await createReminder(userId);
+
+      return null;
+    }
+    case FormAction.DeleteAllReminders: {
+      const reminders = await getRemindersByUserId(userId);
+
+      await Promise.all(
+        reminders.map(async (reminder) => deleteReminderById(reminder.id)),
+      );
+
+      return null;
+    }
+    default:
+      return exhaustiveMatchingGuard(_action);
+  }
 };
 
 const RemindersRoute = () => {
@@ -43,9 +72,27 @@ const RemindersRoute = () => {
       <hr />
 
       <fetcher.Form method="POST">
+        <input type="hidden" name="_action" value={FormAction.CreateReminder} />
+
         <input
           type="submit"
           value="Create a New Reminder"
+          className="font-bold"
+        />
+      </fetcher.Form>
+
+      <hr />
+
+      <fetcher.Form method="POST">
+        <input
+          type="hidden"
+          name="_action"
+          value={FormAction.DeleteAllReminders}
+        />
+
+        <input
+          type="submit"
+          value="Delete All Reminders"
           className="font-bold"
         />
       </fetcher.Form>
