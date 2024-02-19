@@ -101,7 +101,7 @@ const ContactUsRoute = () => {
         <img
           className="absolute inset-0 h-full w-full object-cover"
           // TODO: Add image
-          src="https://picsum.photos/2000/1000.webp?random=16"
+          src="https://fastly.picsum.photos/id/385/2000/1000.webp?hmac=kEbTroKnpSiJ2ek09Fb9OCQ1nXmx9ON55bV6G6BQu00"
           alt=""
         />
       }

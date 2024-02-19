@@ -18,7 +18,8 @@ const features: Feature[] = [
     description:
       "Jittter is designed to work on any device, so you can access your business from anywhere.",
     // TODO: Add image
-    image: "https://picsum.photos/2000/1000.webp?random=5",
+    image:
+      "https://fastly.picsum.photos/id/33/2000/1000.webp?hmac=XaZMIpydecgmnqnZqhHNqDtCwsudi3YqRhqkC9jsFBo",
     icon: function MobileFirstIcon() {
       return (
         <svg
@@ -45,7 +46,8 @@ const features: Feature[] = [
     description:
       "Focusing heavily on the user experience, we built Jittter from the ground up for simplicity.",
     // TODO: Add image
-    image: "https://picsum.photos/2000/1000.webp?random=6",
+    image:
+      "https://fastly.picsum.photos/id/609/2000/1000.webp?hmac=R7WOThp9wHJf-7Q2WPIKTj4AfvKbkrtYdI6huz00wX4",
     icon: function SimpleEaseOfUseIcon() {
       return (
         <svg
@@ -72,7 +74,8 @@ const features: Feature[] = [
     description:
       "We are simply here to help you manage it. Whenever you choose to leave, you can take your data with you.",
     // TODO: Add image
-    image: "https://picsum.photos/2000/1000.webp?random=7",
+    image:
+      "https://fastly.picsum.photos/id/970/2000/1000.webp?hmac=PdvRCxWbs8sQDdHcApcV_-QTCbQh5cUqV0FN4a4sj7U",
     icon: function DataThatYouOwnIcon() {
       return (
         <svg

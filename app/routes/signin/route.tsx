@@ -67,7 +67,7 @@ const SignInRoute = () => {
         <img
           className="absolute inset-0 h-full w-full object-cover"
           // TODO: Add image
-          src="https://picsum.photos/2000/1000.webp?random=14"
+          src="https://fastly.picsum.photos/id/475/2000/1000.webp?hmac=cJ4NA7Cf4U-Ex0LQxcrIqfffR-DXTA-WMAvPpje2iSI"
           alt=""
         />
       }
