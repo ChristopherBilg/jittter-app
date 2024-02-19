@@ -1,4 +1,4 @@
-import { and, eq, isNull } from "drizzle-orm";
+import { InferSelectModel, and, eq, isNull } from "drizzle-orm";
 import { pgTable, text, uuid } from "drizzle-orm/pg-core";
 import { pbkdf2, pbkdf2Verify } from "~/app/utils/auth";
 import { getTimestampFields } from "../../utils/db";
@@ -74,7 +74,7 @@ export class User {
 
   static update = async (
     id: string,
-    user: Partial<typeof UserTable.$inferSelect>,
+    user: Partial<InferSelectModel<typeof UserTable>>,
   ) => {
     try {
       const updatedUsers = await NeonDB.getInstance()

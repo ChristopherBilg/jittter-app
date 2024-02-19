@@ -1,11 +1,10 @@
-import { Link } from "@remix-run/react";
-import Container from "./Container";
+import { Link, useLoaderData } from "@remix-run/react";
+import { loader } from "~/app/routes/_index";
+import Container from "../common/Container";
 
-type CallToActionProps = {
-  isAuthenticated: boolean;
-};
+const CallToAction = () => {
+  const loaderData = useLoaderData<typeof loader>();
 
-const CallToAction = ({ isAuthenticated }: CallToActionProps) => {
   return (
     <section className="relative overflow-hidden bg-blue-600 py-32">
       <Container className="relative">
@@ -19,7 +18,7 @@ const CallToAction = ({ isAuthenticated }: CallToActionProps) => {
             your journey today.
           </p>
 
-          {isAuthenticated ? (
+          {loaderData?.id ? (
             <Link
               to="/dashboard"
               prefetch="viewport"

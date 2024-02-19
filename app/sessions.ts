@@ -1,8 +1,9 @@
 import { createCookieSessionStorage, redirect } from "@remix-run/cloudflare";
+import { InferSelectModel } from "drizzle-orm";
 import { UserTable } from "./db/schema";
 
 export type SessionData = {
-  id: typeof UserTable.$inferSelect.id;
+  id: InferSelectModel<typeof UserTable>["id"];
 };
 
 type SessionFlashData = {

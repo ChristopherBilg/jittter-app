@@ -1,5 +1,5 @@
 import { ComponentPropsWithoutRef } from "react";
-import Container from "./Container";
+import Container from "../common/Container";
 
 type Testimonial = {
   content: string;
