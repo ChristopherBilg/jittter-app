@@ -107,6 +107,8 @@ const RemindersRoute = () => {
               <span>
                 {reminder.content || "No content"}
                 {" - "}
+                {reminder.createdAt}
+                {" - "}
                 {new Date(reminder.createdAt).toLocaleString()}
               </span>
             </li>
