@@ -50,10 +50,10 @@ export const validateSignUp = async (request: Request) => {
     };
   } else {
     data = {
-      firstName: String(result.data.firstName),
-      lastName: String(result.data.lastName),
-      email: String(result.data.email),
-      password: String(result.data.password),
+      firstName: result.data.firstName,
+      lastName: result.data.lastName,
+      email: result.data.email,
+      password: result.data.password,
     };
   }
 

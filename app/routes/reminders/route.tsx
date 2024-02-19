@@ -4,11 +4,7 @@ import {
   redirect,
 } from "@remix-run/cloudflare";
 import { useFetcher, useLoaderData } from "@remix-run/react";
-import {
-  createReminder,
-  deleteReminderById,
-  getRemindersByUserId,
-} from "~/app/db/schema";
+import { Reminder } from "~/app/db/models/reminder";
 import { redirectIfNotAuthenticated } from "~/app/sessions";
 import { exhaustiveMatchingGuard } from "~/app/utils/misc";
 
@@ -18,7 +14,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   const userId = session.get("id");
   if (!userId) return redirect("/logout");
 
-  const reminders = await getRemindersByUserId(userId);
+  const reminders = await Reminder.getByUserId(userId);
 
   return {
     reminders,
@@ -42,15 +38,15 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   switch (_action) {
     case FormAction.CreateReminder: {
       // TODO: Create a reminder using optimistic UI
-      await createReminder(userId);
+      await Reminder.create(userId);
 
       return null;
     }
     case FormAction.DeleteAllReminders: {
-      const reminders = await getRemindersByUserId(userId);
+      const reminders = await Reminder.getByUserId(userId);
 
       await Promise.all(
-        reminders.map(async (reminder) => deleteReminderById(reminder.id)),
+        reminders.map(async (reminder) => Reminder.deleteById(reminder.id)),
       );
 
       return null;

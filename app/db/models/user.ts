@@ -13,105 +13,101 @@ export const UserTable = pgTable("user", {
   ...getTimestampFields(),
 });
 
-export const getUserByAuthenticating = async (
-  email: string,
-  password: string,
-) => {
-  try {
-    const user = await NeonDB.getInstance().db.query.UserTable.findFirst({
-      where: and(eq(UserTable.email, email), isNull(UserTable.deletedAt)),
-    });
-    if (!user) return null;
+export class User {
+  static getByAuthenticating = async (email: string, password: string) => {
+    try {
+      const user = await NeonDB.getInstance().db.query.UserTable.findFirst({
+        where: and(eq(UserTable.email, email), isNull(UserTable.deletedAt)),
+      });
+      if (!user) return null;
 
-    const valid = await pbkdf2Verify(user.passKey, password);
-    if (!valid) return null;
+      const valid = await pbkdf2Verify(user.passKey, password);
+      if (!valid) return null;
 
-    return user;
-  } catch (err) {
-    console.error(err);
-    return null;
-  }
-};
+      return user;
+    } catch (err) {
+      console.error(err);
+      return null;
+    }
+  };
 
-export const getUserById = async (id: string) => {
-  try {
-    const user = await NeonDB.getInstance().db.query.UserTable.findFirst({
-      where: eq(UserTable.id, id),
-    });
+  static getById = async (id: string) => {
+    try {
+      const user = await NeonDB.getInstance().db.query.UserTable.findFirst({
+        where: eq(UserTable.id, id),
+      });
 
-    return user ?? null;
-  } catch (err) {
-    console.error(err);
-    return null;
-  }
-};
+      return user ?? null;
+    } catch (err) {
+      console.error(err);
+      return null;
+    }
+  };
 
-export const createUser = async (
-  firstName: string,
-  lastName: string,
-  email: string,
-  password: string,
-) => {
-  const passKey = await pbkdf2(password);
+  static create = async (
+    firstName: string,
+    lastName: string,
+    email: string,
+    password: string,
+  ) => {
+    const passKey = await pbkdf2(password);
 
-  try {
-    const newUsers = await NeonDB.getInstance()
-      .db.insert(UserTable)
-      .values({
-        firstName,
-        lastName,
-        email,
-        passKey,
-      })
-      .returning();
+    try {
+      const newUsers = await NeonDB.getInstance()
+        .db.insert(UserTable)
+        .values({
+          firstName,
+          lastName,
+          email,
+          passKey,
+        })
+        .returning();
 
-    if (newUsers.length !== 1) return null;
+      if (newUsers.length !== 1) return null;
 
-    return newUsers[0];
-  } catch (err) {
-    console.error(err);
-    return null;
-  }
-};
+      return newUsers[0];
+    } catch (err) {
+      console.error(err);
+      return null;
+    }
+  };
 
-export const updateUser = async (
-  id: string,
-  user: Partial<typeof UserTable.$inferSelect>,
-) => {
-  try {
-    const updatedUsers = await NeonDB.getInstance()
-      .db.update(UserTable)
-      .set({ ...user, updatedAt: new Date() })
-      .where(eq(UserTable.id, id))
-      .returning();
+  static update = async (
+    id: string,
+    user: Partial<typeof UserTable.$inferSelect>,
+  ) => {
+    try {
+      const updatedUsers = await NeonDB.getInstance()
+        .db.update(UserTable)
+        .set({ ...user, updatedAt: new Date() })
+        .where(eq(UserTable.id, id))
+        .returning();
 
-    if (updatedUsers.length !== 1) return null;
+      if (updatedUsers.length !== 1) return null;
 
-    return updatedUsers[0];
-  } catch (err) {
-    console.error(err);
-    return null;
-  }
-};
+      return updatedUsers[0];
+    } catch (err) {
+      console.error(err);
+      return null;
+    }
+  };
 
-export const updateUserAuthentication = async (
-  id: string,
-  password: string,
-) => {
-  const passKey = await pbkdf2(password);
+  static updateAuthentication = async (id: string, password: string) => {
+    const passKey = await pbkdf2(password);
 
-  try {
-    const updatedUsers = await NeonDB.getInstance()
-      .db.update(UserTable)
-      .set({ passKey, updatedAt: new Date() })
-      .where(eq(UserTable.id, id))
-      .returning();
+    try {
+      const updatedUsers = await NeonDB.getInstance()
+        .db.update(UserTable)
+        .set({ passKey, updatedAt: new Date() })
+        .where(eq(UserTable.id, id))
+        .returning();
 
-    if (updatedUsers.length !== 1) return null;
+      if (updatedUsers.length !== 1) return null;
 
-    return updatedUsers[0];
-  } catch (err) {
-    console.error(err);
-    return null;
-  }
-};
+      return updatedUsers[0];
+    } catch (err) {
+      console.error(err);
+      return null;
+    }
+  };
+}

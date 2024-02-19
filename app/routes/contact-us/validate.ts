@@ -36,10 +36,10 @@ export const validateSendMessage = async (request: Request) => {
     };
   } else {
     data = {
-      firstName: String(result.data.firstName),
-      lastName: String(result.data.lastName),
-      email: String(result.data.email),
-      message: String(result.data.message),
+      firstName: result.data.firstName,
+      lastName: result.data.lastName,
+      email: result.data.email,
+      message: result.data.message,
     };
   }
 

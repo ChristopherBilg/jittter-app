@@ -8,7 +8,7 @@ import { Link, useFetcher, useLoaderData } from "@remix-run/react";
 import { useEffect, useRef } from "react";
 import Logo from "~/app/components/common/Logo";
 import SlimLayout from "~/app/components/common/SlimLayout";
-import { createContactUsMessage } from "~/app/db/models/contact-us";
+import { ContactUs } from "~/app/db/models/contact-us";
 import { commitSession, getSession } from "~/app/sessions";
 import { validateSendMessage } from "./validate";
 
@@ -53,7 +53,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 
   const { firstName, lastName, email, message } = data;
 
-  const sentMessage = await createContactUsMessage(
+  const sentMessage = await ContactUs.create(
     firstName,
     lastName,
     email,
