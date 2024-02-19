@@ -12,11 +12,7 @@ import {
 import { Link, useFetcher, useLoaderData } from "@remix-run/react";
 import clsx from "clsx";
 import { useState } from "react";
-import {
-  getUserById,
-  updateUser,
-  updateUserAuthentication,
-} from "~/app/db/models/user";
+import { User } from "~/app/db/models/user";
 import { redirectIfNotAuthenticated } from "~/app/sessions";
 import { USER_ACCOUNT_MINIMUM_PASSWORD_LENGTH } from "~/app/utils/constant";
 import { exhaustiveMatchingGuard } from "~/app/utils/misc";
@@ -33,7 +29,7 @@ export const meta: MetaFunction = () => {
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const session = await redirectIfNotAuthenticated(request, "/signin");
 
-  const user = await getUserById(session.data.id!);
+  const user = await User.getById(session.data.id!);
 
   return {
     user,
@@ -53,14 +49,15 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 
   switch (_action) {
     case FormAction.UpdateName: {
-      const id = String(session.get("id"));
+      const id = session.get("id");
+      if (!id) return null;
 
       const validateResult = await validateUpdateName(formData);
       if (!validateResult) return null;
 
       const { firstName, lastName } = validateResult;
 
-      await updateUser(id, {
+      await User.update(id, {
         firstName,
         lastName,
       });
@@ -68,14 +65,15 @@ export const action = async ({ request }: ActionFunctionArgs) => {
       return null;
     }
     case FormAction.UpdatePassword: {
-      const id = String(session.get("id"));
+      const id = session.get("id");
+      if (!id) return null;
 
       const validateResult = await validateUpdatePassword(formData);
       if (!validateResult) return null;
 
       const { newPassword } = validateResult;
 
-      await updateUserAuthentication(id, newPassword);
+      await User.updateAuthentication(id, newPassword);
 
       return null;
     }

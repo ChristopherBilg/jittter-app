@@ -12,7 +12,7 @@ import {
 } from "@remix-run/react";
 import Logo from "~/app/components/common/Logo";
 import SlimLayout from "~/app/components/common/SlimLayout";
-import { createUser } from "~/app/db/schema";
+import { User } from "~/app/db/models/user";
 import { commitSession, getSession } from "~/app/sessions";
 import { USER_ACCOUNT_MINIMUM_PASSWORD_LENGTH } from "~/app/utils/constant";
 import { validateSignUp } from "./validate";
@@ -53,7 +53,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 
   const { firstName, lastName, email, password } = data;
 
-  const user = await createUser(firstName, lastName, email, password);
+  const user = await User.create(firstName, lastName, email, password);
 
   if (!user) {
     session.flash("error", "An error occurred while creating your account.");
