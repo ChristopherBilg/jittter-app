@@ -1,5 +1,4 @@
 import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/cloudflare";
-import { useLoaderData } from "@remix-run/react";
 import { getSession } from "~/app/sessions";
 import CallToAction from "../components/landing/CallToAction";
 import FAQs from "../components/landing/FAQs";
@@ -28,19 +27,17 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 };
 
 const LandingRoute = () => {
-  const loaderData = useLoaderData<typeof loader>();
-
   return (
     <>
-      <Header isAuthenticated={!!loaderData?.id} />
+      <Header />
 
       <main>
         <Hero />
         <PrimaryFeatures />
         <SecondaryFeatures />
-        <CallToAction isAuthenticated={!!loaderData?.id} />
+        <CallToAction />
         <Testimonials />
-        <Pricing isAuthenticated={!!loaderData?.id} />
+        <Pricing />
         <FAQs />
       </main>
 

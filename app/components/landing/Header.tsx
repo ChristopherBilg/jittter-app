@@ -1,9 +1,10 @@
 import { Popover, Transition } from "@headlessui/react";
-import { Link } from "@remix-run/react";
+import { Link, useLoaderData } from "@remix-run/react";
 import clsx from "clsx";
 import { Fragment, ReactNode } from "react";
+import { loader } from "~/app/routes/_index";
+import Container from "../common/Container";
 import Logo from "../common/Logo";
-import Container from "./Container";
 import NavLink from "./NavLink";
 
 type MobileNavLinkProps = {
@@ -80,11 +81,9 @@ const navigationLinks: NavigationLink[] = [
   },
 ];
 
-type MobileNavigationProps = {
-  isAuthenticated: boolean;
-};
+const MobileNavigation = () => {
+  const loaderData = useLoaderData<typeof loader>();
 
-const MobileNavigation = ({ isAuthenticated }: MobileNavigationProps) => {
   return (
     <Popover>
       <Popover.Button
@@ -130,7 +129,7 @@ const MobileNavigation = ({ isAuthenticated }: MobileNavigationProps) => {
 
             <hr className="m-2 border-slate-300/40" />
 
-            {isAuthenticated ? (
+            {loaderData?.id ? (
               <MobileNavLink to="/dashboard">Dashboard</MobileNavLink>
             ) : (
               <MobileNavLink to="/signin">Sign in</MobileNavLink>
@@ -142,11 +141,9 @@ const MobileNavigation = ({ isAuthenticated }: MobileNavigationProps) => {
   );
 };
 
-type HeaderProps = {
-  isAuthenticated: boolean;
-};
+const Header = () => {
+  const loaderData = useLoaderData<typeof loader>();
 
-const Header = ({ isAuthenticated }: HeaderProps) => {
   return (
     <header className="py-10">
       <Container>
@@ -167,7 +164,7 @@ const Header = ({ isAuthenticated }: HeaderProps) => {
 
           <div className="flex items-center gap-x-5 md:gap-x-8">
             <div className="hidden md:block">
-              {isAuthenticated ? (
+              {loaderData?.id ? (
                 <NavLink to="/dashboard" className="font-bold">
                   My Dashboard
                 </NavLink>
@@ -179,7 +176,7 @@ const Header = ({ isAuthenticated }: HeaderProps) => {
             </div>
 
             <div className="-mr-1 md:hidden">
-              <MobileNavigation isAuthenticated={isAuthenticated} />
+              <MobileNavigation />
             </div>
           </div>
         </nav>

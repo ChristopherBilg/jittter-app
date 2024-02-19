@@ -1,10 +1,14 @@
+import { MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
 import {
   ActionFunctionArgs,
   LoaderFunctionArgs,
   redirect,
 } from "@remix-run/cloudflare";
 import { useFetcher, useLoaderData } from "@remix-run/react";
-import { Reminder } from "~/app/db/models/reminder";
+import { InferSelectModel } from "drizzle-orm";
+import Container from "~/app/components/common/Container";
+import EditableReminderList from "~/app/components/reminder/EditableReminderList";
+import { Reminder, ReminderTable } from "~/app/db/models/reminder";
 import { redirectIfNotAuthenticated } from "~/app/sessions";
 import { exhaustiveMatchingGuard } from "~/app/utils/misc";
 
@@ -21,8 +25,9 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   };
 };
 
-const enum FormAction {
+export const enum FormAction {
   CreateReminder = "create-reminder",
+  UpdateReminder = "update-reminder",
   DeleteAllReminders = "delete-all-reminders",
 }
 
@@ -39,6 +44,21 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     case FormAction.CreateReminder: {
       // TODO: Create a reminder using optimistic UI
       await Reminder.create(userId);
+
+      return null;
+    }
+    case FormAction.UpdateReminder: {
+      const reminderId = formData.get("reminderId");
+      const content = formData.get("content");
+
+      if (!reminderId || content === null) return null;
+
+      // TODO: Validate this form data
+
+      await Reminder.updateById(
+        String(reminderId),
+        String(formData.get("content")),
+      );
 
       return null;
     }
@@ -62,55 +82,53 @@ const RemindersRoute = () => {
   const fetcher = useFetcher();
 
   return (
-    <div>
-      <h1>Reminders ({reminders.length})</h1>
+    <Container>
+      <div>
+        <h1 className="mx-auto my-2 w-fit text-2xl font-bold">
+          Reminders ({reminders.length})
+        </h1>
 
-      <hr />
+        <hr />
 
-      <fetcher.Form method="POST">
-        <input type="hidden" name="_action" value={FormAction.CreateReminder} />
-
-        <input
-          type="submit"
-          value="Create a New Reminder"
-          className="font-bold"
+        <EditableReminderList
+          reminders={
+            reminders as unknown as InferSelectModel<typeof ReminderTable>[]
+          }
         />
-      </fetcher.Form>
+      </div>
 
-      <hr />
+      <span className="fixed bottom-4 left-4 isolate inline-flex flex-col space-y-2 rounded-md shadow-sm">
+        <fetcher.Form method="POST">
+          <input
+            type="hidden"
+            name="_action"
+            value={FormAction.DeleteAllReminders}
+          />
 
-      <fetcher.Form method="POST">
-        <input
-          type="hidden"
-          name="_action"
-          value={FormAction.DeleteAllReminders}
-        />
+          <button
+            type="submit"
+            className="rounded-full bg-red-600 p-4 text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600 md:p-3"
+          >
+            <MinusIcon className="h-5 w-5" aria-hidden="true" />
+          </button>
+        </fetcher.Form>
 
-        <input
-          type="submit"
-          value="Delete All Reminders"
-          className="font-bold"
-        />
-      </fetcher.Form>
+        <fetcher.Form method="POST">
+          <input
+            type="hidden"
+            name="_action"
+            value={FormAction.CreateReminder}
+          />
 
-      <hr />
-
-      <ol>
-        {reminders
-          .sort((a, b) => (a.createdAt > b.createdAt ? -1 : 1))
-          .map((reminder) => (
-            <li key={reminder.id}>
-              <span>
-                {reminder.content || "No content"}
-                {" - "}
-                {reminder.createdAt}
-                {" - "}
-                {new Date(reminder.createdAt).toLocaleString()}
-              </span>
-            </li>
-          ))}
-      </ol>
-    </div>
+          <button
+            type="submit"
+            className="rounded-full bg-blue-600 p-4 text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 md:p-3"
+          >
+            <PlusIcon className="h-5 w-5" aria-hidden="true" />
+          </button>
+        </fetcher.Form>
+      </span>
+    </Container>
   );
 };
 

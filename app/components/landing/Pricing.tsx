@@ -1,7 +1,8 @@
-import { Link } from "@remix-run/react";
+import { Link, useLoaderData } from "@remix-run/react";
 import clsx from "clsx";
 import { ComponentPropsWithoutRef } from "react";
-import Container from "./Container";
+import { loader } from "~/app/routes/_index";
+import Container from "../common/Container";
 
 const CheckIcon = ({
   className,
@@ -40,7 +41,6 @@ type PlanProps = {
   description: string;
   features: string[];
   featured?: boolean;
-  isAuthenticated: boolean;
 };
 
 const Plan = ({
@@ -49,8 +49,9 @@ const Plan = ({
   description,
   features,
   featured = false,
-  isAuthenticated,
 }: PlanProps) => {
+  const loaderData = useLoaderData<typeof loader>();
+
   return (
     <section
       className={clsx(
@@ -87,7 +88,7 @@ const Plan = ({
         ))}
       </ul>
 
-      {isAuthenticated ? (
+      {loaderData?.id ? (
         <Link
           to="/dashboard"
           prefetch="viewport"
@@ -108,11 +109,7 @@ const Plan = ({
   );
 };
 
-type PricingProps = {
-  isAuthenticated: boolean;
-};
-
-const Pricing = ({ isAuthenticated }: PricingProps) => {
+const Pricing = () => {
   return (
     <section
       id="pricing"
@@ -136,7 +133,6 @@ const Pricing = ({ isAuthenticated }: PricingProps) => {
             price="Free"
             description="Good for anyone who wants to see what we're about."
             features={["Unlimited reminders"]}
-            isAuthenticated={isAuthenticated}
           />
 
           <Plan

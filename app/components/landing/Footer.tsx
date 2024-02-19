@@ -1,5 +1,5 @@
+import Container from "../common/Container";
 import Logo from "../common/Logo";
-import Container from "./Container";
 import NavLink from "./NavLink";
 
 const Footer = () => {
