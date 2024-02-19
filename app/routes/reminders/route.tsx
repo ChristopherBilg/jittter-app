@@ -12,6 +12,10 @@ import { Reminder, ReminderTable } from "~/app/db/models/reminder";
 import { redirectIfNotAuthenticated } from "~/app/sessions";
 import { exhaustiveMatchingGuard } from "~/app/utils/misc";
 
+export const meta: MetaFunction = () => {
+  return [{ title: "Jittter - Reminders" }];
+};
+
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const session = await redirectIfNotAuthenticated(request, "/login");
 
