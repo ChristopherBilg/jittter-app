@@ -148,6 +148,8 @@ const ContactUsRoute = () => {
             placeholder="First Name"
             autoComplete="given-name"
             className="mr-2 w-[50%] rounded border px-4 py-2"
+            minLength={1}
+            maxLength={128}
             required
           />
 
@@ -157,6 +159,8 @@ const ContactUsRoute = () => {
             placeholder="Last Name"
             autoComplete="family-name"
             className="w-[50%] rounded border px-4 py-2"
+            minLength={1}
+            maxLength={128}
             required
           />
         </div>
@@ -173,6 +177,7 @@ const ContactUsRoute = () => {
           placeholder="Email"
           autoComplete="email"
           className="rounded border px-4 py-2"
+          maxLength={128}
           required
         />
 
@@ -186,6 +191,8 @@ const ContactUsRoute = () => {
           name="message"
           placeholder="Message"
           className="min-h-40 rounded border px-4 py-2"
+          minLength={1}
+          maxLength={1024}
           required
         />
 

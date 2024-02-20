@@ -14,7 +14,14 @@ import clsx from "clsx";
 import { useState } from "react";
 import { User } from "~/app/db/models/user";
 import { redirectIfNotAuthenticated } from "~/app/sessions";
-import { USER_ACCOUNT_MINIMUM_PASSWORD_LENGTH } from "~/app/utils/constant";
+import {
+  USER_ACCOUNT_MAXIMUM_FIRST_NAME_LENGTH,
+  USER_ACCOUNT_MAXIMUM_LAST_NAME_LENGTH,
+  USER_ACCOUNT_MAXIMUM_PASSWORD_LENGTH,
+  USER_ACCOUNT_MINIMUM_FIRST_NAME_LENGTH,
+  USER_ACCOUNT_MINIMUM_LAST_NAME_LENGTH,
+  USER_ACCOUNT_MINIMUM_PASSWORD_LENGTH,
+} from "~/app/utils/constant";
 import { exhaustiveMatchingGuard } from "~/app/utils/misc";
 import { validateUpdateName, validateUpdatePassword } from "./validate";
 
@@ -49,15 +56,15 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 
   switch (_action) {
     case FormAction.UpdateName: {
-      const id = session.get("id");
-      if (!id) return null;
+      const userId = session.get("id");
+      if (!userId) return null;
 
       const validateResult = await validateUpdateName(formData);
       if (!validateResult) return null;
 
       const { firstName, lastName } = validateResult;
 
-      await User.update(id, {
+      await User.update(userId, {
         firstName,
         lastName,
       });
@@ -65,15 +72,15 @@ export const action = async ({ request }: ActionFunctionArgs) => {
       return null;
     }
     case FormAction.UpdatePassword: {
-      const id = session.get("id");
-      if (!id) return null;
+      const userId = session.get("id");
+      if (!userId) return null;
 
       const validateResult = await validateUpdatePassword(formData);
       if (!validateResult) return null;
 
       const { newPassword } = validateResult;
 
-      await User.updateAuthentication(id, newPassword);
+      await User.updateAuthentication(userId, newPassword);
 
       return null;
     }
@@ -251,6 +258,8 @@ const AccountRoute = () => {
                           autoComplete="given-name"
                           className="mr-2 w-1/2 rounded border px-4 py-2"
                           defaultValue={user?.firstName || ""}
+                          minLength={USER_ACCOUNT_MINIMUM_FIRST_NAME_LENGTH}
+                          maxLength={USER_ACCOUNT_MAXIMUM_FIRST_NAME_LENGTH}
                           required
                         />
 
@@ -261,6 +270,8 @@ const AccountRoute = () => {
                           autoComplete="family-name"
                           className="w-1/2 rounded border px-4 py-2"
                           defaultValue={user?.lastName || ""}
+                          minLength={USER_ACCOUNT_MINIMUM_LAST_NAME_LENGTH}
+                          maxLength={USER_ACCOUNT_MAXIMUM_LAST_NAME_LENGTH}
                           required
                         />
                       </div>
@@ -304,6 +315,7 @@ const AccountRoute = () => {
                           className="mr-2 w-1/2 rounded border px-4 py-2"
                           defaultValue=""
                           minLength={USER_ACCOUNT_MINIMUM_PASSWORD_LENGTH}
+                          maxLength={USER_ACCOUNT_MAXIMUM_PASSWORD_LENGTH}
                           required
                         />
 
@@ -315,6 +327,7 @@ const AccountRoute = () => {
                           className="w-1/2 rounded border px-4 py-2"
                           defaultValue=""
                           minLength={USER_ACCOUNT_MINIMUM_PASSWORD_LENGTH}
+                          maxLength={USER_ACCOUNT_MAXIMUM_PASSWORD_LENGTH}
                           required
                         />
                       </div>

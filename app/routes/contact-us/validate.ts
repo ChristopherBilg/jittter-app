@@ -1,10 +1,10 @@
 import { z } from "zod";
 
 const SendMessageSchema = z.object({
-  firstName: z.string().min(1),
-  lastName: z.string().min(1),
-  email: z.string().email(),
-  message: z.string().min(1).max(1000),
+  firstName: z.string().min(1).max(128),
+  lastName: z.string().min(1).max(128),
+  email: z.string().email().max(128),
+  message: z.string().min(1).max(1024),
 });
 
 export const validateSendMessage = async (request: Request) => {

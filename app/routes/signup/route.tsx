@@ -14,7 +14,15 @@ import Logo from "~/app/components/common/Logo";
 import SlimLayout from "~/app/components/common/SlimLayout";
 import { User } from "~/app/db/models/user";
 import { commitSession, getSession } from "~/app/sessions";
-import { USER_ACCOUNT_MINIMUM_PASSWORD_LENGTH } from "~/app/utils/constant";
+import {
+  USER_ACCOUNT_MAXIMUM_EMAIL_LENGTH,
+  USER_ACCOUNT_MAXIMUM_FIRST_NAME_LENGTH,
+  USER_ACCOUNT_MAXIMUM_LAST_NAME_LENGTH,
+  USER_ACCOUNT_MAXIMUM_PASSWORD_LENGTH,
+  USER_ACCOUNT_MINIMUM_FIRST_NAME_LENGTH,
+  USER_ACCOUNT_MINIMUM_LAST_NAME_LENGTH,
+  USER_ACCOUNT_MINIMUM_PASSWORD_LENGTH,
+} from "~/app/utils/constant";
 import { validateSignUp } from "./validate";
 
 export const meta: MetaFunction = () => {
@@ -137,6 +145,8 @@ const SignUpRoute = () => {
             placeholder="First Name"
             autoComplete="given-name"
             className="mr-2 w-1/2 rounded border px-4 py-2"
+            minLength={USER_ACCOUNT_MINIMUM_FIRST_NAME_LENGTH}
+            maxLength={USER_ACCOUNT_MAXIMUM_FIRST_NAME_LENGTH}
             required
           />
 
@@ -146,6 +156,8 @@ const SignUpRoute = () => {
             placeholder="Last Name"
             autoComplete="family-name"
             className="w-1/2 rounded border px-4 py-2"
+            minLength={USER_ACCOUNT_MINIMUM_LAST_NAME_LENGTH}
+            maxLength={USER_ACCOUNT_MAXIMUM_LAST_NAME_LENGTH}
             required
           />
         </div>
@@ -162,6 +174,7 @@ const SignUpRoute = () => {
           placeholder="Email"
           autoComplete="email"
           className="rounded border px-4 py-2"
+          maxLength={USER_ACCOUNT_MAXIMUM_EMAIL_LENGTH}
           required
         />
 
@@ -179,6 +192,7 @@ const SignUpRoute = () => {
             autoComplete="new-password"
             className="mr-2 w-1/2 rounded border px-4 py-2"
             minLength={USER_ACCOUNT_MINIMUM_PASSWORD_LENGTH}
+            maxLength={USER_ACCOUNT_MAXIMUM_PASSWORD_LENGTH}
             required
           />
 
@@ -189,6 +203,7 @@ const SignUpRoute = () => {
             autoComplete="new-password"
             className="w-1/2 rounded border px-4 py-2"
             minLength={USER_ACCOUNT_MINIMUM_PASSWORD_LENGTH}
+            maxLength={USER_ACCOUNT_MAXIMUM_PASSWORD_LENGTH}
             required
           />
         </div>
