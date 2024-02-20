@@ -1,16 +1,16 @@
 import { useFetcher } from "@remix-run/react";
 import { InferSelectModel } from "drizzle-orm";
 import { useState } from "react";
-import { ReminderTable } from "~/app/db/schema";
-import { FormAction } from "~/app/routes/reminders/route";
+import { NoteTable } from "~/app/db/schema";
+import { FormAction } from "~/app/routes/notes/route";
 
-type EditableReminderProps = {
-  reminder: InferSelectModel<typeof ReminderTable>;
+type EditableNoteProps = {
+  note: InferSelectModel<typeof NoteTable>;
 };
 
-const EditableReminder = ({ reminder }: EditableReminderProps) => {
+const EditableNote = ({ note }: EditableNoteProps) => {
   const fetcher = useFetcher();
-  const [value, setValue] = useState(reminder.content ?? "");
+  const [value, setValue] = useState(note.content ?? "");
 
   const onChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
@@ -23,12 +23,12 @@ const EditableReminder = ({ reminder }: EditableReminderProps) => {
 
   return (
     <fetcher.Form className="flex flex-col gap-y-2">
-      <label htmlFor={reminder.id} className="sr-only">
-        Reminder
+      <label htmlFor={note.id} className="sr-only">
+        Note
       </label>
 
       <input
-        id={reminder.id}
+        id={note.id}
         type="text"
         name="content"
         className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
@@ -36,10 +36,10 @@ const EditableReminder = ({ reminder }: EditableReminderProps) => {
         onChange={onChange}
       />
 
-      <input type="hidden" name="reminderId" value={reminder.id} />
-      <input type="hidden" name="_action" value={FormAction.UpdateReminder} />
+      <input type="hidden" name="noteId" value={note.id} />
+      <input type="hidden" name="_action" value={FormAction.UpdateNote} />
     </fetcher.Form>
   );
 };
 
-export default EditableReminder;
+export default EditableNote;

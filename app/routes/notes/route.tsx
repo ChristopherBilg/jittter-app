@@ -8,13 +8,13 @@ import {
 import { useFetcher, useLoaderData } from "@remix-run/react";
 import { InferSelectModel } from "drizzle-orm";
 import Container from "~/app/components/common/Container";
-import EditableReminderList from "~/app/components/reminder/EditableReminderList";
-import { Reminder, ReminderTable } from "~/app/db/models/reminder";
+import EditableNoteList from "~/app/components/note/EditableNoteList";
+import { Note, NoteTable } from "~/app/db/models/note";
 import { redirectIfNotAuthenticated } from "~/app/sessions";
 import { exhaustiveMatchingGuard } from "~/app/utils/misc";
 
 export const meta: MetaFunction = () => {
-  return [{ title: "Jittter - Reminders" }];
+  return [{ title: "Jittter - Notes" }];
 };
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
@@ -23,17 +23,17 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   const userId = session.get("id");
   if (!userId) return redirect("/logout");
 
-  const reminders = await Reminder.getByUserId(userId);
+  const notes = await Note.getByUserId(userId);
 
   return {
-    reminders,
+    notes,
   };
 };
 
 export const enum FormAction {
-  CreateReminder = "create-reminder",
-  UpdateReminder = "update-reminder",
-  DeleteReminder = "delete-reminder",
+  CreateNote = "create-note",
+  UpdateNote = "update-note",
+  DeleteNote = "delete-note",
 }
 
 export const action = async ({ request }: ActionFunctionArgs) => {
@@ -46,35 +46,32 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   const _action = formData.get("_action") as FormAction;
 
   switch (_action) {
-    case FormAction.CreateReminder: {
-      // TODO: Create a reminder using optimistic UI
-      await Reminder.create(userId);
+    case FormAction.CreateNote: {
+      // TODO: Create a note using optimistic UI
+      await Note.create(userId);
 
       return null;
     }
-    case FormAction.UpdateReminder: {
-      const reminderId = formData.get("reminderId");
+    case FormAction.UpdateNote: {
+      const noteId = formData.get("noteId");
       const content = formData.get("content");
 
-      if (!reminderId || content === null) return null;
+      if (!noteId || content === null) return null;
 
       // TODO: Validate this form data
 
-      await Reminder.updateById(
-        String(reminderId),
-        String(formData.get("content")),
-      );
+      await Note.updateById(String(noteId), String(formData.get("content")));
 
       return null;
     }
-    case FormAction.DeleteReminder: {
-      const reminderId = formData.get("reminderId");
+    case FormAction.DeleteNote: {
+      const noteId = formData.get("noteId");
 
-      if (!reminderId) return null;
+      if (!noteId) return null;
 
       // TODO: Validate this form data
 
-      await Reminder.deleteById(String(reminderId));
+      await Note.deleteById(String(noteId));
 
       return null;
     }
@@ -83,8 +80,8 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   }
 };
 
-const RemindersRoute = () => {
-  const { reminders } = useLoaderData<typeof loader>();
+const NotesRoute = () => {
+  const { notes } = useLoaderData<typeof loader>();
 
   const fetcher = useFetcher();
 
@@ -92,25 +89,19 @@ const RemindersRoute = () => {
     <Container>
       <div>
         <h1 className="mx-auto my-2 w-fit text-2xl font-bold">
-          Reminders ({reminders.length})
+          Notes ({notes.length})
         </h1>
 
         <hr />
 
-        <EditableReminderList
-          reminders={
-            reminders as unknown as InferSelectModel<typeof ReminderTable>[]
-          }
+        <EditableNoteList
+          notes={notes as unknown as InferSelectModel<typeof NoteTable>[]}
         />
       </div>
 
       <span className="fixed bottom-4 left-4 isolate inline-flex flex-col space-y-2 rounded-md shadow-sm">
         <fetcher.Form method="POST">
-          <input
-            type="hidden"
-            name="_action"
-            value={FormAction.CreateReminder}
-          />
+          <input type="hidden" name="_action" value={FormAction.CreateNote} />
 
           <button
             type="submit"
@@ -124,4 +115,4 @@ const RemindersRoute = () => {
   );
 };
 
-export default RemindersRoute;
+export default NotesRoute;

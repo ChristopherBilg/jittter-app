@@ -132,7 +132,7 @@ const Pricing = () => {
             name="Starter"
             price="Free"
             description="Good for anyone who wants to see what we're about."
-            features={["Unlimited reminders"]}
+            features={["Unlimited notes"]}
           />
 
           <Plan

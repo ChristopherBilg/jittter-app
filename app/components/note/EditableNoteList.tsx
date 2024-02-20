@@ -4,35 +4,33 @@ import { useFetcher } from "@remix-run/react";
 import clsx from "clsx";
 import { InferSelectModel } from "drizzle-orm";
 import { Fragment } from "react";
-import { ReminderTable } from "~/app/db/schema";
-import { FormAction } from "~/app/routes/reminders/route";
-import EditableReminder from "./EditableReminder";
+import { NoteTable } from "~/app/db/schema";
+import { FormAction } from "~/app/routes/notes/route";
+import EditableNote from "./EditableNote";
 
-type EditableReminderListProps = {
-  reminders: InferSelectModel<typeof ReminderTable>[];
+type EditableNoteListProps = {
+  notes: InferSelectModel<typeof NoteTable>[];
 };
 
-const EditableReminderList = ({ reminders }: EditableReminderListProps) => {
+const EditableNoteList = ({ notes }: EditableNoteListProps) => {
   const fetcher = useFetcher();
 
   return (
     <ul className="divide-y divide-gray-100">
-      {reminders
+      {notes
         .sort((a, b) => (a.createdAt > b.createdAt ? -1 : 1))
-        .map((reminder) => (
-          <li key={reminder.id} className="flex justify-between gap-x-6 py-5">
+        .map((note) => (
+          <li key={note.id} className="flex justify-between gap-x-6 py-5">
             <div className="flex min-w-0 gap-x-4">
-              <EditableReminder reminder={reminder} />
+              <EditableNote note={note} />
             </div>
 
             <div className="flex shrink-0 items-center gap-x-6">
               <div className="hidden sm:flex sm:flex-col sm:items-end">
                 <p className="mt-1 text-xs leading-5 text-gray-500">
                   Created at{" "}
-                  <time
-                    dateTime={new Date(reminder.createdAt).toLocaleString()}
-                  >
-                    {new Date(reminder.createdAt).toLocaleString()}
+                  <time dateTime={new Date(note.createdAt).toLocaleString()}>
+                    {new Date(note.createdAt).toLocaleString()}
                   </time>
                 </p>
               </div>
@@ -59,15 +57,11 @@ const EditableReminderList = ({ reminders }: EditableReminderListProps) => {
                     <Menu.Item>
                       {({ active }) => (
                         <fetcher.Form method="POST">
-                          <input
-                            type="hidden"
-                            name="reminderId"
-                            value={reminder.id}
-                          />
+                          <input type="hidden" name="noteId" value={note.id} />
                           <input
                             type="hidden"
                             name="_action"
-                            value={FormAction.DeleteReminder}
+                            value={FormAction.DeleteNote}
                           />
 
                           <button
@@ -78,9 +72,7 @@ const EditableReminderList = ({ reminders }: EditableReminderListProps) => {
                             )}
                           >
                             Delete{" "}
-                            <span className="sr-only">
-                              , {reminder.content}
-                            </span>
+                            <span className="sr-only">, {note.content}</span>
                           </button>
                         </fetcher.Form>
                       )}
@@ -95,4 +87,4 @@ const EditableReminderList = ({ reminders }: EditableReminderListProps) => {
   );
 };
 
-export default EditableReminderList;
+export default EditableNoteList;

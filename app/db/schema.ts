@@ -1,3 +1,3 @@
 export { ContactUsTable } from "./models/contact-us";
-export { ReminderTable } from "./models/reminder";
+export { NoteTable } from "./models/note";
 export { UserTable } from "./models/user";
