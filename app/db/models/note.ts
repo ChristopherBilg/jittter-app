@@ -4,7 +4,7 @@ import { getTimestampFields } from "../../utils/db";
 import NeonDB from "../client.server";
 import { UserTable } from "./user";
 
-export const ReminderTable = pgTable("reminder", {
+export const NoteTable = pgTable("note", {
   id: uuid("id").primaryKey().defaultRandom(),
   userId: uuid("user_id")
     .references(() => UserTable.id)
@@ -13,19 +13,13 @@ export const ReminderTable = pgTable("reminder", {
   ...getTimestampFields(),
 });
 
-export class Reminder {
+export class Note {
   static getByUserId = async (userId: string) => {
     try {
-      const reminders =
-        await NeonDB.getInstance().db.query.ReminderTable.findMany({
-          where: and(
-            eq(ReminderTable.userId, userId),
-            isNull(ReminderTable.deletedAt),
-          ),
-          orderBy: desc(ReminderTable.createdAt),
-        });
-
-      return reminders;
+      return NeonDB.getInstance().db.query.NoteTable.findMany({
+        where: and(eq(NoteTable.userId, userId), isNull(NoteTable.deletedAt)),
+        orderBy: desc(NoteTable.createdAt),
+      });
     } catch (err) {
       console.error(err);
       return [];
@@ -34,17 +28,17 @@ export class Reminder {
 
   static create = async (userId: string, content?: string) => {
     try {
-      const newReminders = await NeonDB.getInstance()
-        .db.insert(ReminderTable)
+      const newNotes = await NeonDB.getInstance()
+        .db.insert(NoteTable)
         .values({
           userId,
           content,
         })
         .returning();
 
-      if (newReminders.length !== 1) return null;
+      if (newNotes.length !== 1) return null;
 
-      return newReminders[0];
+      return newNotes[0];
     } catch (err) {
       console.error(err);
       return null;
@@ -53,15 +47,15 @@ export class Reminder {
 
   static updateById = async (id: string, content: string) => {
     try {
-      const updatedReminders = await NeonDB.getInstance()
-        .db.update(ReminderTable)
+      const updatedNotes = await NeonDB.getInstance()
+        .db.update(NoteTable)
         .set({ content, updatedAt: new Date() })
-        .where(eq(ReminderTable.id, id))
+        .where(eq(NoteTable.id, id))
         .returning();
 
-      if (updatedReminders.length !== 1) return null;
+      if (updatedNotes.length !== 1) return null;
 
-      return updatedReminders[0];
+      return updatedNotes[0];
     } catch (err) {
       console.error(err);
       return null;
@@ -70,15 +64,15 @@ export class Reminder {
 
   static deleteById = async (id: string) => {
     try {
-      const deletedReminders = await NeonDB.getInstance()
-        .db.update(ReminderTable)
+      const deletedNotes = await NeonDB.getInstance()
+        .db.update(NoteTable)
         .set({ deletedAt: new Date() })
-        .where(eq(ReminderTable.id, id))
+        .where(eq(NoteTable.id, id))
         .returning();
 
-      if (deletedReminders.length !== 1) return null;
+      if (deletedNotes.length !== 1) return null;
 
-      return deletedReminders[0];
+      return deletedNotes[0];
     } catch (err) {
       console.error(err);
       return null;
