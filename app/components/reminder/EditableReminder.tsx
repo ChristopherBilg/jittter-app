@@ -23,11 +23,12 @@ const EditableReminder = ({ reminder }: EditableReminderProps) => {
 
   return (
     <fetcher.Form className="flex flex-col gap-y-2">
-      <label htmlFor={`reminder-${reminder.id}`} className="sr-only">
+      <label htmlFor={reminder.id} className="sr-only">
         Reminder
       </label>
 
       <input
+        id={reminder.id}
         type="text"
         name="content"
         className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"

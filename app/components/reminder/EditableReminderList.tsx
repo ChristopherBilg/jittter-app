@@ -1,10 +1,11 @@
 import { Menu, Transition } from "@headlessui/react";
 import { EllipsisVerticalIcon } from "@heroicons/react/24/outline";
-import { Link } from "@remix-run/react";
+import { useFetcher } from "@remix-run/react";
 import clsx from "clsx";
 import { InferSelectModel } from "drizzle-orm";
 import { Fragment } from "react";
 import { ReminderTable } from "~/app/db/schema";
+import { FormAction } from "~/app/routes/reminders/route";
 import EditableReminder from "./EditableReminder";
 
 type EditableReminderListProps = {
@@ -12,6 +13,8 @@ type EditableReminderListProps = {
 };
 
 const EditableReminderList = ({ reminders }: EditableReminderListProps) => {
+  const fetcher = useFetcher();
+
   return (
     <ul className="divide-y divide-gray-100">
       {reminders
@@ -52,36 +55,34 @@ const EditableReminderList = ({ reminders }: EditableReminderListProps) => {
                   leaveFrom="transform opacity-100 scale-100"
                   leaveTo="transform opacity-0 scale-95"
                 >
-                  <Menu.Items className="absolute right-0 z-10 mt-2 w-32 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none">
+                  <Menu.Items className="absolute right-0 z-10 mt-2 w-auto origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none">
                     <Menu.Item>
-                      {/* TODO: Implement editing */}
                       {({ active }) => (
-                        <Link
-                          to="#"
-                          className={clsx(
-                            active ? "bg-gray-50" : "",
-                            "block px-3 py-1 text-sm leading-6 text-gray-900",
-                          )}
-                        >
-                          Edit
-                          <span className="sr-only">, {reminder.content}</span>
-                        </Link>
-                      )}
-                    </Menu.Item>
+                        <fetcher.Form method="POST">
+                          <input
+                            type="hidden"
+                            name="reminderId"
+                            value={reminder.id}
+                          />
+                          <input
+                            type="hidden"
+                            name="_action"
+                            value={FormAction.DeleteReminder}
+                          />
 
-                    <Menu.Item>
-                      {/* TODO: Implement deleting */}
-                      {({ active }) => (
-                        <Link
-                          to="#"
-                          className={clsx(
-                            active ? "bg-gray-50" : "",
-                            "block px-3 py-1 text-sm leading-6 text-gray-900",
-                          )}
-                        >
-                          Delete
-                          <span className="sr-only">, {reminder.content}</span>
-                        </Link>
+                          <button
+                            type="submit"
+                            className={clsx(
+                              active ? "bg-gray-50" : "",
+                              "block px-3 py-1 text-sm leading-6 text-gray-900",
+                            )}
+                          >
+                            Delete{" "}
+                            <span className="sr-only">
+                              , {reminder.content}
+                            </span>
+                          </button>
+                        </fetcher.Form>
                       )}
                     </Menu.Item>
                   </Menu.Items>

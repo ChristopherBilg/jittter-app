@@ -1,7 +1,8 @@
-import { MinusIcon, PlusIcon } from "@heroicons/react/24/outline";
+import { PlusIcon } from "@heroicons/react/24/outline";
 import {
   ActionFunctionArgs,
   LoaderFunctionArgs,
+  MetaFunction,
   redirect,
 } from "@remix-run/cloudflare";
 import { useFetcher, useLoaderData } from "@remix-run/react";
@@ -32,7 +33,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 export const enum FormAction {
   CreateReminder = "create-reminder",
   UpdateReminder = "update-reminder",
-  DeleteAllReminders = "delete-all-reminders",
+  DeleteReminder = "delete-reminder",
 }
 
 export const action = async ({ request }: ActionFunctionArgs) => {
@@ -66,12 +67,14 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 
       return null;
     }
-    case FormAction.DeleteAllReminders: {
-      const reminders = await Reminder.getByUserId(userId);
+    case FormAction.DeleteReminder: {
+      const reminderId = formData.get("reminderId");
 
-      await Promise.all(
-        reminders.map(async (reminder) => Reminder.deleteById(reminder.id)),
-      );
+      if (!reminderId) return null;
+
+      // TODO: Validate this form data
+
+      await Reminder.deleteById(String(reminderId));
 
       return null;
     }
@@ -102,21 +105,6 @@ const RemindersRoute = () => {
       </div>
 
       <span className="fixed bottom-4 left-4 isolate inline-flex flex-col space-y-2 rounded-md shadow-sm">
-        <fetcher.Form method="POST">
-          <input
-            type="hidden"
-            name="_action"
-            value={FormAction.DeleteAllReminders}
-          />
-
-          <button
-            type="submit"
-            className="rounded-full bg-red-600 p-4 text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600 md:p-3"
-          >
-            <MinusIcon className="h-5 w-5" aria-hidden="true" />
-          </button>
-        </fetcher.Form>
-
         <fetcher.Form method="POST">
           <input
             type="hidden"
