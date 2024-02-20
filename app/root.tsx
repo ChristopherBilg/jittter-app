@@ -18,6 +18,10 @@ export const meta: MetaFunction = () => {
     {
       title: "Jittter",
     },
+    {
+      name: "theme-color",
+      content: "#2563EB",
+    },
   ];
 };
 
