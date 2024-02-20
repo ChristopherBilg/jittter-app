@@ -1,17 +1,5 @@
-import {
-  LoaderFunctionArgs,
-  MetaFunction,
-  redirect,
-} from "@remix-run/cloudflare";
+import { LoaderFunctionArgs, redirect } from "@remix-run/cloudflare";
 import { destroySession, getSession } from "~/app/sessions";
-
-export const meta: MetaFunction = () => {
-  return [
-    {
-      title: "Leaving Jittter so soon?",
-    },
-  ];
-};
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const session = await getSession(request.headers.get("Cookie"));
@@ -22,7 +10,3 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
     },
   });
 };
-
-const SignOutRoute = () => null;
-
-export default SignOutRoute;

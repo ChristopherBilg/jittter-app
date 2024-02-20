@@ -1,13 +1,33 @@
 import { z } from "zod";
-import { USER_ACCOUNT_MINIMUM_PASSWORD_LENGTH } from "~/app/utils/constant";
+import {
+  USER_ACCOUNT_MAXIMUM_EMAIL_LENGTH,
+  USER_ACCOUNT_MAXIMUM_FIRST_NAME_LENGTH,
+  USER_ACCOUNT_MAXIMUM_LAST_NAME_LENGTH,
+  USER_ACCOUNT_MAXIMUM_PASSWORD_LENGTH,
+  USER_ACCOUNT_MINIMUM_FIRST_NAME_LENGTH,
+  USER_ACCOUNT_MINIMUM_LAST_NAME_LENGTH,
+  USER_ACCOUNT_MINIMUM_PASSWORD_LENGTH,
+} from "~/app/utils/constant";
 
 const SignUpUserSchema = z
   .object({
-    firstName: z.string().min(1),
-    lastName: z.string().min(1),
-    email: z.string().email(),
-    password: z.string().min(USER_ACCOUNT_MINIMUM_PASSWORD_LENGTH),
-    confirmPassword: z.string().min(USER_ACCOUNT_MINIMUM_PASSWORD_LENGTH),
+    firstName: z
+      .string()
+      .min(USER_ACCOUNT_MINIMUM_FIRST_NAME_LENGTH)
+      .max(USER_ACCOUNT_MAXIMUM_FIRST_NAME_LENGTH),
+    lastName: z
+      .string()
+      .min(USER_ACCOUNT_MINIMUM_LAST_NAME_LENGTH)
+      .max(USER_ACCOUNT_MAXIMUM_LAST_NAME_LENGTH),
+    email: z.string().email().max(USER_ACCOUNT_MAXIMUM_EMAIL_LENGTH),
+    password: z
+      .string()
+      .min(USER_ACCOUNT_MINIMUM_PASSWORD_LENGTH)
+      .max(USER_ACCOUNT_MAXIMUM_PASSWORD_LENGTH),
+    confirmPassword: z
+      .string()
+      .min(USER_ACCOUNT_MINIMUM_PASSWORD_LENGTH)
+      .max(USER_ACCOUNT_MAXIMUM_PASSWORD_LENGTH),
   })
   .superRefine(({ password, confirmPassword }, ctx) => {
     if (password !== confirmPassword) {
@@ -52,7 +72,7 @@ export const validateSignUp = async (request: Request) => {
     data = {
       firstName: result.data.firstName,
       lastName: result.data.lastName,
-      email: result.data.email,
+      email: result.data.email.toLowerCase(),
       password: result.data.password,
     };
   }

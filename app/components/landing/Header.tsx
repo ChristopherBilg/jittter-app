@@ -169,8 +169,8 @@ const Header = () => {
                   My Dashboard
                 </NavLink>
               ) : (
-                <NavLink to="/signin" className="font-bold">
-                  Sign In
+                <NavLink to="/signup" className="font-bold">
+                  Sign Up
                 </NavLink>
               )}
             </div>

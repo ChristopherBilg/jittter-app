@@ -16,17 +16,19 @@ export const NoteTable = pgTable("note", {
 export class Note {
   static getByUserId = async (userId: string) => {
     try {
-      return NeonDB.getInstance().db.query.NoteTable.findMany({
+      const allNotes = await NeonDB.getInstance().db.query.NoteTable.findMany({
         where: and(eq(NoteTable.userId, userId), isNull(NoteTable.deletedAt)),
         orderBy: desc(NoteTable.createdAt),
       });
+
+      return allNotes;
     } catch (err) {
       console.error(err);
       return [];
     }
   };
 
-  static create = async (userId: string, content?: string) => {
+  static create = async (userId: string, content: string) => {
     try {
       const newNotes = await NeonDB.getInstance()
         .db.insert(NoteTable)
@@ -45,12 +47,12 @@ export class Note {
     }
   };
 
-  static updateById = async (id: string, content: string) => {
+  static update = async (userId: string, noteId: string, content: string) => {
     try {
       const updatedNotes = await NeonDB.getInstance()
         .db.update(NoteTable)
         .set({ content, updatedAt: new Date() })
-        .where(eq(NoteTable.id, id))
+        .where(and(eq(NoteTable.id, noteId), eq(NoteTable.userId, userId)))
         .returning();
 
       if (updatedNotes.length !== 1) return null;
@@ -62,17 +64,17 @@ export class Note {
     }
   };
 
-  static deleteById = async (id: string) => {
+  static softDelete = async (userId: string, noteId: string) => {
     try {
-      const deletedNotes = await NeonDB.getInstance()
+      const softDeletedNotes = await NeonDB.getInstance()
         .db.update(NoteTable)
         .set({ deletedAt: new Date() })
-        .where(eq(NoteTable.id, id))
+        .where(and(eq(NoteTable.id, noteId), eq(NoteTable.userId, userId)))
         .returning();
 
-      if (deletedNotes.length !== 1) return null;
+      if (softDeletedNotes.length !== 1) return null;
 
-      return deletedNotes[0];
+      return softDeletedNotes[0];
     } catch (err) {
       console.error(err);
       return null;
