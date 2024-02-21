@@ -1,22 +1,8 @@
 import { z } from "zod";
-import {
-  USER_ACCOUNT_MAXIMUM_FIRST_NAME_LENGTH,
-  USER_ACCOUNT_MAXIMUM_LAST_NAME_LENGTH,
-  USER_ACCOUNT_MAXIMUM_PASSWORD_LENGTH,
-  USER_ACCOUNT_MINIMUM_FIRST_NAME_LENGTH,
-  USER_ACCOUNT_MINIMUM_LAST_NAME_LENGTH,
-  USER_ACCOUNT_MINIMUM_PASSWORD_LENGTH,
-} from "~/app/utils/constant";
 
-const UpdateNameSchema = z.object({
-  firstName: z
-    .string()
-    .min(USER_ACCOUNT_MINIMUM_FIRST_NAME_LENGTH)
-    .max(USER_ACCOUNT_MAXIMUM_FIRST_NAME_LENGTH),
-  lastName: z
-    .string()
-    .min(USER_ACCOUNT_MINIMUM_LAST_NAME_LENGTH)
-    .max(USER_ACCOUNT_MAXIMUM_LAST_NAME_LENGTH),
+export const UpdateNameSchema = z.object({
+  firstName: z.string().min(1).max(128),
+  lastName: z.string().min(1).max(128),
 });
 
 export const validateUpdateName = async (formData: FormData) => {
@@ -36,16 +22,10 @@ export const validateUpdateName = async (formData: FormData) => {
   };
 };
 
-const UpdatePasswordSchema = z
+export const UpdatePasswordSchema = z
   .object({
-    newPassword: z
-      .string()
-      .min(USER_ACCOUNT_MINIMUM_PASSWORD_LENGTH)
-      .max(USER_ACCOUNT_MAXIMUM_PASSWORD_LENGTH),
-    confirmNewPassword: z
-      .string()
-      .min(USER_ACCOUNT_MINIMUM_PASSWORD_LENGTH)
-      .max(USER_ACCOUNT_MAXIMUM_PASSWORD_LENGTH),
+    newPassword: z.string().min(10).max(128),
+    confirmNewPassword: z.string().min(10).max(128),
   })
   .superRefine(({ newPassword, confirmNewPassword }, ctx) => {
     if (newPassword !== confirmNewPassword) {

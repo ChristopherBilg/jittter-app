@@ -13,12 +13,7 @@ import {
 import Logo from "~/app/components/common/Logo";
 import SlimLayout from "~/app/components/common/SlimLayout";
 import { commitSession, getSession } from "~/app/sessions";
-import {
-  USER_ACCOUNT_MAXIMUM_EMAIL_LENGTH,
-  USER_ACCOUNT_MAXIMUM_PASSWORD_LENGTH,
-  USER_ACCOUNT_MINIMUM_PASSWORD_LENGTH,
-} from "~/app/utils/constant";
-import { validateSignIn } from "./validate";
+import { SignInUserSchema, validateSignIn } from "./validate";
 
 export const meta: MetaFunction = () => {
   return [{ title: "Welcome back to Jittter!" }];
@@ -110,7 +105,7 @@ const SignInRoute = () => {
           placeholder="Email"
           autoComplete="email"
           className="rounded border px-4 py-2"
-          maxLength={USER_ACCOUNT_MAXIMUM_EMAIL_LENGTH}
+          maxLength={SignInUserSchema.shape.email.maxLength ?? undefined}
           required
         />
 
@@ -120,8 +115,8 @@ const SignInRoute = () => {
           placeholder="Password"
           autoComplete="current-password"
           className="rounded border px-4 py-2"
-          minLength={USER_ACCOUNT_MINIMUM_PASSWORD_LENGTH}
-          maxLength={USER_ACCOUNT_MAXIMUM_PASSWORD_LENGTH}
+          minLength={SignInUserSchema.shape.password.minLength ?? undefined}
+          maxLength={SignInUserSchema.shape.password.maxLength ?? undefined}
           required
         />
 

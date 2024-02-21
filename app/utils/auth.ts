@@ -1,5 +1,9 @@
-// pbkdf2 === Password-Based Key Derivation Function 2
-
+/**
+ * Computes a PBKDF2 hash of the given password using SHA-512 as the underlying hash function.
+ * @param password - The password to hash.
+ * @param iterations - The number of iterations to perform. Default is 100,000.
+ * @returns A base64-encoded string representing the computed PBKDF2 hash.
+ */
 export const pbkdf2 = async (password: string, iterations = 100_000) => {
   const pwUtf8 = new TextEncoder().encode(password);
   const pwKey = await crypto.subtle.importKey("raw", pwUtf8, "PBKDF2", false, [
@@ -36,6 +40,13 @@ export const pbkdf2 = async (password: string, iterations = 100_000) => {
   return compositeBase64;
 };
 
+/**
+ * Verifies a password using a PBKDF2 key.
+ * @param key - The PBKDF2 key to verify against.
+ * @param password - The password to verify.
+ * @returns A boolean indicating whether the password is valid or not.
+ * @throws Error if the key is invalid.
+ */
 export const pbkdf2Verify = async (key: string, password: string) => {
   let compositeStr = null;
   try {
