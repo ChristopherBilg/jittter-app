@@ -10,7 +10,7 @@ import Logo from "~/app/components/common/Logo";
 import SlimLayout from "~/app/components/common/SlimLayout";
 import { ContactUs } from "~/app/db/models/contact-us";
 import { commitSession, getSession } from "~/app/sessions";
-import { validateSendMessage } from "./validate";
+import { SendMessageSchema, validateSendMessage } from "./validate";
 
 export const meta: MetaFunction = () => {
   return [
@@ -148,8 +148,7 @@ const ContactUsRoute = () => {
             placeholder="First Name"
             autoComplete="given-name"
             className="mr-2 w-[50%] rounded border px-4 py-2"
-            minLength={1}
-            maxLength={128}
+            maxLength={SendMessageSchema.shape.firstName.maxLength ?? undefined}
             required
           />
 
@@ -159,8 +158,7 @@ const ContactUsRoute = () => {
             placeholder="Last Name"
             autoComplete="family-name"
             className="w-[50%] rounded border px-4 py-2"
-            minLength={1}
-            maxLength={128}
+            maxLength={SendMessageSchema.shape.lastName.maxLength ?? undefined}
             required
           />
         </div>
@@ -177,7 +175,7 @@ const ContactUsRoute = () => {
           placeholder="Email"
           autoComplete="email"
           className="rounded border px-4 py-2"
-          maxLength={128}
+          maxLength={SendMessageSchema.shape.email.maxLength ?? undefined}
           required
         />
 
@@ -191,8 +189,7 @@ const ContactUsRoute = () => {
           name="message"
           placeholder="Message"
           className="min-h-40 rounded border px-4 py-2"
-          minLength={1}
-          maxLength={1024}
+          maxLength={SendMessageSchema.shape.message.maxLength ?? undefined}
           required
         />
 

@@ -10,8 +10,8 @@ import Container from "~/app/components/dashboard/Container";
 import Drawer from "~/app/components/dashboard/Drawer";
 import { Note } from "~/app/db/models/note";
 import { redirectIfNotAuthenticated } from "~/app/sessions";
-import { NOTE_MAXIMUM_CONTENT_LENGTH } from "~/app/utils/constant";
 import { FormAction } from "../notes/route";
+import { CreateNoteSchema } from "../notes/validate";
 
 export const meta: MetaFunction = () => {
   return [
@@ -44,6 +44,7 @@ const DashboardRoute = () => {
   useEffect(
     function resetFormOnSuccess() {
       // TODO: Check for errors here, similar to how I've done in other routes
+      // TODO: Only reset the form if the request was initiated from the create note form
       if (fetcher.state === "idle") {
         formRef.current?.reset();
         formRef.current?.scrollIntoView({
@@ -111,8 +112,7 @@ const DashboardRoute = () => {
               name="content"
               placeholder="Add a note"
               className="rounded-md border border-gray-200 p-2"
-              minLength={1}
-              maxLength={NOTE_MAXIMUM_CONTENT_LENGTH}
+              maxLength={CreateNoteSchema.shape.content.maxLength ?? undefined}
               required
               // TODO: Scroll down, and use optimistic add
             />

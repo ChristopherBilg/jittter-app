@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-const SendMessageSchema = z.object({
+export const SendMessageSchema = z.object({
   firstName: z.string().min(1).max(128),
   lastName: z.string().min(1).max(128),
   email: z.string().email().max(128),

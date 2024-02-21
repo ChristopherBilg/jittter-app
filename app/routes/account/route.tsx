@@ -14,16 +14,13 @@ import clsx from "clsx";
 import { useState } from "react";
 import { User } from "~/app/db/models/user";
 import { redirectIfNotAuthenticated } from "~/app/sessions";
-import {
-  USER_ACCOUNT_MAXIMUM_FIRST_NAME_LENGTH,
-  USER_ACCOUNT_MAXIMUM_LAST_NAME_LENGTH,
-  USER_ACCOUNT_MAXIMUM_PASSWORD_LENGTH,
-  USER_ACCOUNT_MINIMUM_FIRST_NAME_LENGTH,
-  USER_ACCOUNT_MINIMUM_LAST_NAME_LENGTH,
-  USER_ACCOUNT_MINIMUM_PASSWORD_LENGTH,
-} from "~/app/utils/constant";
 import { exhaustiveMatchingGuard } from "~/app/utils/misc";
-import { validateUpdateName, validateUpdatePassword } from "./validate";
+import {
+  UpdateNameSchema,
+  UpdatePasswordSchema,
+  validateUpdateName,
+  validateUpdatePassword,
+} from "./validate";
 
 export const meta: MetaFunction = () => {
   return [
@@ -258,8 +255,10 @@ const AccountRoute = () => {
                           autoComplete="given-name"
                           className="mr-2 w-1/2 rounded border px-4 py-2"
                           defaultValue={user?.firstName || ""}
-                          minLength={USER_ACCOUNT_MINIMUM_FIRST_NAME_LENGTH}
-                          maxLength={USER_ACCOUNT_MAXIMUM_FIRST_NAME_LENGTH}
+                          maxLength={
+                            UpdateNameSchema.shape.firstName.maxLength ??
+                            undefined
+                          }
                           required
                         />
 
@@ -270,8 +269,10 @@ const AccountRoute = () => {
                           autoComplete="family-name"
                           className="w-1/2 rounded border px-4 py-2"
                           defaultValue={user?.lastName || ""}
-                          minLength={USER_ACCOUNT_MINIMUM_LAST_NAME_LENGTH}
-                          maxLength={USER_ACCOUNT_MAXIMUM_LAST_NAME_LENGTH}
+                          maxLength={
+                            UpdateNameSchema.shape.lastName.maxLength ??
+                            undefined
+                          }
                           required
                         />
                       </div>
@@ -314,8 +315,14 @@ const AccountRoute = () => {
                           autoComplete="new-password"
                           className="mr-2 w-1/2 rounded border px-4 py-2"
                           defaultValue=""
-                          minLength={USER_ACCOUNT_MINIMUM_PASSWORD_LENGTH}
-                          maxLength={USER_ACCOUNT_MAXIMUM_PASSWORD_LENGTH}
+                          minLength={
+                            UpdatePasswordSchema._def.schema.shape.newPassword
+                              .minLength ?? undefined
+                          }
+                          maxLength={
+                            UpdatePasswordSchema._def.schema.shape.newPassword
+                              .maxLength ?? undefined
+                          }
                           required
                         />
 
@@ -326,8 +333,14 @@ const AccountRoute = () => {
                           autoComplete="new-password"
                           className="w-1/2 rounded border px-4 py-2"
                           defaultValue=""
-                          minLength={USER_ACCOUNT_MINIMUM_PASSWORD_LENGTH}
-                          maxLength={USER_ACCOUNT_MAXIMUM_PASSWORD_LENGTH}
+                          minLength={
+                            UpdatePasswordSchema._def.schema.shape
+                              .confirmNewPassword.minLength ?? undefined
+                          }
+                          maxLength={
+                            UpdatePasswordSchema._def.schema.shape
+                              .confirmNewPassword.maxLength ?? undefined
+                          }
                           required
                         />
                       </div>

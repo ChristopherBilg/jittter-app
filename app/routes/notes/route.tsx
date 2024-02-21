@@ -6,6 +6,11 @@ import {
 import { Note } from "~/app/db/models/note";
 import { redirectIfNotAuthenticated } from "~/app/sessions";
 import { exhaustiveMatchingGuard } from "~/app/utils/misc";
+import {
+  validateCreateNote,
+  validateDeleteNote,
+  validateUpdateNote,
+} from "./validate";
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const session = await redirectIfNotAuthenticated(request, "/login");
@@ -37,37 +42,29 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 
   switch (_action) {
     case FormAction.CreateNote: {
-      const content = formData.get("content");
+      const validated = await validateCreateNote(formData);
+      if (!validated) return null;
 
-      // TODO: Validate this form data
-      if (!content) return null;
-
-      await Note.create(userId, String(content));
+      const { content } = validated;
+      await Note.create(userId, content);
 
       return null;
     }
     case FormAction.UpdateNote: {
-      const noteId = formData.get("noteId");
-      const content = formData.get("content");
+      const validated = await validateUpdateNote(formData);
+      if (!validated) return null;
 
-      // TODO: Validate this form data
-      if (!noteId || content === null) return null;
-
-      await Note.update(
-        userId,
-        String(noteId),
-        String(formData.get("content")),
-      );
+      const { noteId, content } = validated;
+      await Note.update(userId, noteId, content);
 
       return null;
     }
     case FormAction.DeleteNote: {
-      const noteId = formData.get("noteId");
+      const validated = await validateDeleteNote(formData);
+      if (!validated) return null;
 
-      // TODO: Validate this form data
-      if (!noteId) return null;
-
-      await Note.softDelete(userId, String(noteId));
+      const { noteId } = validated;
+      await Note.softDelete(userId, noteId);
 
       return null;
     }
