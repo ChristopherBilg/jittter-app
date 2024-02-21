@@ -1,7 +1,7 @@
 import { Tab } from "@headlessui/react";
 import clsx from "clsx";
 import { ComponentPropsWithoutRef, ComponentType, ReactNode } from "react";
-import Container from "../common/Container";
+import Container from "./Container";
 
 type Feature = {
   name: ReactNode;

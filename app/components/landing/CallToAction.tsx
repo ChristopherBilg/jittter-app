@@ -1,6 +1,6 @@
 import { Link, useLoaderData } from "@remix-run/react";
 import { loader } from "~/app/routes/_index";
-import Container from "../common/Container";
+import Container from "./Container";
 
 const CallToAction = () => {
   const loaderData = useLoaderData<typeof loader>();

@@ -1,4 +1,4 @@
-import Container from "../common/Container";
+import Container from "./Container";
 
 type FAQ = {
   question: string;
