@@ -1,4 +1,4 @@
-import Container from "../common/Container";
+import Container from "./Container";
 
 const Hero = () => {
   return (

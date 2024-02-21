@@ -3,8 +3,8 @@ import { Link, useLoaderData } from "@remix-run/react";
 import clsx from "clsx";
 import { Fragment, ReactNode } from "react";
 import { loader } from "~/app/routes/_index";
-import Container from "../common/Container";
 import Logo from "../common/Logo";
+import Container from "./Container";
 import NavLink from "./NavLink";
 
 type MobileNavLinkProps = {
@@ -169,8 +169,8 @@ const Header = () => {
                   My Dashboard
                 </NavLink>
               ) : (
-                <NavLink to="/signup" className="font-bold">
-                  Sign Up
+                <NavLink to="/signin" className="font-bold">
+                  Sign In
                 </NavLink>
               )}
             </div>

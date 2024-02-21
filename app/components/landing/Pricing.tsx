@@ -2,7 +2,7 @@ import { Link, useLoaderData } from "@remix-run/react";
 import clsx from "clsx";
 import { ComponentPropsWithoutRef } from "react";
 import { loader } from "~/app/routes/_index";
-import Container from "../common/Container";
+import Container from "./Container";
 
 const CheckIcon = ({
   className,
