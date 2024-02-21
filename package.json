@@ -19,7 +19,7 @@
     "@headlessui/react": "^1.7.18",
     "@heroicons/react": "^2.1.1",
     "@neondatabase/serverless": "^0.8.1",
-    "@remix-run/cloudflare": "^2.7.1",
+    "@remix-run/cloudflare": "^2.7.2",
     "@remix-run/cloudflare-pages": "^2.5.1",
     "@remix-run/css-bundle": "^2.7.1",
     "@remix-run/react": "^2.5.1",
