@@ -39,12 +39,26 @@
     {
       "name": "Dashboard",
       "url": "/dashboard?source=pwa",
-      "description": "Dashboard"
+      "description": "Dashboard",
+      "icons": [
+        {
+          "src": "/favicon-96x96.png",
+          "type": "image/png",
+          "sizes": "96x96"
+        }
+      ]
     },
     {
-      "name": "My Account",
+      "name": "Account Settings",
       "url": "/account?source=pwa",
-      "description": "My Account"
+      "description": "Account Settings",
+      "icons": [
+        {
+          "src": "/favicon-96x96.png",
+          "type": "image/png",
+          "sizes": "96x96"
+        }
+      ]
     }
   ]
 }
