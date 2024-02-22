@@ -4,7 +4,7 @@ export const CreateAtomSchema = z.object({
   content: z.string().min(0).max(1024),
 });
 
-export const validateCreateAtom = async (formData: FormData) => {
+export const validateCreateNoteAtom = async (formData: FormData) => {
   const content = formData.get("content");
 
   const result = CreateAtomSchema.safeParse({
@@ -21,7 +21,7 @@ const UpdateAtomSchema = z.object({
   content: z.string().min(0).max(10244),
 });
 
-export const validateUpdateAtom = async (formData: FormData) => {
+export const validateUpdateNoteAtom = async (formData: FormData) => {
   const atomId = formData.get("atomId");
   const content = formData.get("content");
 

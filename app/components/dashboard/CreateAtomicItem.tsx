@@ -11,7 +11,7 @@ const CreateAtomicItem = () => {
       className="flex flex-col overflow-hidden bg-white px-4 py-4 shadow-lg sm:rounded-md sm:px-6"
       action="/atoms"
     >
-      <input type="hidden" name="_action" value={FormAction.CreateAtom} />
+      <input type="hidden" name="_action" value={FormAction.CreateNoteAtom} />
 
       <input
         type="text"

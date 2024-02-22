@@ -3,14 +3,14 @@ import { Atom } from "~/app/db/models/atom.server";
 import { redirectIfNotAuthenticated } from "~/app/sessions";
 import { exhaustiveMatchingGuard } from "~/app/utils/misc";
 import {
-  validateCreateAtom,
+  validateCreateNoteAtom,
   validateDeleteAtom,
-  validateUpdateAtom,
+  validateUpdateNoteAtom,
 } from "./validate";
 
 export const enum FormAction {
-  CreateAtom = "create-atom",
-  UpdateAtom = "update-atom",
+  CreateNoteAtom = "create-note-atom",
+  UpdateNoteAtom = "update-note-atom",
   DeleteAtom = "delete-atom",
 }
 
@@ -24,21 +24,21 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   const _action = formData.get("_action") as FormAction;
 
   switch (_action) {
-    case FormAction.CreateAtom: {
-      const validated = await validateCreateAtom(formData);
+    case FormAction.CreateNoteAtom: {
+      const validated = await validateCreateNoteAtom(formData);
       if (!validated) return null;
 
       const { content } = validated;
-      await Atom.create(userId, { content });
+      await Atom.create(userId, { type: "note", data: { content } });
 
       return null;
     }
-    case FormAction.UpdateAtom: {
-      const validated = await validateUpdateAtom(formData);
+    case FormAction.UpdateNoteAtom: {
+      const validated = await validateUpdateNoteAtom(formData);
       if (!validated) return null;
 
       const { atomId, content } = validated;
-      await Atom.update(userId, atomId, { content });
+      await Atom.update(userId, atomId, { data: { content } });
 
       return null;
     }

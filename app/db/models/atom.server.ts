@@ -1,10 +1,23 @@
-export type AtomStructure = {
+export type NoteStructure = {
+  data: {
+    content: string;
+  };
+};
+
+export type ContactStructure = {
+  data: {
+    fullName: string;
+  };
+};
+
+export type AtomStructure<T = NoteStructure | ContactStructure> = {
   _id: string;
   userId: string;
-  content: string;
   createdAt: string;
   updatedAt: string;
-};
+  deletedAt?: string;
+  type: "note" | "contact";
+} & T;
 
 export class Atom {
   private static _baseUrl =
