@@ -6,13 +6,12 @@ import {
   redirect,
 } from "@remix-run/cloudflare";
 import { useLoaderData } from "@remix-run/react";
-import { InferSelectModel } from "drizzle-orm";
 import { useState } from "react";
 import AtomicItem from "~/app/components/dashboard/AtomicItem";
 import Container from "~/app/components/dashboard/Container";
 import CreateAtomicItem from "~/app/components/dashboard/CreateAtomicItem";
 import Drawer from "~/app/components/dashboard/Drawer";
-import { Note, NoteTable } from "~/app/db/models/note.server";
+import { Atom } from "~/app/db/models/atom.server";
 import { redirectIfNotAuthenticated } from "~/app/sessions";
 
 export const meta: MetaFunction = () => {
@@ -29,7 +28,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   const userId = session.get("id");
   if (!userId) return redirect("/logout");
 
-  const notes = await Note.getByUserId(userId);
+  const notes = await Atom.get(userId);
 
   return json({
     notes,
@@ -59,10 +58,8 @@ const DashboardRoute = () => {
         {loaderData.notes
           .sort((a, b) => (a.createdAt > b.createdAt ? 1 : -1))
           .map((note) => (
-            <li key={note.id}>
-              <AtomicItem
-                note={note as unknown as InferSelectModel<typeof NoteTable>}
-              />
+            <li key={note._id}>
+              <AtomicItem note={note} />
             </li>
           ))}
 

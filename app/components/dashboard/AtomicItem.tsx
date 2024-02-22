@@ -1,12 +1,11 @@
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { useFetcher } from "@remix-run/react";
-import { InferSelectModel } from "drizzle-orm";
 import { createRef, useEffect, useState } from "react";
-import { NoteTable } from "~/app/db/schema";
+import { AtomStructure } from "~/app/db/models/atom.server";
 import { FormAction } from "~/app/routes/notes/route";
 
 type AtomicItemProps = {
-  note: InferSelectModel<typeof NoteTable>;
+  note: AtomStructure;
 };
 
 const AtomicItem = ({ note }: AtomicItemProps) => {
@@ -29,7 +28,7 @@ const AtomicItem = ({ note }: AtomicItemProps) => {
           onSubmit={() => setEditable(false)}
         >
           <input type="hidden" name="_action" value={FormAction.UpdateNote} />
-          <input type="hidden" name="noteId" value={note.id} />
+          <input type="hidden" name="noteId" value={note._id} />
 
           <input
             ref={editInputRef}
@@ -51,7 +50,7 @@ const AtomicItem = ({ note }: AtomicItemProps) => {
 
       <fetcher.Form method="POST" action="/notes">
         <input type="hidden" name="_action" value={FormAction.DeleteNote} />
-        <input type="hidden" name="noteId" value={note.id} />
+        <input type="hidden" name="noteId" value={note._id} />
 
         <button type="submit" className="rounded-md bg-red-300 text-white">
           <span className="sr-only">Delete, {note.content}</span>

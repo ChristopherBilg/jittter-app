@@ -17,7 +17,7 @@ export const validateCreateNote = async (formData: FormData) => {
 };
 
 const UpdateNoteSchema = z.object({
-  noteId: z.string().uuid(),
+  noteId: z.string(),
   content: z.string().min(0).max(10244),
 });
 
@@ -36,7 +36,7 @@ export const validateUpdateNote = async (formData: FormData) => {
 };
 
 const DeleteNoteSchema = z.object({
-  noteId: z.string().uuid(),
+  noteId: z.string(),
 });
 
 export const validateDeleteNote = async (formData: FormData) => {

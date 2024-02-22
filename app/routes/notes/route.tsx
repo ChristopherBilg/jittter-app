@@ -1,10 +1,5 @@
-import {
-  ActionFunctionArgs,
-  LoaderFunctionArgs,
-  json,
-  redirect,
-} from "@remix-run/cloudflare";
-import { Note } from "~/app/db/models/note.server";
+import { ActionFunctionArgs } from "@remix-run/cloudflare";
+import { Atom } from "~/app/db/models/atom.server";
 import { redirectIfNotAuthenticated } from "~/app/sessions";
 import { exhaustiveMatchingGuard } from "~/app/utils/misc";
 import {
@@ -12,19 +7,6 @@ import {
   validateDeleteNote,
   validateUpdateNote,
 } from "./validate";
-
-export const loader = async ({ request }: LoaderFunctionArgs) => {
-  const session = await redirectIfNotAuthenticated(request, "/login");
-
-  const userId = session.get("id");
-  if (!userId) return redirect("/logout");
-
-  const notes = await Note.getByUserId(userId);
-
-  return json({
-    notes,
-  });
-};
 
 export const enum FormAction {
   CreateNote = "create-note",
@@ -47,7 +29,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
       if (!validated) return null;
 
       const { content } = validated;
-      await Note.create(userId, content);
+      await Atom.create(userId, { content });
 
       return null;
     }
@@ -56,7 +38,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
       if (!validated) return null;
 
       const { noteId, content } = validated;
-      await Note.update(userId, noteId, content);
+      await Atom.update(userId, noteId, { content });
 
       return null;
     }
@@ -65,7 +47,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
       if (!validated) return null;
 
       const { noteId } = validated;
-      await Note.softDelete(userId, noteId);
+      await Atom.softDelete(userId, noteId);
 
       return null;
     }
