@@ -42,29 +42,28 @@ const DashboardRoute = () => {
   const [open, setOpen] = useState(false);
 
   const formRef = useRef<HTMLFormElement>(null);
-  useEffect(
-    function resetFormOnSuccess() {
-      // TODO: Check for errors here, similar to how I've done in other routes
-      // TODO: Only reset the form if the request was initiated from the create note form
-      if (fetcher.state === "idle") {
-        formRef.current?.reset();
-        formRef.current?.scrollIntoView({
-          behavior: "instant",
-        });
-      }
-    },
-    [fetcher.state, fetcher.data, fetcher.formData],
-  );
+  useEffect(() => {
+    // TODO: Check for errors here, similar to how I've done in other routes
+    // TODO: Only reset the form if the request was initiated from the create note form
+    if (fetcher.state === "idle") {
+      formRef.current?.reset();
+      formRef.current?.scrollIntoView({
+        behavior: "instant",
+      });
+    }
+  }, [fetcher.state]);
 
   return (
     <Container>
-      <button
-        className="fixed right-4 top-4 rounded-md bg-blue-500 px-2 py-1 text-white"
-        onClick={() => setOpen(true)}
-      >
-        <span className="sr-only">Open dashboard menu</span>
-        <Bars3Icon className="h-6 w-6" />
-      </button>
+      <div className="flex justify-end">
+        <button
+          className="my-2 rounded-md bg-blue-500 px-2 py-1 text-white"
+          onClick={() => setOpen(true)}
+        >
+          <span className="sr-only">Open dashboard menu</span>
+          <Bars3Icon className="h-6 w-6" />
+        </button>
+      </div>
 
       <Drawer open={open} setOpen={setOpen} />
 
@@ -115,7 +114,7 @@ const DashboardRoute = () => {
               className="rounded-md border border-gray-200 p-2"
               maxLength={CreateNoteSchema.shape.content.maxLength ?? undefined}
               required
-              // TODO: Scroll down, and use optimistic add
+              // TODO: Use optimistic add
             />
           </fetcher.Form>
         </li>

@@ -5,20 +5,20 @@ import Container from "./Container";
 
 const features = [
   {
-    title: "Journals",
-    description:
-      "Journals are a great way to keep track of your day-to-day activities. You can use them to record your thoughts, tasks, and experiences, and they can help you to stay organized and focused.",
-    // TODO: Add image
-    image:
-      "https://fastly.picsum.photos/id/269/2000/1000.webp?hmac=CqxS2lmxLf70SttDTy3dpjcf2QmG3i6fvP0ft4ZN9dU",
-  },
-  {
     title: "Notes",
     description:
       "Notes are a great way to keep track of important information.",
     // TODO: Add image
     image:
       "https://fastly.picsum.photos/id/921/2000/1000.webp?hmac=voS6TQxFBVc6cyuicOs60tJ0dlUpfj-GsKJbMG9YHFQ",
+  },
+  {
+    title: "Journals",
+    description:
+      "Journals are a great way to keep track of your day-to-day activities. You can use them to record your thoughts, tasks, and experiences, and they can help you to stay organized and focused.",
+    // TODO: Add image
+    image:
+      "https://fastly.picsum.photos/id/269/2000/1000.webp?hmac=CqxS2lmxLf70SttDTy3dpjcf2QmG3i6fvP0ft4ZN9dU",
   },
   {
     title: "Reminders",
