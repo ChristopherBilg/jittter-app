@@ -2,6 +2,7 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import {
   LoaderFunctionArgs,
   MetaFunction,
+  json,
   redirect,
 } from "@remix-run/cloudflare";
 import { useFetcher, useLoaderData } from "@remix-run/react";
@@ -29,9 +30,9 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 
   const notes = await Note.getByUserId(userId);
 
-  return {
+  return json({
     notes,
-  };
+  });
 };
 
 const DashboardRoute = () => {

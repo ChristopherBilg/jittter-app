@@ -1,6 +1,7 @@
 import {
   ActionFunctionArgs,
   LoaderFunctionArgs,
+  json,
   redirect,
 } from "@remix-run/cloudflare";
 import { Note } from "~/app/db/models/note";
@@ -20,9 +21,9 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 
   const notes = await Note.getByUserId(userId);
 
-  return {
+  return json({
     notes,
-  };
+  });
 };
 
 export const enum FormAction {

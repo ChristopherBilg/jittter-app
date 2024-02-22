@@ -1,4 +1,8 @@
-import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/cloudflare";
+import {
+  json,
+  type LoaderFunctionArgs,
+  type MetaFunction,
+} from "@remix-run/cloudflare";
 import { getSession } from "~/app/sessions";
 import CallToAction from "../components/landing/CallToAction";
 import FAQs from "../components/landing/FAQs";
@@ -21,9 +25,9 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 
   if (!session.has("id")) return null;
 
-  return {
+  return json({
     id: session.get("id"),
-  };
+  });
 };
 
 const LandingRoute = () => {

@@ -8,6 +8,7 @@ import {
   ActionFunctionArgs,
   LoaderFunctionArgs,
   MetaFunction,
+  json,
 } from "@remix-run/cloudflare";
 import { Link, useFetcher, useLoaderData } from "@remix-run/react";
 import clsx from "clsx";
@@ -35,9 +36,9 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 
   const user = await User.getById(session.data.id!);
 
-  return {
+  return json({
     user,
-  };
+  });
 };
 
 const enum FormAction {
