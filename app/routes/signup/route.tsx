@@ -12,7 +12,7 @@ import {
 } from "@remix-run/react";
 import Logo from "~/app/components/common/Logo";
 import SlimLayout from "~/app/components/common/SlimLayout";
-import { User } from "~/app/db/models/user";
+import { User } from "~/app/db/models/user.server";
 import { commitSession, getSession } from "~/app/sessions";
 import { SignUpUserSchema, validateSignUp } from "./validate";
 

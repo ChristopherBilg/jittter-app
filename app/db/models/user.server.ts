@@ -1,8 +1,8 @@
 import { InferSelectModel, and, eq, isNull } from "drizzle-orm";
 import { pgTable, text, uuid } from "drizzle-orm/pg-core";
-import { pbkdf2, pbkdf2Verify } from "~/app/utils/auth";
+import { pbkdf2, pbkdf2Verify } from "~/app/utils/auth.server";
 import { getTimestampFields } from "../../utils/db";
-import NeonDB from "../client.server";
+import NeonDB from "../neondb.server";
 
 export const UserTable = pgTable("user", {
   id: uuid("id").primaryKey().defaultRandom(),

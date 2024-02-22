@@ -4,7 +4,7 @@ import {
   json,
   redirect,
 } from "@remix-run/cloudflare";
-import { Note } from "~/app/db/models/note";
+import { Note } from "~/app/db/models/note.server";
 import { redirectIfNotAuthenticated } from "~/app/sessions";
 import { exhaustiveMatchingGuard } from "~/app/utils/misc";
 import {

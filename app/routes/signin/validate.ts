@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { User } from "~/app/db/models/user";
+import { User } from "~/app/db/models/user.server";
 
 export const SignInUserSchema = z.object({
   email: z.string().email().max(128),

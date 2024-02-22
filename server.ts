@@ -1,4 +1,4 @@
-import { logDevReady } from "@remix-run/cloudflare";
+import { ServerBuild, logDevReady } from "@remix-run/cloudflare";
 import { createPagesFunctionHandler } from "@remix-run/cloudflare-pages";
 import * as build from "@remix-run/dev/server-build";
 import { output, z } from "zod";
@@ -21,14 +21,11 @@ declare global {
 }
 
 if (process.env.NODE_ENV === "development") {
-  logDevReady(build);
+  logDevReady(build as ServerBuild); // TODO: "as ServerBuild" is necessary because the types are not compatible (issue with Remix)
 }
 
 export const onRequest = createPagesFunctionHandler({
-  build,
-  getLoadContext: (context) => {
-    const env = ApplicationEnvironmentVariableSchema.parse(context.env);
-    return { env };
-  },
+  build: build as ServerBuild, // TODO: "as ServerBuild" is necessary because the types are not compatible (issue with Remix)
+  getLoadContext: ({ context }) => ({ env: context.cloudflare.env }),
   mode: process.env.NODE_ENV,
 });

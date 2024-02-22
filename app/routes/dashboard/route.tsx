@@ -12,7 +12,7 @@ import AtomicItem from "~/app/components/dashboard/AtomicItem";
 import Container from "~/app/components/dashboard/Container";
 import CreateAtomicItem from "~/app/components/dashboard/CreateAtomicItem";
 import Drawer from "~/app/components/dashboard/Drawer";
-import { Note, NoteTable } from "~/app/db/models/note";
+import { Note, NoteTable } from "~/app/db/models/note.server";
 import { redirectIfNotAuthenticated } from "~/app/sessions";
 
 export const meta: MetaFunction = () => {

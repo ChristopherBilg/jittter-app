@@ -1,3 +1,3 @@
-export { ContactUsTable } from "./models/contact-us";
-export { NoteTable } from "./models/note";
-export { UserTable } from "./models/user";
+export { ContactUsTable } from "./models/contact-us.server";
+export { NoteTable } from "./models/note.server";
+export { UserTable } from "./models/user.server";

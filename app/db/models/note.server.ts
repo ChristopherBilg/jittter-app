@@ -1,8 +1,8 @@
 import { and, desc, eq, isNull } from "drizzle-orm";
 import { pgTable, text, uuid } from "drizzle-orm/pg-core";
 import { getTimestampFields } from "../../utils/db";
-import NeonDB from "../client.server";
-import { UserTable } from "./user";
+import NeonDB from "../neondb.server";
+import { UserTable } from "./user.server";
 
 export const NoteTable = pgTable("note", {
   id: uuid("id").primaryKey().defaultRandom(),
