@@ -1,5 +1,5 @@
 import { pgTable, text, uuid } from "drizzle-orm/pg-core";
-import { getTimestampFields } from "../../utils/db";
+import { getTimestampFields } from "../../../utils/db";
 import NeonDB from "../neondb.server";
 
 export const ContactUsTable = pgTable("contact_us", {

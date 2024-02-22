@@ -2,7 +2,7 @@ import {
   AtomStructure,
   ContactStructure,
   NoteStructure,
-} from "~/app/db/models/atom.server";
+} from "~/app/db/mongodb/atom.server";
 import AtomicContact from "./AtomicContact";
 import AtomicNote from "./AtomicNote";
 

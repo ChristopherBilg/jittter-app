@@ -13,7 +13,7 @@ import {
 import { Link, useFetcher, useLoaderData } from "@remix-run/react";
 import clsx from "clsx";
 import { useState } from "react";
-import { User } from "~/app/db/models/user.server";
+import { User } from "~/app/db/postgresql/models/user.server";
 import { redirectIfNotAuthenticated } from "~/app/sessions";
 import { exhaustiveMatchingGuard } from "~/app/utils/misc";
 import {

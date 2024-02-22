@@ -11,7 +11,7 @@ import AtomicItem from "~/app/components/dashboard/AtomicItem";
 import Container from "~/app/components/dashboard/Container";
 import CreateAtomicItem from "~/app/components/dashboard/CreateAtomicItem";
 import Drawer from "~/app/components/dashboard/Drawer";
-import { Atom } from "~/app/db/models/atom.server";
+import { Atom } from "~/app/db/mongodb/atom.server";
 import { redirectIfNotAuthenticated } from "~/app/sessions";
 
 export const meta: MetaFunction = () => {
@@ -55,13 +55,11 @@ const DashboardRoute = () => {
       <Drawer open={open} setOpen={setOpen} />
 
       <ul className="my-2 space-y-2 divide-gray-200">
-        {loaderData.atoms
-          .sort((a, b) => (a.createdAt > b.createdAt ? 1 : -1))
-          .map((atom) => (
-            <li key={atom._id}>
-              <AtomicItem atom={atom} />
-            </li>
-          ))}
+        {loaderData.atoms.map((atom) => (
+          <li key={atom._id}>
+            <AtomicItem atom={atom} />
+          </li>
+        ))}
 
         <li>
           <CreateAtomicItem />

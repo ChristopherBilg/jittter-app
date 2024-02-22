@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { User } from "~/app/db/models/user.server";
+import { User } from "~/app/db/postgresql/models/user.server";
 
 export const SignInUserSchema = z.object({
   email: z.string().email().max(128),

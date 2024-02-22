@@ -1,4 +1,4 @@
-import { AtomStructure, ContactStructure } from "~/app/db/models/atom.server";
+import { AtomStructure, ContactStructure } from "~/app/db/mongodb/atom.server";
 
 type AtomicContactProps = {
   atom: AtomStructure<ContactStructure>;

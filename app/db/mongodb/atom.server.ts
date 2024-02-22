@@ -71,7 +71,7 @@ export class Atom {
           },
         },
         sort: {
-          createdAt: -1,
+          createdAt: 1,
         },
       });
 

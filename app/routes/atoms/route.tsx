@@ -1,5 +1,5 @@
 import { ActionFunctionArgs } from "@remix-run/cloudflare";
-import { Atom } from "~/app/db/models/atom.server";
+import { Atom } from "~/app/db/mongodb/atom.server";
 import { redirectIfNotAuthenticated } from "~/app/sessions";
 import { exhaustiveMatchingGuard } from "~/app/utils/misc";
 import {

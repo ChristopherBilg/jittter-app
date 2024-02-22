@@ -1,7 +1,7 @@
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { useFetcher } from "@remix-run/react";
 import { createRef, useEffect, useState } from "react";
-import { AtomStructure, NoteStructure } from "~/app/db/models/atom.server";
+import { AtomStructure, NoteStructure } from "~/app/db/mongodb/atom.server";
 import { FormAction } from "~/app/routes/atoms/route";
 
 type AtomicNoteProps = {
