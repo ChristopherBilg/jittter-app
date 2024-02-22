@@ -66,6 +66,7 @@ export const ErrorBoundary = () => {
     );
   } else if (error instanceof Error) {
     return (
+      // TODO: Better error messages here for engineers to debug
       <div>
         <h1>Error</h1>
         <p>{error.message}</p>
@@ -78,6 +79,7 @@ export const ErrorBoundary = () => {
       </div>
     );
   } else {
+    // TODO: Better error messages here for engineers to debug
     return <h1>Unknown Error</h1>;
   }
 };

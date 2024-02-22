@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const CreateNoteSchema = z.object({
-  content: z.string().min(1).max(1024),
+  content: z.string().min(0).max(1024),
 });
 
 export const validateCreateNote = async (formData: FormData) => {
@@ -18,7 +18,7 @@ export const validateCreateNote = async (formData: FormData) => {
 
 const UpdateNoteSchema = z.object({
   noteId: z.string().uuid(),
-  content: z.string().min(1).max(10244),
+  content: z.string().min(0).max(10244),
 });
 
 export const validateUpdateNote = async (formData: FormData) => {

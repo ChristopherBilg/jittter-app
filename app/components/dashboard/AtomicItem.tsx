@@ -1,7 +1,7 @@
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { useFetcher } from "@remix-run/react";
 import { InferSelectModel } from "drizzle-orm";
-import { useState } from "react";
+import { createRef, useEffect, useState } from "react";
 import { NoteTable } from "~/app/db/schema";
 import { FormAction } from "~/app/routes/notes/route";
 
@@ -12,7 +12,12 @@ type AtomicItemProps = {
 const AtomicItem = ({ note }: AtomicItemProps) => {
   const fetcher = useFetcher();
 
+  const editInputRef = createRef<HTMLInputElement>();
+
   const [editable, setEditable] = useState(false);
+  useEffect(() => {
+    if (editable) editInputRef.current?.focus();
+  }, [editable, editInputRef]);
 
   return (
     <div className="flex justify-between space-x-2 overflow-hidden bg-white px-4 py-4 shadow-lg sm:rounded-md sm:px-6">
@@ -27,10 +32,15 @@ const AtomicItem = ({ note }: AtomicItemProps) => {
           <input type="hidden" name="noteId" value={note.id} />
 
           <input
+            ref={editInputRef}
             type="text"
             name="content"
             defaultValue={note.content ?? ""}
             className="w-full rounded-md border border-gray-200 p-2"
+            onBlur={(e) => {
+              fetcher.submit(e.target.form);
+              setEditable(false);
+            }}
           />
         </fetcher.Form>
       ) : (
