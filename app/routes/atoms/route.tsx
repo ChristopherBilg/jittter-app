@@ -3,15 +3,15 @@ import { Atom } from "~/app/db/models/atom.server";
 import { redirectIfNotAuthenticated } from "~/app/sessions";
 import { exhaustiveMatchingGuard } from "~/app/utils/misc";
 import {
-  validateCreateNote,
-  validateDeleteNote,
-  validateUpdateNote,
+  validateCreateAtom,
+  validateDeleteAtom,
+  validateUpdateAtom,
 } from "./validate";
 
 export const enum FormAction {
-  CreateNote = "create-note",
-  UpdateNote = "update-note",
-  DeleteNote = "delete-note",
+  CreateAtom = "create-atom",
+  UpdateAtom = "update-atom",
+  DeleteAtom = "delete-atom",
 }
 
 export const action = async ({ request }: ActionFunctionArgs) => {
@@ -24,8 +24,8 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   const _action = formData.get("_action") as FormAction;
 
   switch (_action) {
-    case FormAction.CreateNote: {
-      const validated = await validateCreateNote(formData);
+    case FormAction.CreateAtom: {
+      const validated = await validateCreateAtom(formData);
       if (!validated) return null;
 
       const { content } = validated;
@@ -33,21 +33,21 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 
       return null;
     }
-    case FormAction.UpdateNote: {
-      const validated = await validateUpdateNote(formData);
+    case FormAction.UpdateAtom: {
+      const validated = await validateUpdateAtom(formData);
       if (!validated) return null;
 
-      const { noteId, content } = validated;
-      await Atom.update(userId, noteId, { content });
+      const { atomId, content } = validated;
+      await Atom.update(userId, atomId, { content });
 
       return null;
     }
-    case FormAction.DeleteNote: {
-      const validated = await validateDeleteNote(formData);
+    case FormAction.DeleteAtom: {
+      const validated = await validateDeleteAtom(formData);
       if (!validated) return null;
 
-      const { noteId } = validated;
-      await Atom.softDelete(userId, noteId);
+      const { atomId } = validated;
+      await Atom.softDelete(userId, atomId);
 
       return null;
     }

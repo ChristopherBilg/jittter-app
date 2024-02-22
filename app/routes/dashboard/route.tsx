@@ -28,10 +28,10 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   const userId = session.get("id");
   if (!userId) return redirect("/logout");
 
-  const notes = await Atom.get(userId);
+  const atoms = await Atom.get(userId);
 
   return json({
-    notes,
+    atoms,
   });
 };
 
@@ -55,11 +55,11 @@ const DashboardRoute = () => {
       <Drawer open={open} setOpen={setOpen} />
 
       <ul className="my-2 space-y-2 divide-gray-200">
-        {loaderData.notes
+        {loaderData.atoms
           .sort((a, b) => (a.createdAt > b.createdAt ? 1 : -1))
-          .map((note) => (
-            <li key={note._id}>
-              <AtomicItem note={note} />
+          .map((atom) => (
+            <li key={atom._id}>
+              <AtomicItem atom={atom} />
             </li>
           ))}
 
