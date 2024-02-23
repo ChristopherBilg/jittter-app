@@ -18,6 +18,10 @@ const AtomicNote = ({ atom }: AtomicNoteProps) => {
     if (editable) editInputRef.current?.focus();
   }, [editable, editInputRef]);
 
+  if (fetcher?.formData?.has("content")) {
+    atom.data.content = String(fetcher.formData.get("content"));
+  }
+
   return (
     <div
       className="flex justify-between space-x-2 overflow-hidden bg-white px-4 py-4 shadow-lg sm:rounded-md sm:px-6"
@@ -50,7 +54,6 @@ const AtomicNote = ({ atom }: AtomicNoteProps) => {
               fetcher.submit(e.target.form);
               setEditable(false);
             }}
-            // TODO: Use optimistic update
           />
         </fetcher.Form>
       ) : (
