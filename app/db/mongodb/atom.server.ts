@@ -7,6 +7,8 @@ export type NoteStructure = {
 export type ContactStructure = {
   data: {
     fullName: string;
+    email: string;
+    phoneNumber: string;
   };
 };
 

@@ -3,14 +3,18 @@ import { Atom } from "~/app/db/mongodb/atom.server";
 import { redirectIfNotAuthenticated } from "~/app/sessions";
 import { exhaustiveMatchingGuard } from "~/app/utils/misc";
 import {
+  validateCreateContactAtom,
   validateCreateNoteAtom,
   validateDeleteAtom,
+  validateUpdateContactAtom,
   validateUpdateNoteAtom,
 } from "./validate";
 
 export const enum FormAction {
   CreateNoteAtom = "create-note-atom",
   UpdateNoteAtom = "update-note-atom",
+  CreateContactAtom = "create-contact-atom",
+  UpdateContactAtom = "update-contact-atom",
   DeleteAtom = "delete-atom",
 }
 
@@ -37,6 +41,29 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 
       const { atomId, content } = validated;
       await Atom.update(userId, atomId, { data: { content } });
+
+      return null;
+    }
+    case FormAction.CreateContactAtom: {
+      const validated = await validateCreateContactAtom(formData);
+      if (!validated) return null;
+
+      const { fullName, email, phoneNumber } = validated;
+      await Atom.create(userId, {
+        type: "contact",
+        data: { fullName, email, phoneNumber },
+      });
+
+      return null;
+    }
+    case FormAction.UpdateContactAtom: {
+      const validated = await validateUpdateContactAtom(formData);
+      if (!validated) return null;
+
+      const { atomId, fullName, email, phoneNumber } = validated;
+      await Atom.update(userId, atomId, {
+        data: { fullName, email, phoneNumber },
+      });
 
       return null;
     }

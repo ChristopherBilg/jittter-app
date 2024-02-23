@@ -23,13 +23,7 @@ const AtomicNote = ({ atom }: AtomicNoteProps) => {
   }
 
   return (
-    <div
-      className="flex justify-between space-x-2 overflow-hidden bg-white px-4 py-4 shadow-lg sm:rounded-md sm:px-6"
-      style={{
-        borderTop: "solid 3px green",
-        borderLeft: "solid 3px green",
-      }}
-    >
+    <div className="flex justify-between space-x-2 overflow-hidden border-l-2 border-t-2 border-green-700 bg-white px-4 py-4 shadow-lg sm:rounded-md sm:px-6">
       {editable ? (
         <fetcher.Form
           method="POST"
