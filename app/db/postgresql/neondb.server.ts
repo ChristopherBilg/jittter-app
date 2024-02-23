@@ -6,15 +6,13 @@ class NeonDB {
   private static _instance: NeonDB;
 
   private _connectionString;
-  private _sql;
   private _db;
 
   private constructor() {
     // TODO: Figure out how to get the connection string from the environment
     this._connectionString =
       "postgresql://christopherbilg:dv91LmpwCjVb@ep-weathered-sky-a5ilhn57-pooler.us-east-2.aws.neon.tech/jittter-product-db?sslmode=require";
-    this._sql = neon(this._connectionString);
-    this._db = drizzle(this._sql, { schema });
+    this._db = drizzle(neon(this._connectionString), { schema });
   }
 
   public static getInstance = (): NeonDB => {
