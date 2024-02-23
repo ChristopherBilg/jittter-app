@@ -15,10 +15,8 @@ export const enum FormAction {
 }
 
 export const action = async ({ request }: ActionFunctionArgs) => {
-  const session = await redirectIfNotAuthenticated(request, "/login");
-
-  const userId = session.get("id");
-  if (!userId) return null;
+  const { user } = await redirectIfNotAuthenticated(request, "/login");
+  const { id: userId } = user;
 
   const formData = await request.formData();
   const _action = formData.get("_action") as FormAction;

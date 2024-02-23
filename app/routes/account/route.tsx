@@ -32,9 +32,7 @@ export const meta: MetaFunction = () => {
 };
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
-  const session = await redirectIfNotAuthenticated(request, "/signin");
-
-  const user = await User.getById(session.data.id!);
+  const { user } = await redirectIfNotAuthenticated(request, "/signin");
 
   return json({
     user,
@@ -47,16 +45,14 @@ const enum FormAction {
 }
 
 export const action = async ({ request }: ActionFunctionArgs) => {
-  const session = await redirectIfNotAuthenticated(request, "/signin");
+  const { user } = await redirectIfNotAuthenticated(request, "/signin");
+  const { id: userId } = user;
 
   const formData = await request.formData();
   const _action = formData.get("_action") as FormAction;
 
   switch (_action) {
     case FormAction.UpdateName: {
-      const userId = session.get("id");
-      if (!userId) return null;
-
       const validateResult = await validateUpdateName(formData);
       if (!validateResult) return null;
 
@@ -70,9 +66,6 @@ export const action = async ({ request }: ActionFunctionArgs) => {
       return null;
     }
     case FormAction.UpdatePassword: {
-      const userId = session.get("id");
-      if (!userId) return null;
-
       const validateResult = await validateUpdatePassword(formData);
       if (!validateResult) return null;
 

@@ -1,10 +1,5 @@
 import { Bars3Icon } from "@heroicons/react/24/outline";
-import {
-  LoaderFunctionArgs,
-  MetaFunction,
-  json,
-  redirect,
-} from "@remix-run/cloudflare";
+import { LoaderFunctionArgs, MetaFunction, json } from "@remix-run/cloudflare";
 import { useLoaderData } from "@remix-run/react";
 import { useState } from "react";
 import AtomicItem from "~/app/components/dashboard/AtomicItem";
@@ -23,10 +18,8 @@ export const meta: MetaFunction = () => {
 };
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
-  const session = await redirectIfNotAuthenticated(request, "/signin");
-
-  const userId = session.get("id");
-  if (!userId) return redirect("/logout");
+  const { user } = await redirectIfNotAuthenticated(request, "/signin");
+  const { id: userId } = user;
 
   const atoms = await Atom.get(userId);
 

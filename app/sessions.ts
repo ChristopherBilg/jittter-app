@@ -1,5 +1,6 @@
 import { createCookieSessionStorage, redirect } from "@remix-run/cloudflare";
 import { InferSelectModel } from "drizzle-orm";
+import { User } from "./db/postgresql/models/user.server";
 import { UserTable } from "./db/postgresql/schema";
 
 export type SessionData = {
@@ -27,12 +28,26 @@ const { getSession, commitSession, destroySession } =
 
 const redirectIfNotAuthenticated = async (request: Request, route: string) => {
   const session = await getSession(request.headers.get("Cookie"));
+  if (!session.has("id")) {
+    throw redirect(route, {
+      status: 302,
+      headers: {
+        "Set-Cookie": await destroySession(session),
+      },
+    });
+  }
 
-  if (!session.has("id")) throw redirect(route, 302);
+  const user = await User.getById(session.get("id")!);
+  if (!user) {
+    throw redirect(route, {
+      status: 302,
+      headers: {
+        "Set-Cookie": await destroySession(session),
+      },
+    });
+  }
 
-  // TODO: Check that the user exists in the database and then return { session, user }
-
-  return session;
+  return { user };
 };
 
 export {
