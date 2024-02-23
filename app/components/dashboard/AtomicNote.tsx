@@ -50,6 +50,7 @@ const AtomicNote = ({ atom }: AtomicNoteProps) => {
               fetcher.submit(e.target.form);
               setEditable(false);
             }}
+            // TODO: Use optimistic update
           />
         </fetcher.Form>
       ) : (
@@ -62,6 +63,7 @@ const AtomicNote = ({ atom }: AtomicNoteProps) => {
         <input type="hidden" name="_action" value={FormAction.DeleteAtom} />
         <input type="hidden" name="atomId" value={atom._id} />
 
+        {/* TODO: Update optimistic delete */}
         <button type="submit" className="rounded-md bg-red-300 text-white">
           <span className="sr-only">Delete, {atom.data.content}</span>
           <XMarkIcon className="h-4 w-4" />
