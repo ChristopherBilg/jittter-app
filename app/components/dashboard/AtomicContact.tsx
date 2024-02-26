@@ -1,8 +1,9 @@
-import { CheckCircleIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { CheckCircleIcon } from "@heroicons/react/24/outline";
 import { useFetcher } from "@remix-run/react";
 import { useRef, useState } from "react";
 import { AtomStructure, ContactStructure } from "~/app/db/mongodb/atom.server";
 import { FormAction } from "~/app/routes/atoms/route";
+import OptimisticDeleteAtomicItemButton from "./OptimisticDeleteAtomicItemButton";
 
 type AtomicContactProps = {
   atom: AtomStructure<ContactStructure>;
@@ -99,16 +100,7 @@ const AtomicContact = ({ atom }: AtomicContactProps) => {
       )}
 
       <div className="flex flex-col justify-between">
-        <fetcher.Form method="POST" action="/atoms">
-          <input type="hidden" name="_action" value={FormAction.DeleteAtom} />
-          <input type="hidden" name="atomId" value={atom._id} />
-
-          {/* TODO: Update optimistic delete */}
-          <button type="submit" className="rounded-md bg-red-300 text-white">
-            <span className="sr-only">Delete, {atom.data.fullName}</span>
-            <XMarkIcon className="h-5 w-5 md:h-4 md:w-4" />
-          </button>
-        </fetcher.Form>
+        <OptimisticDeleteAtomicItemButton id={atom._id} />
 
         {/* TODO: Remove in favor of blur events */}
         {editable && (

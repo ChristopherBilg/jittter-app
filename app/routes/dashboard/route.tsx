@@ -1,6 +1,6 @@
 import { Bars3Icon } from "@heroicons/react/24/outline";
 import { LoaderFunctionArgs, MetaFunction, json } from "@remix-run/cloudflare";
-import { useLoaderData } from "@remix-run/react";
+import { useFetchers, useLoaderData } from "@remix-run/react";
 import { useState } from "react";
 import AtomicItem from "~/app/components/dashboard/AtomicItem";
 import Container from "~/app/components/dashboard/Container";
@@ -8,6 +8,7 @@ import CreateAtomicItem from "~/app/components/dashboard/CreateAtomicItem";
 import Drawer from "~/app/components/dashboard/Drawer";
 import { Atom } from "~/app/db/mongodb/atom.server";
 import { redirectIfNotAuthenticated } from "~/app/sessions";
+import { FormAction } from "../atoms/route";
 
 export const meta: MetaFunction = () => {
   return [
@@ -28,8 +29,23 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   });
 };
 
+const useDeletedAtomIds = () => {
+  return useFetchers()
+    .filter((fetcher) => {
+      if (!fetcher.formData) return false;
+
+      return fetcher.formData.get("_action") === FormAction.DeleteAtom;
+    })
+    .map((fetcher) => String(fetcher.formData!.get("atomId")));
+};
+
 const DashboardRoute = () => {
   const loaderData = useLoaderData<typeof loader>();
+
+  const deletedAtomIds = useDeletedAtomIds();
+  const displayAtoms = loaderData.atoms.filter(
+    (atom) => !deletedAtomIds.includes(atom._id),
+  );
 
   const [open, setOpen] = useState(false);
 
@@ -48,7 +64,7 @@ const DashboardRoute = () => {
       <Drawer open={open} setOpen={setOpen} />
 
       <ul className="my-2 space-y-2 divide-gray-200">
-        {loaderData.atoms.map((atom) => (
+        {displayAtoms.map((atom) => (
           <li key={atom._id}>
             <AtomicItem atom={atom} />
           </li>
