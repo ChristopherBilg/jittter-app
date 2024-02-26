@@ -12,13 +12,19 @@ export type ContactStructure = {
   };
 };
 
+export type ReminderStructure = {
+  data: {
+    content: string;
+  };
+};
+
 export type AtomStructure<T = NoteStructure | ContactStructure> = {
   _id: string;
   userId: string;
   createdAt: string;
   updatedAt: string;
   deletedAt?: string;
-  type: "note" | "contact";
+  type: "note" | "contact" | "reminder";
 } & T;
 
 export class Atom {
@@ -36,8 +42,8 @@ export class Atom {
         document: {
           ...document,
           userId,
-          createdAt: new Date().toUTCString(),
-          updatedAt: new Date().toUTCString(),
+          createdAt: new Date().getTime(),
+          updatedAt: new Date().getTime(),
         },
       });
 
@@ -110,7 +116,7 @@ export class Atom {
         update: {
           $set: {
             ...document,
-            updatedAt: new Date().toUTCString(),
+            updatedAt: new Date().getTime(),
           },
         },
       });
@@ -148,7 +154,7 @@ export class Atom {
         },
         update: {
           $set: {
-            deletedAt: new Date().toUTCString(),
+            deletedAt: new Date().getTime(),
           },
         },
       });

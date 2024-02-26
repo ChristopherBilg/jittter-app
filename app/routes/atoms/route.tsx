@@ -15,6 +15,8 @@ export const enum FormAction {
   UpdateNoteAtom = "update-note-atom",
   CreateContactAtom = "create-contact-atom",
   UpdateContactAtom = "update-contact-atom",
+  CreateReminderAtom = "create-reminder-atom",
+  UpdateReminderAtom = "update-reminder-atom",
   DeleteAtom = "delete-atom",
 }
 
@@ -65,6 +67,14 @@ export const action = async ({ request }: ActionFunctionArgs) => {
         data: { fullName, email, phoneNumber },
       });
 
+      return null;
+    }
+    case FormAction.CreateReminderAtom: {
+      // TODO: Implement
+      return null;
+    }
+    case FormAction.UpdateReminderAtom: {
+      // TODO: Implement
       return null;
     }
     case FormAction.DeleteAtom: {

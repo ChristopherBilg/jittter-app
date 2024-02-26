@@ -4,11 +4,11 @@ import { useRef, useState } from "react";
 import { AtomStructure, ContactStructure } from "~/app/db/mongodb/atom.server";
 import { FormAction } from "~/app/routes/atoms/route";
 
-type AtomicNoteProps = {
+type AtomicContactProps = {
   atom: AtomStructure<ContactStructure>;
 };
 
-const AtomicNote = ({ atom }: AtomicNoteProps) => {
+const AtomicContact = ({ atom }: AtomicContactProps) => {
   const fetcher = useFetcher();
 
   const formRef = useRef<HTMLFormElement>(null);
@@ -30,80 +30,102 @@ const AtomicNote = ({ atom }: AtomicNoteProps) => {
   return (
     <div className="flex justify-between space-x-2 overflow-hidden border-l-2 border-t-2 border-blue-700 bg-white px-4 py-4 shadow-lg sm:rounded-md sm:px-6">
       {editable ? (
-        <>
-          <fetcher.Form
-            ref={formRef}
-            method="POST"
-            action="/atoms"
-            className="flex w-full flex-col space-y-2"
-            onSubmit={() => setEditable(false)}
-          >
-            <input
-              type="hidden"
-              name="_action"
-              value={FormAction.UpdateContactAtom}
-            />
-            <input type="hidden" name="atomId" value={atom._id} />
+        <fetcher.Form
+          ref={formRef}
+          method="POST"
+          action="/atoms"
+          className="flex w-full flex-col space-y-2"
+          onSubmit={() => setEditable(false)}
+        >
+          <input
+            type="text"
+            name="fullName"
+            placeholder="Full name"
+            autoComplete="name"
+            defaultValue={atom.data.fullName ?? ""}
+            className="w-full rounded-md border border-gray-200 p-2"
+          />
 
-            <input
-              type="text"
-              name="fullName"
-              defaultValue={atom.data.fullName ?? ""}
-              className="w-full rounded-md border border-gray-200 p-2"
-            />
+          <input
+            type="email"
+            name="email"
+            placeholder="Email"
+            autoComplete="email"
+            defaultValue={atom.data.email ?? ""}
+            className="w-full rounded-md border border-gray-200 p-2"
+          />
 
-            <input
-              type="text"
-              name="email"
-              defaultValue={atom.data.email ?? ""}
-              className="w-full rounded-md border border-gray-200 p-2"
-            />
+          <input
+            type="text"
+            name="phoneNumber"
+            placeholder="Phone number"
+            autoComplete="tel"
+            defaultValue={atom.data.phoneNumber ?? ""}
+            className="w-full rounded-md border border-gray-200 p-2"
+          />
 
-            <input
-              type="text"
-              name="phoneNumber"
-              defaultValue={atom.data.phoneNumber ?? ""}
-              className="w-full rounded-md border border-gray-200 p-2"
-            />
-          </fetcher.Form>
+          <input
+            type="hidden"
+            name="_action"
+            value={FormAction.UpdateContactAtom}
+          />
 
-          {/* TODO: Remove in favor of blur events */}
-          <div>
-            <button
-              onClick={() => {
-                fetcher.submit(formRef.current);
-                setEditable(false);
-              }}
-              className="rounded-md bg-green-700 text-white"
-            >
-              <span className="sr-only">Save, {atom.data.fullName}</span>
-              <CheckCircleIcon className="h-4 w-4" />
-            </button>
-          </div>
-        </>
+          <input type="hidden" name="atomId" value={atom._id} />
+        </fetcher.Form>
       ) : (
         <button
           onClick={() => setEditable(true)}
           className="flex w-full flex-col space-y-2"
         >
-          <p className="text-left">{atom.data.fullName}</p>
-          <p className="text-left">{atom.data.email}</p>
-          <p className="text-left">{atom.data.phoneNumber}</p>
+          <p className="text-left">
+            <span className="text-sm font-semibold text-gray-600 md:text-xs">
+              Full name:
+            </span>{" "}
+            {atom.data.fullName}
+          </p>
+          <p className="text-left">
+            <span className="text-sm font-semibold text-gray-600 md:text-xs">
+              Email:
+            </span>{" "}
+            {atom.data.email}
+          </p>
+          <p className="text-left">
+            <span className="text-sm font-semibold text-gray-600 md:text-xs">
+              Phone number:
+            </span>{" "}
+            {atom.data.phoneNumber}
+          </p>
         </button>
       )}
 
-      <fetcher.Form method="POST" action="/atoms">
-        <input type="hidden" name="_action" value={FormAction.DeleteAtom} />
-        <input type="hidden" name="atomId" value={atom._id} />
+      <div className="flex flex-col justify-between">
+        <fetcher.Form method="POST" action="/atoms">
+          <input type="hidden" name="_action" value={FormAction.DeleteAtom} />
+          <input type="hidden" name="atomId" value={atom._id} />
 
-        {/* TODO: Update optimistic delete */}
-        <button type="submit" className="rounded-md bg-red-300 text-white">
-          <span className="sr-only">Delete, {atom.data.fullName}</span>
-          <XMarkIcon className="h-4 w-4" />
-        </button>
-      </fetcher.Form>
+          {/* TODO: Update optimistic delete */}
+          <button type="submit" className="rounded-md bg-red-300 text-white">
+            <span className="sr-only">Delete, {atom.data.fullName}</span>
+            <XMarkIcon className="h-5 w-5 md:h-4 md:w-4" />
+          </button>
+        </fetcher.Form>
+
+        {/* TODO: Remove in favor of blur events */}
+        {editable && (
+          <button
+            onClick={() => {
+              fetcher.submit(formRef.current);
+              setEditable(false);
+            }}
+            className="rounded-md bg-green-700 text-white"
+          >
+            <span className="sr-only">Save, {atom.data.fullName}</span>
+            <CheckCircleIcon className="h-5 w-5 md:h-4 md:w-4" />
+          </button>
+        )}
+      </div>
     </div>
   );
 };
 
-export default AtomicNote;
+export default AtomicContact;

@@ -1,14 +1,14 @@
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { useFetcher } from "@remix-run/react";
 import { createRef, useEffect, useState } from "react";
-import { AtomStructure, NoteStructure } from "~/app/db/mongodb/atom.server";
+import { AtomStructure, ReminderStructure } from "~/app/db/mongodb/atom.server";
 import { FormAction } from "~/app/routes/atoms/route";
 
-type AtomicNoteProps = {
-  atom: AtomStructure<NoteStructure>;
+type AtomicReminderProps = {
+  atom: AtomStructure<ReminderStructure>;
 };
 
-const AtomicNote = ({ atom }: AtomicNoteProps) => {
+const AtomicReminder = ({ atom }: AtomicReminderProps) => {
   const fetcher = useFetcher();
 
   const editInputRef = createRef<HTMLInputElement>();
@@ -34,7 +34,7 @@ const AtomicNote = ({ atom }: AtomicNoteProps) => {
           <input
             type="hidden"
             name="_action"
-            value={FormAction.UpdateNoteAtom}
+            value={FormAction.UpdateReminderAtom}
           />
           <input type="hidden" name="atomId" value={atom._id} />
 
@@ -70,4 +70,4 @@ const AtomicNote = ({ atom }: AtomicNoteProps) => {
   );
 };
 
-export default AtomicNote;
+export default AtomicReminder;
