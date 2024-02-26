@@ -1,13 +1,13 @@
 import { z } from "zod";
 
-export const CreateAtomSchema = z.object({
+export const CreateNoteAtomSchema = z.object({
   content: z.string().min(0).max(1024),
 });
 
 export const validateCreateNoteAtom = async (formData: FormData) => {
   const content = formData.get("content");
 
-  const result = CreateAtomSchema.safeParse({
+  const result = CreateNoteAtomSchema.safeParse({
     content,
   });
 
@@ -75,6 +75,41 @@ export const validateUpdateContactAtom = async (formData: FormData) => {
     fullName,
     email,
     phoneNumber,
+  });
+
+  if (!result.success) return null;
+
+  return result.data;
+};
+
+const CreateReminderAtomSchema = z.object({
+  content: z.string().min(0).max(1024),
+});
+
+export const validateCreateReminderAtom = async (formData: FormData) => {
+  const content = formData.get("content");
+
+  const result = CreateReminderAtomSchema.safeParse({
+    content,
+  });
+
+  if (!result.success) return null;
+
+  return result.data;
+};
+
+const UpdateReminderAtomSchema = z.object({
+  atomId: z.string(),
+  content: z.string().min(0).max(1024),
+});
+
+export const validateUpdateReminderAtom = async (formData: FormData) => {
+  const atomId = formData.get("atomId");
+  const content = formData.get("content");
+
+  const result = UpdateReminderAtomSchema.safeParse({
+    atomId,
+    content,
   });
 
   if (!result.success) return null;

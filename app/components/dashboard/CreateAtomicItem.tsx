@@ -1,6 +1,6 @@
 import { Form, useSubmit } from "@remix-run/react";
 import { AtomFormAction } from "~/app/routes/atoms/route";
-import { CreateAtomSchema } from "~/app/routes/atoms/validate";
+import { CreateNoteAtomSchema } from "~/app/routes/atoms/validate";
 
 const CreateAtomicItem = () => {
   const submit = useSubmit();
@@ -27,9 +27,8 @@ const CreateAtomicItem = () => {
         name="content"
         placeholder="Add an atom"
         className="rounded-md border border-gray-200 p-2"
-        maxLength={CreateAtomSchema.shape.content.maxLength ?? undefined}
+        maxLength={CreateNoteAtomSchema.shape.content.maxLength ?? undefined}
         required
-        // TODO: Scroll to this input when the form is submitted
       />
     </Form>
   );

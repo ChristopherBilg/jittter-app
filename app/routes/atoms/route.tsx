@@ -3,10 +3,13 @@ import { Atom, AtomStructure } from "~/app/db/mongodb/atom.server";
 import { redirectIfNotAuthenticated } from "~/app/sessions";
 import { exhaustiveMatchingGuard } from "~/app/utils/misc";
 import {
+  validateCreateContactAtom,
   validateCreateNoteAtom,
+  validateCreateReminderAtom,
   validateDeleteAtom,
   validateUpdateContactAtom,
   validateUpdateNoteAtom,
+  validateUpdateReminderAtom,
 } from "./validate";
 
 export const enum AtomFormAction {
@@ -39,6 +42,35 @@ export const action = async ({ request }: ActionFunctionArgs) => {
             type: _type,
             data: { content },
             createdAt: _createdAt,
+            updatedAt: _createdAt,
+          });
+
+          return null;
+        }
+        case "contact": {
+          const validated = await validateCreateContactAtom(formData);
+          if (!validated) return null;
+
+          const { fullName, email, phoneNumber } = validated;
+          await Atom.create(userId, {
+            type: _type,
+            data: { fullName, email, phoneNumber },
+            createdAt: _createdAt,
+            updatedAt: _createdAt,
+          });
+
+          return null;
+        }
+        case "reminder": {
+          const validated = await validateCreateReminderAtom(formData);
+          if (!validated) return null;
+
+          const { content } = validated;
+          await Atom.create(userId, {
+            type: _type,
+            data: { content },
+            createdAt: _createdAt,
+            updatedAt: _createdAt,
           });
 
           return null;
@@ -77,7 +109,12 @@ export const action = async ({ request }: ActionFunctionArgs) => {
       return null;
     }
     case AtomFormAction.UpdateReminderAtom: {
-      // TODO: Implement
+      const validated = await validateUpdateReminderAtom(formData);
+      if (!validated) return null;
+
+      const { atomId, content } = validated;
+      await Atom.update(userId, atomId, { data: { content } });
+
       return null;
     }
     default:
