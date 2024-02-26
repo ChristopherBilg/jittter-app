@@ -39,7 +39,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   });
 };
 
-const enum FormAction {
+const enum AtomFormAction {
   UpdateName = "update-name",
   UpdatePassword = "update-password",
 }
@@ -49,10 +49,10 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   const { id: userId } = user;
 
   const formData = await request.formData();
-  const _action = formData.get("_action") as FormAction;
+  const _action = formData.get("_action") as AtomFormAction;
 
   switch (_action) {
-    case FormAction.UpdateName: {
+    case AtomFormAction.UpdateName: {
       const validateResult = await validateUpdateName(formData);
       if (!validateResult) return null;
 
@@ -65,7 +65,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 
       return null;
     }
-    case FormAction.UpdatePassword: {
+    case AtomFormAction.UpdatePassword: {
       const validateResult = await validateUpdatePassword(formData);
       if (!validateResult) return null;
 
@@ -274,7 +274,7 @@ const AccountRoute = () => {
                       <input
                         type="hidden"
                         name="_action"
-                        value={FormAction.UpdateName}
+                        value={AtomFormAction.UpdateName}
                       />
 
                       <input
@@ -282,7 +282,7 @@ const AccountRoute = () => {
                         value={
                           fetcher.state !== "idle" &&
                           fetcher.formData?.get("_action") ===
-                            FormAction.UpdateName
+                            AtomFormAction.UpdateName
                             ? "Updating Name..."
                             : "Update Name"
                         }
@@ -342,7 +342,7 @@ const AccountRoute = () => {
                       <input
                         type="hidden"
                         name="_action"
-                        value={FormAction.UpdatePassword}
+                        value={AtomFormAction.UpdatePassword}
                       />
 
                       <input
@@ -350,7 +350,7 @@ const AccountRoute = () => {
                         value={
                           fetcher.state !== "idle" &&
                           fetcher.formData?.get("_action") ===
-                            FormAction.UpdatePassword
+                            AtomFormAction.UpdatePassword
                             ? "Updating Password..."
                             : "Update Password"
                         }

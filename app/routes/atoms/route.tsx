@@ -1,23 +1,20 @@
 import { ActionFunctionArgs } from "@remix-run/cloudflare";
-import { Atom } from "~/app/db/mongodb/atom.server";
+import { Atom, AtomStructure } from "~/app/db/mongodb/atom.server";
 import { redirectIfNotAuthenticated } from "~/app/sessions";
 import { exhaustiveMatchingGuard } from "~/app/utils/misc";
 import {
-  validateCreateContactAtom,
   validateCreateNoteAtom,
   validateDeleteAtom,
   validateUpdateContactAtom,
   validateUpdateNoteAtom,
 } from "./validate";
 
-export const enum FormAction {
-  CreateNoteAtom = "create-note-atom",
-  UpdateNoteAtom = "update-note-atom",
-  CreateContactAtom = "create-contact-atom",
-  UpdateContactAtom = "update-contact-atom",
-  CreateReminderAtom = "create-reminder-atom",
-  UpdateReminderAtom = "update-reminder-atom",
+export const enum AtomFormAction {
+  CreateAtom = "create-note-atom",
   DeleteAtom = "delete-atom",
+  UpdateNoteAtom = "update-note-atom",
+  UpdateContactAtom = "update-contact-atom",
+  UpdateReminderAtom = "update-reminder-atom",
 }
 
 export const action = async ({ request }: ActionFunctionArgs) => {
@@ -25,19 +22,41 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   const { id: userId } = user;
 
   const formData = await request.formData();
-  const _action = formData.get("_action") as FormAction;
+  const _action = formData.get("_action") as AtomFormAction;
 
   switch (_action) {
-    case FormAction.CreateNoteAtom: {
-      const validated = await validateCreateNoteAtom(formData);
+    case AtomFormAction.CreateAtom: {
+      const _type = formData.get("_type");
+      const _createdAt = Number(formData.get("_createdAt"));
+
+      switch (_type as AtomStructure["type"]) {
+        case "note": {
+          const validated = await validateCreateNoteAtom(formData);
+          if (!validated) return null;
+
+          const { content } = validated;
+          await Atom.create(userId, {
+            type: _type,
+            data: { content },
+            createdAt: _createdAt,
+          });
+
+          return null;
+        }
+        default:
+          return null;
+      }
+    }
+    case AtomFormAction.DeleteAtom: {
+      const validated = await validateDeleteAtom(formData);
       if (!validated) return null;
 
-      const { content } = validated;
-      await Atom.create(userId, { type: "note", data: { content } });
+      const { atomId } = validated;
+      await Atom.softDelete(userId, atomId);
 
       return null;
     }
-    case FormAction.UpdateNoteAtom: {
+    case AtomFormAction.UpdateNoteAtom: {
       const validated = await validateUpdateNoteAtom(formData);
       if (!validated) return null;
 
@@ -46,19 +65,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 
       return null;
     }
-    case FormAction.CreateContactAtom: {
-      const validated = await validateCreateContactAtom(formData);
-      if (!validated) return null;
-
-      const { fullName, email, phoneNumber } = validated;
-      await Atom.create(userId, {
-        type: "contact",
-        data: { fullName, email, phoneNumber },
-      });
-
-      return null;
-    }
-    case FormAction.UpdateContactAtom: {
+    case AtomFormAction.UpdateContactAtom: {
       const validated = await validateUpdateContactAtom(formData);
       if (!validated) return null;
 
@@ -69,21 +76,8 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 
       return null;
     }
-    case FormAction.CreateReminderAtom: {
+    case AtomFormAction.UpdateReminderAtom: {
       // TODO: Implement
-      return null;
-    }
-    case FormAction.UpdateReminderAtom: {
-      // TODO: Implement
-      return null;
-    }
-    case FormAction.DeleteAtom: {
-      const validated = await validateDeleteAtom(formData);
-      if (!validated) return null;
-
-      const { atomId } = validated;
-      await Atom.softDelete(userId, atomId);
-
       return null;
     }
     default:

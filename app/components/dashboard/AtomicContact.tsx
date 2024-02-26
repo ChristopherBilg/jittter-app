@@ -2,7 +2,7 @@ import { CheckCircleIcon } from "@heroicons/react/24/outline";
 import { useFetcher } from "@remix-run/react";
 import { useRef, useState } from "react";
 import { AtomStructure, ContactStructure } from "~/app/db/mongodb/atom.server";
-import { FormAction } from "~/app/routes/atoms/route";
+import { AtomFormAction } from "~/app/routes/atoms/route";
 import OptimisticDeleteAtomicItemButton from "./OptimisticDeleteAtomicItemButton";
 
 type AtomicContactProps = {
@@ -68,7 +68,7 @@ const AtomicContact = ({ atom }: AtomicContactProps) => {
           <input
             type="hidden"
             name="_action"
-            value={FormAction.UpdateContactAtom}
+            value={AtomFormAction.UpdateContactAtom}
           />
 
           <input type="hidden" name="atomId" value={atom._id} />

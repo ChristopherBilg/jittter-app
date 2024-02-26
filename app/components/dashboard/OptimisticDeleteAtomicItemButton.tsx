@@ -1,6 +1,6 @@
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { Form, useSubmit } from "@remix-run/react";
-import { FormAction } from "~/app/routes/atoms/route";
+import { AtomFormAction } from "~/app/routes/atoms/route";
 
 type OptimisticDeleteAtomicItemButtonProps = {
   id: string;
@@ -20,7 +20,7 @@ const OptimisticDeleteAtomicItemButton = ({
         submit(formData, { method: "POST", action: "/atoms", navigate: false });
       }}
     >
-      <input type="hidden" name="_action" value={FormAction.DeleteAtom} />
+      <input type="hidden" name="_action" value={AtomFormAction.DeleteAtom} />
       <input type="hidden" name="atomId" value={id} />
 
       <button type="submit" className="rounded-md bg-red-300 text-white">

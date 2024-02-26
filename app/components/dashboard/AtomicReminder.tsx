@@ -1,7 +1,7 @@
 import { useFetcher } from "@remix-run/react";
 import { createRef, useEffect, useState } from "react";
 import { AtomStructure, ReminderStructure } from "~/app/db/mongodb/atom.server";
-import { FormAction } from "~/app/routes/atoms/route";
+import { AtomFormAction } from "~/app/routes/atoms/route";
 import OptimisticDeleteAtomicItemButton from "./OptimisticDeleteAtomicItemButton";
 
 type AtomicReminderProps = {
@@ -34,7 +34,7 @@ const AtomicReminder = ({ atom }: AtomicReminderProps) => {
           <input
             type="hidden"
             name="_action"
-            value={FormAction.UpdateReminderAtom}
+            value={AtomFormAction.UpdateReminderAtom}
           />
           <input type="hidden" name="atomId" value={atom._id} />
 

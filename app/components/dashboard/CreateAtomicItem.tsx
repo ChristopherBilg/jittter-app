@@ -1,27 +1,26 @@
-import { useFetcher } from "@remix-run/react";
-import { useEffect, useRef } from "react";
-import { FormAction } from "~/app/routes/atoms/route";
+import { Form, useSubmit } from "@remix-run/react";
+import { AtomFormAction } from "~/app/routes/atoms/route";
 import { CreateAtomSchema } from "~/app/routes/atoms/validate";
 
 const CreateAtomicItem = () => {
-  const fetcher = useFetcher();
-
-  const formRef = useRef<HTMLFormElement>(null);
-  useEffect(() => {
-    if (fetcher.state === "idle") {
-      formRef.current?.reset();
-      formRef.current?.scrollIntoView({ behavior: "smooth" });
-    }
-  }, [fetcher.state, fetcher.data]);
+  const submit = useSubmit();
 
   return (
-    <fetcher.Form
-      ref={formRef}
-      method="POST"
+    <Form
       className="flex flex-col overflow-hidden bg-white px-4 py-4 shadow-lg sm:rounded-md sm:px-6"
-      action="/atoms"
+      onSubmit={(e) => {
+        e.preventDefault();
+
+        const formData = new FormData(e.currentTarget);
+        formData.set("_createdAt", new Date().getTime().toString());
+
+        submit(formData, { method: "POST", action: "/atoms", navigate: false });
+
+        e.currentTarget.reset();
+      }}
     >
-      <input type="hidden" name="_action" value={FormAction.CreateNoteAtom} />
+      <input type="hidden" name="_action" value={AtomFormAction.CreateAtom} />
+      <input type="hidden" name="_type" value="note" />
 
       <input
         type="text"
@@ -30,9 +29,9 @@ const CreateAtomicItem = () => {
         className="rounded-md border border-gray-200 p-2"
         maxLength={CreateAtomSchema.shape.content.maxLength ?? undefined}
         required
-        // TODO: Use optimistic add
+        // TODO: Scroll to this input when the form is submitted
       />
-    </fetcher.Form>
+    </Form>
   );
 };
 

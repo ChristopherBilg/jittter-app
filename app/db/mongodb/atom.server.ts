@@ -21,9 +21,9 @@ export type ReminderStructure = {
 export type AtomStructure<T = NoteStructure | ContactStructure> = {
   _id: string;
   userId: string;
-  createdAt: string;
-  updatedAt: string;
-  deletedAt?: string;
+  createdAt: number;
+  updatedAt: number;
+  deletedAt?: number;
   type: "note" | "contact" | "reminder";
 } & T;
 
@@ -40,10 +40,10 @@ export class Atom {
         database: "jittter-product-cluster",
         collection: "atom",
         document: {
-          ...document,
           userId,
           createdAt: new Date().getTime(),
           updatedAt: new Date().getTime(),
+          ...document,
         },
       });
 
@@ -115,8 +115,8 @@ export class Atom {
         },
         update: {
           $set: {
-            ...document,
             updatedAt: new Date().getTime(),
+            ...document,
           },
         },
       });
