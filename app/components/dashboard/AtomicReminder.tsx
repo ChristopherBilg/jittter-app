@@ -1,6 +1,6 @@
 import { useFetcher } from "@remix-run/react";
 import { createRef, useEffect, useState } from "react";
-import { AtomStructure, ReminderStructure } from "~/app/db/mongodb/atom.server";
+import { AtomStructure, ReminderStructure } from "~/app/db.server/mongodb/atom";
 import { AtomFormAction } from "~/app/routes/atoms/route";
 import OptimisticDeleteAtomicItemButton from "./OptimisticDeleteAtomicItemButton";
 
@@ -20,6 +20,14 @@ const AtomicReminder = ({ atom }: AtomicReminderProps) => {
 
   if (fetcher?.formData?.has("content")) {
     atom.data.content = String(fetcher.formData.get("content"));
+  }
+
+  if (fetcher?.formData?.has("frequency")) {
+    atom.data.frequency = String(fetcher.formData.get("frequency"));
+  }
+
+  if (fetcher?.formData?.has("startingAt")) {
+    atom.data.startingAt = String(fetcher.formData.get("startingAt"));
   }
 
   return (

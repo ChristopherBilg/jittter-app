@@ -1,6 +1,6 @@
 import { pgTable, text, uuid } from "drizzle-orm/pg-core";
 import { getTimestampFields } from "../../../utils/db";
-import NeonDB from "../neondb.server";
+import NeonDB from "../neondb";
 
 export const ContactUsTable = pgTable("contact_us", {
   id: uuid("id").primaryKey().defaultRandom(),

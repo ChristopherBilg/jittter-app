@@ -1,9 +1,10 @@
 import { useFetchers, useLoaderData } from "@remix-run/react";
-import { AtomStructure, NoteStructure } from "~/app/db/mongodb/atom.server";
+import { AtomStructure, NoteStructure } from "~/app/db.server/mongodb/atom";
 import { AtomFormAction } from "~/app/routes/atoms/route";
 import { loader } from "~/app/routes/dashboard/route";
 import AtomicItem from "./AtomicItem";
 import CreateAtomicItem from "./CreateAtomicItem";
+import CreateAtomicReminder from "./CreateAtomicReminder";
 
 const useDeletedAtomIds = () => {
   return useFetchers()
@@ -66,6 +67,10 @@ const AtomicItemList = () => {
 
       <li>
         <CreateAtomicItem />
+      </li>
+
+      <li>
+        <CreateAtomicReminder />
       </li>
     </ul>
   );

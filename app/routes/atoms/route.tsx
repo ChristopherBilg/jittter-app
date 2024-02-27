@@ -1,5 +1,5 @@
 import { ActionFunctionArgs } from "@remix-run/cloudflare";
-import { Atom, AtomStructure } from "~/app/db/mongodb/atom.server";
+import { Atom, AtomStructure } from "~/app/db.server/mongodb/atom";
 import { redirectIfNotAuthenticated } from "~/app/sessions";
 import { exhaustiveMatchingGuard } from "~/app/utils/misc";
 import {
@@ -65,10 +65,10 @@ export const action = async ({ request }: ActionFunctionArgs) => {
           const validated = await validateCreateReminderAtom(formData);
           if (!validated) return null;
 
-          const { content } = validated;
+          const { content, frequency, startingAt } = validated;
           await Atom.create(userId, {
             type: _type,
-            data: { content },
+            data: { content, frequency, startingAt },
             createdAt: _createdAt,
             updatedAt: _createdAt,
           });

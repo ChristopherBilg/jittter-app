@@ -15,6 +15,8 @@ export type ContactStructure = {
 export type ReminderStructure = {
   data: {
     content: string;
+    frequency: string;
+    startingAt: string;
   };
 };
 

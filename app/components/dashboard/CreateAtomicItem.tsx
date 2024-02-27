@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { AtomStructure } from "~/app/db/mongodb/atom.server";
+import { AtomStructure } from "~/app/db.server/mongodb/atom";
 import CreateAtomicNote from "./CreateAtomicNote";
 
 const CreateAtomicItem = () => {

@@ -1,6 +1,6 @@
 import { useFetcher } from "@remix-run/react";
 import { createRef, useEffect, useState } from "react";
-import { AtomStructure, NoteStructure } from "~/app/db/mongodb/atom.server";
+import { AtomStructure, NoteStructure } from "~/app/db.server/mongodb/atom";
 import { AtomFormAction } from "~/app/routes/atoms/route";
 import OptimisticDeleteAtomicItemButton from "./OptimisticDeleteAtomicItemButton";
 

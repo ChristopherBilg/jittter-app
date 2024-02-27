@@ -8,7 +8,7 @@ import { Link, useFetcher, useLoaderData } from "@remix-run/react";
 import { useEffect, useRef } from "react";
 import Logo from "~/app/components/common/Logo";
 import SlimLayout from "~/app/components/common/SlimLayout";
-import { ContactUs } from "~/app/db/postgresql/models/contact-us.server";
+import { ContactUs } from "~/app/db.server/postgresql/models/contact-us";
 import { commitSession, getSession } from "~/app/sessions";
 import { SendMessageSchema, validateSendMessage } from "./validate";
 

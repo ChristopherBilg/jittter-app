@@ -4,7 +4,7 @@ import {
 } from "@heroicons/react/24/outline";
 import { useFetcher } from "@remix-run/react";
 import { useRef, useState } from "react";
-import { AtomStructure, ContactStructure } from "~/app/db/mongodb/atom.server";
+import { AtomStructure, ContactStructure } from "~/app/db.server/mongodb/atom";
 import { AtomFormAction } from "~/app/routes/atoms/route";
 import OptimisticDeleteAtomicItemButton from "./OptimisticDeleteAtomicItemButton";
 

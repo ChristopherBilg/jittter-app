@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { AtomicReminderFrequency } from "~/app/utils/constant";
 
 export const CreateNoteAtomSchema = z.object({
   content: z.string().min(0).max(1024),
@@ -84,13 +85,19 @@ export const validateUpdateContactAtom = async (formData: FormData) => {
 
 const CreateReminderAtomSchema = z.object({
   content: z.string().min(0).max(1024),
+  frequency: z.nativeEnum(AtomicReminderFrequency),
+  startingAt: z.string().min(0).max(256),
 });
 
 export const validateCreateReminderAtom = async (formData: FormData) => {
   const content = formData.get("content");
+  const frequency = formData.get("frequency");
+  const startingAt = formData.get("startingAt");
 
   const result = CreateReminderAtomSchema.safeParse({
     content,
+    frequency,
+    startingAt,
   });
 
   if (!result.success) return null;

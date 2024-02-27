@@ -3,7 +3,7 @@ import {
   ContactStructure,
   NoteStructure,
   ReminderStructure,
-} from "~/app/db/mongodb/atom.server";
+} from "~/app/db.server/mongodb/atom";
 import AtomicContact from "./AtomicContact";
 import AtomicNote from "./AtomicNote";
 import AtomicReminder from "./AtomicReminder";
