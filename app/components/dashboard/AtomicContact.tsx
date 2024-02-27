@@ -1,4 +1,7 @@
-import { CheckCircleIcon } from "@heroicons/react/24/outline";
+import {
+  ArrowUturnLeftIcon,
+  CheckCircleIcon,
+} from "@heroicons/react/24/outline";
 import { useFetcher } from "@remix-run/react";
 import { useRef, useState } from "react";
 import { AtomStructure, ContactStructure } from "~/app/db/mongodb/atom.server";
@@ -100,7 +103,17 @@ const AtomicContact = ({ atom }: AtomicContactProps) => {
       )}
 
       <div className="flex flex-col justify-between">
-        <OptimisticDeleteAtomicItemButton id={atom._id} />
+        {editable ? (
+          <button
+            onClick={() => setEditable(false)}
+            className="rounded-md bg-gray-400 text-white"
+          >
+            <span className="sr-only">Undo, {atom.data.fullName}</span>
+            <ArrowUturnLeftIcon className="h-5 w-5 md:h-4 md:w-4" />
+          </button>
+        ) : (
+          <OptimisticDeleteAtomicItemButton id={atom._id} />
+        )}
 
         {/* TODO: Remove in favor of blur events */}
         {editable && (
