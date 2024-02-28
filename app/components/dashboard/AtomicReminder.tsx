@@ -1,13 +1,10 @@
-import {
-  ArrowUturnLeftIcon,
-  CheckCircleIcon,
-} from "@heroicons/react/24/outline";
 import { useFetcher } from "@remix-run/react";
 import { useEffect, useRef, useState } from "react";
 import { AtomStructure, ReminderStructure } from "~/app/db.server/mongodb/atom";
 import { AtomFormAction } from "~/app/routes/atoms/route";
 import { UpdateReminderAtomSchema } from "~/app/routes/atoms/validate";
 import { AtomicReminderFrequency } from "~/app/utils/constant";
+import { getNextReminderDate } from "~/app/utils/date";
 import OptimisticDeleteAtomicItemButton from "./OptimisticDeleteAtomicItemButton";
 
 type AtomicReminderProps = {
@@ -30,7 +27,9 @@ const AtomicReminder = ({ atom }: AtomicReminderProps) => {
   }
 
   if (fetcher?.formData?.has("frequency")) {
-    atom.data.frequency = String(fetcher.formData.get("frequency"));
+    atom.data.frequency = fetcher.formData.get(
+      "frequency",
+    ) as AtomicReminderFrequency;
   }
 
   if (fetcher?.formData?.has("startingAt")) {
@@ -46,6 +45,18 @@ const AtomicReminder = ({ atom }: AtomicReminderProps) => {
           action="/atoms"
           className="flex w-full flex-col space-y-2"
           onSubmit={() => setEditable(false)}
+          onBlur={(e) => {
+            if (
+              !formRef.current?.contains(e.relatedTarget as Node) &&
+              !(
+                e.relatedTarget instanceof HTMLButtonElement &&
+                e.relatedTarget.name === "delete-atom"
+              )
+            ) {
+              fetcher.submit(formRef.current);
+              setEditable(false);
+            }
+          }}
         >
           <input
             ref={firstInputRef}
@@ -120,38 +131,12 @@ const AtomicReminder = ({ atom }: AtomicReminderProps) => {
               Next reminder at:
             </span>{" "}
             {/* TODO: Update to perform calculation to get next reminder date */}
-            {atom.data.startingAt}
+            {getNextReminderDate(atom.data.startingAt, atom.data.frequency)}
           </p>
         </button>
       )}
 
-      <div className="flex flex-col justify-between">
-        {editable ? (
-          <button
-            onClick={() => setEditable(false)}
-            className="rounded-md bg-gray-400 text-white"
-          >
-            <span className="sr-only">Undo, {atom.data.content}</span>
-            <ArrowUturnLeftIcon className="h-5 w-5 md:h-4 md:w-4" />
-          </button>
-        ) : (
-          <OptimisticDeleteAtomicItemButton id={atom._id} />
-        )}
-
-        {/* TODO: Remove in favor of blur events */}
-        {editable && (
-          <button
-            onClick={() => {
-              fetcher.submit(formRef.current);
-              setEditable(false);
-            }}
-            className="rounded-md bg-green-700 text-white"
-          >
-            <span className="sr-only">Save, {atom.data.content}</span>
-            <CheckCircleIcon className="h-5 w-5 md:h-4 md:w-4" />
-          </button>
-        )}
-      </div>
+      <OptimisticDeleteAtomicItemButton id={atom._id} />
     </div>
   );
 };

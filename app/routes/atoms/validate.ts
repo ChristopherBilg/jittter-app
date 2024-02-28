@@ -36,7 +36,7 @@ export const validateUpdateNoteAtom = async (formData: FormData) => {
   return result.data;
 };
 
-const CreateContactAtomSchema = z.object({
+export const CreateContactAtomSchema = z.object({
   fullName: z.string().min(0).max(256),
   email: z.string().email(),
   phoneNumber: z.string().min(0).max(16),

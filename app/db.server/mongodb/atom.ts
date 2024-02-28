@@ -1,3 +1,5 @@
+import { AtomicReminderFrequency } from "~/app/utils/constant";
+
 export type NoteStructure = {
   data: {
     content: string;
@@ -15,7 +17,7 @@ export type ContactStructure = {
 export type ReminderStructure = {
   data: {
     content: string;
-    frequency: string;
+    frequency: AtomicReminderFrequency;
     startingAt: string;
   };
 };

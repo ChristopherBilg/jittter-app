@@ -3,7 +3,8 @@ import { AtomStructure, NoteStructure } from "~/app/db.server/mongodb/atom";
 import { AtomFormAction } from "~/app/routes/atoms/route";
 import { loader } from "~/app/routes/dashboard/route";
 import AtomicItem from "./AtomicItem";
-import CreateAtomicItem from "./CreateAtomicItem";
+import CreateAtomicContact from "./CreateAtomicContact";
+import CreateAtomicNote from "./CreateAtomicNote";
 import CreateAtomicReminder from "./CreateAtomicReminder";
 
 const useDeletedAtomIds = () => {
@@ -66,11 +67,15 @@ const AtomicItemList = () => {
       ))}
 
       <li>
-        <CreateAtomicItem />
+        <CreateAtomicNote />
       </li>
 
       <li>
         <CreateAtomicReminder />
+      </li>
+
+      <li>
+        <CreateAtomicContact />
       </li>
     </ul>
   );

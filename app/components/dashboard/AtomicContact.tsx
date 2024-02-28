@@ -1,9 +1,5 @@
-import {
-  ArrowUturnLeftIcon,
-  CheckCircleIcon,
-} from "@heroicons/react/24/outline";
 import { useFetcher } from "@remix-run/react";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AtomStructure, ContactStructure } from "~/app/db.server/mongodb/atom";
 import { AtomFormAction } from "~/app/routes/atoms/route";
 import OptimisticDeleteAtomicItemButton from "./OptimisticDeleteAtomicItemButton";
@@ -16,8 +12,12 @@ const AtomicContact = ({ atom }: AtomicContactProps) => {
   const fetcher = useFetcher();
 
   const formRef = useRef<HTMLFormElement>(null);
+  const firstInputRef = useRef<HTMLInputElement>(null);
 
   const [editable, setEditable] = useState(false);
+  useEffect(() => {
+    if (editable) firstInputRef.current?.focus();
+  }, [editable, firstInputRef]);
 
   if (fetcher?.formData?.has("fullName")) {
     atom.data.fullName = String(fetcher.formData.get("fullName"));
@@ -40,8 +40,21 @@ const AtomicContact = ({ atom }: AtomicContactProps) => {
           action="/atoms"
           className="flex w-full flex-col space-y-2"
           onSubmit={() => setEditable(false)}
+          onBlur={(e) => {
+            if (
+              !formRef.current?.contains(e.relatedTarget as Node) &&
+              !(
+                e.relatedTarget instanceof HTMLButtonElement &&
+                e.relatedTarget.name === "delete-atom"
+              )
+            ) {
+              fetcher.submit(formRef.current);
+              setEditable(false);
+            }
+          }}
         >
           <input
+            ref={firstInputRef}
             type="text"
             name="fullName"
             placeholder="Full name"
@@ -75,6 +88,7 @@ const AtomicContact = ({ atom }: AtomicContactProps) => {
           />
 
           <input type="hidden" name="atomId" value={atom._id} />
+          <input type="submit" className="hidden" />
         </fetcher.Form>
       ) : (
         <button
@@ -104,33 +118,7 @@ const AtomicContact = ({ atom }: AtomicContactProps) => {
         </button>
       )}
 
-      <div className="flex flex-col justify-between">
-        {editable ? (
-          <button
-            onClick={() => setEditable(false)}
-            className="rounded-md bg-gray-400 text-white"
-          >
-            <span className="sr-only">Undo, {atom.data.fullName}</span>
-            <ArrowUturnLeftIcon className="h-5 w-5 md:h-4 md:w-4" />
-          </button>
-        ) : (
-          <OptimisticDeleteAtomicItemButton id={atom._id} />
-        )}
-
-        {/* TODO: Remove in favor of blur events */}
-        {editable && (
-          <button
-            onClick={() => {
-              fetcher.submit(formRef.current);
-              setEditable(false);
-            }}
-            className="rounded-md bg-green-700 text-white"
-          >
-            <span className="sr-only">Save, {atom.data.fullName}</span>
-            <CheckCircleIcon className="h-5 w-5 md:h-4 md:w-4" />
-          </button>
-        )}
-      </div>
+      <OptimisticDeleteAtomicItemButton id={atom._id} />
     </div>
   );
 };

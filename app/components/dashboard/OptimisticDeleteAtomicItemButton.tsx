@@ -23,7 +23,11 @@ const OptimisticDeleteAtomicItemButton = ({
       <input type="hidden" name="_action" value={AtomFormAction.DeleteAtom} />
       <input type="hidden" name="atomId" value={id} />
 
-      <button type="submit" className="rounded-md bg-red-300 text-white">
+      <button
+        type="submit"
+        name="delete-atom"
+        className="rounded-md bg-red-300 text-white"
+      >
         <span className="sr-only">Delete atom, {id}</span>
         <XMarkIcon className="h-5 w-5 md:h-4 md:w-4" />
       </button>

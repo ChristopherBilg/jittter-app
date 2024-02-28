@@ -31,6 +31,17 @@ const AtomicNote = ({ atom }: AtomicNoteProps) => {
           action="/atoms"
           className="w-full"
           onSubmit={() => setEditable(false)}
+          onBlur={(e) => {
+            if (
+              !(
+                e.relatedTarget instanceof HTMLButtonElement &&
+                e.relatedTarget.name === "delete-atom"
+              )
+            ) {
+              fetcher.submit(e.target.form);
+              setEditable(false);
+            }
+          }}
         >
           <input
             type="hidden"
@@ -49,10 +60,6 @@ const AtomicNote = ({ atom }: AtomicNoteProps) => {
             maxLength={
               UpdateNoteAtomSchema.shape.content.maxLength ?? undefined
             }
-            onBlur={(e) => {
-              fetcher.submit(e.target.form);
-              setEditable(false);
-            }}
           />
         </fetcher.Form>
       ) : (

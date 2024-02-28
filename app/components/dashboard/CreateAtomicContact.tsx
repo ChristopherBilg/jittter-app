@@ -1,9 +1,8 @@
 import { Form, useSubmit } from "@remix-run/react";
 import { AtomFormAction } from "~/app/routes/atoms/route";
-import { CreateReminderAtomSchema } from "~/app/routes/atoms/validate";
-import { AtomicReminderFrequency } from "~/app/utils/constant";
+import { CreateContactAtomSchema } from "~/app/routes/atoms/validate";
 
-const CreateAtomicReminder = () => {
+const CreateAtomicContact = () => {
   const submit = useSubmit();
 
   return (
@@ -21,39 +20,36 @@ const CreateAtomicReminder = () => {
       }}
     >
       <input type="hidden" name="_action" value={AtomFormAction.CreateAtom} />
-      <input type="hidden" name="_type" value="reminder" />
+      <input type="hidden" name="_type" value="contact" />
 
       <input
         type="text"
-        name="content"
-        placeholder="Add a reminder"
+        name="fullName"
+        placeholder="Full name"
         className="rounded-md border border-gray-200 p-2"
         maxLength={
-          CreateReminderAtomSchema.shape.content.maxLength ?? undefined
+          CreateContactAtomSchema.shape.fullName.maxLength ?? undefined
         }
         required
       />
 
       <div className="flex flex-col space-y-2 md:flex-row md:space-x-2 md:space-y-0">
-        <select
-          name="frequency"
+        <input
+          type="email"
+          name="email"
+          placeholder="Email address"
           className="rounded-md border border-gray-200 p-2 md:w-1/2"
+          maxLength={CreateContactAtomSchema.shape.email.maxLength ?? undefined}
           required
-        >
-          {Object.entries(AtomicReminderFrequency).map(([key, value]) => (
-            <option key={key} value={value}>
-              {key}
-            </option>
-          ))}
-        </select>
+        />
 
         <input
-          type="date"
-          name="startingAt"
+          type="tel"
+          name="phoneNumber"
+          placeholder="Phone number"
           className="rounded-md border border-gray-200 p-2 md:w-1/2"
-          defaultValue={new Date().toISOString().split("T")[0]}
           maxLength={
-            CreateReminderAtomSchema.shape.startingAt.maxLength ?? undefined
+            CreateContactAtomSchema.shape.phoneNumber.maxLength ?? undefined
           }
           required
         />
@@ -64,4 +60,4 @@ const CreateAtomicReminder = () => {
   );
 };
 
-export default CreateAtomicReminder;
+export default CreateAtomicContact;
