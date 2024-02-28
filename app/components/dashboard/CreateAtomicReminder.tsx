@@ -50,7 +50,7 @@ const CreateAtomicReminder = () => {
         <input
           type="date"
           name="startingAt"
-          className="rounded-md border border-gray-200 p-2 md:w-1/2"
+          className="w-full rounded-md border border-gray-200 p-2 md:w-1/2"
           defaultValue={new Date().toISOString().split("T")[0]}
           maxLength={
             CreateReminderAtomSchema.shape.startingAt.maxLength ?? undefined

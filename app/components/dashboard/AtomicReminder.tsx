@@ -88,7 +88,7 @@ const AtomicReminder = ({ atom }: AtomicReminderProps) => {
             <input
               type="date"
               name="startingAt"
-              className="rounded-md border border-gray-200 p-2 md:w-1/2"
+              className="w-full rounded-md border border-gray-200 p-2 md:w-1/2"
               defaultValue={atom.data.startingAt ?? ""}
               maxLength={
                 UpdateReminderAtomSchema.shape.startingAt.maxLength ?? undefined
