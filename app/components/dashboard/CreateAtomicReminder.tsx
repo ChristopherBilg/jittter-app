@@ -1,7 +1,7 @@
 import { Form, useSubmit } from "@remix-run/react";
 import { useEffect, useRef } from "react";
 import { AtomFormAction } from "~/app/routes/atoms/route";
-import { CreateNoteAtomSchema } from "~/app/routes/atoms/validate";
+import { CreateReminderAtomSchema } from "~/app/routes/atoms/validate";
 import { AtomicReminderFrequency } from "~/app/utils/constant";
 
 const CreateAtomicReminder = () => {
@@ -35,7 +35,9 @@ const CreateAtomicReminder = () => {
         name="content"
         placeholder="Add a reminder"
         className="rounded-md border border-gray-200 p-2"
-        maxLength={CreateNoteAtomSchema.shape.content.maxLength ?? undefined}
+        maxLength={
+          CreateReminderAtomSchema.shape.content.maxLength ?? undefined
+        }
         required
       />
 
@@ -57,6 +59,9 @@ const CreateAtomicReminder = () => {
           name="startingAt"
           className="rounded-md border border-gray-200 p-2 md:w-1/2"
           defaultValue={new Date().toISOString().split("T")[0]}
+          maxLength={
+            CreateReminderAtomSchema.shape.startingAt.maxLength ?? undefined
+          }
           required
         />
       </div>

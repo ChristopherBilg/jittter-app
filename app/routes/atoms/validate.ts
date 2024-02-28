@@ -17,7 +17,7 @@ export const validateCreateNoteAtom = async (formData: FormData) => {
   return result.data;
 };
 
-const UpdateAtomSchema = z.object({
+export const UpdateNoteAtomSchema = z.object({
   atomId: z.string(),
   content: z.string().min(0).max(1024),
 });
@@ -26,7 +26,7 @@ export const validateUpdateNoteAtom = async (formData: FormData) => {
   const atomId = formData.get("atomId");
   const content = formData.get("content");
 
-  const result = UpdateAtomSchema.safeParse({
+  const result = UpdateNoteAtomSchema.safeParse({
     atomId,
     content,
   });
@@ -83,10 +83,10 @@ export const validateUpdateContactAtom = async (formData: FormData) => {
   return result.data;
 };
 
-const CreateReminderAtomSchema = z.object({
+export const CreateReminderAtomSchema = z.object({
   content: z.string().min(0).max(1024),
   frequency: z.nativeEnum(AtomicReminderFrequency),
-  startingAt: z.string().min(0).max(256),
+  startingAt: z.string().min(0).max(32),
 });
 
 export const validateCreateReminderAtom = async (formData: FormData) => {
@@ -105,18 +105,24 @@ export const validateCreateReminderAtom = async (formData: FormData) => {
   return result.data;
 };
 
-const UpdateReminderAtomSchema = z.object({
+export const UpdateReminderAtomSchema = z.object({
   atomId: z.string(),
   content: z.string().min(0).max(1024),
+  frequency: z.nativeEnum(AtomicReminderFrequency),
+  startingAt: z.string().min(0).max(32),
 });
 
 export const validateUpdateReminderAtom = async (formData: FormData) => {
   const atomId = formData.get("atomId");
   const content = formData.get("content");
+  const frequency = formData.get("frequency");
+  const startingAt = formData.get("startingAt");
 
   const result = UpdateReminderAtomSchema.safeParse({
     atomId,
     content,
+    frequency,
+    startingAt,
   });
 
   if (!result.success) return null;

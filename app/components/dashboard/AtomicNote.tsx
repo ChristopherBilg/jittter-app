@@ -1,7 +1,8 @@
 import { useFetcher } from "@remix-run/react";
-import { createRef, useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AtomStructure, NoteStructure } from "~/app/db.server/mongodb/atom";
 import { AtomFormAction } from "~/app/routes/atoms/route";
+import { UpdateNoteAtomSchema } from "~/app/routes/atoms/validate";
 import OptimisticDeleteAtomicItemButton from "./OptimisticDeleteAtomicItemButton";
 
 type AtomicNoteProps = {
@@ -11,7 +12,7 @@ type AtomicNoteProps = {
 const AtomicNote = ({ atom }: AtomicNoteProps) => {
   const fetcher = useFetcher();
 
-  const editInputRef = createRef<HTMLInputElement>();
+  const editInputRef = useRef<HTMLInputElement>(null);
 
   const [editable, setEditable] = useState(false);
   useEffect(() => {
@@ -42,8 +43,12 @@ const AtomicNote = ({ atom }: AtomicNoteProps) => {
             ref={editInputRef}
             type="text"
             name="content"
+            placeholder="Add a note"
             defaultValue={atom.data.content ?? ""}
             className="w-full rounded-md border border-gray-200 p-2"
+            maxLength={
+              UpdateNoteAtomSchema.shape.content.maxLength ?? undefined
+            }
             onBlur={(e) => {
               fetcher.submit(e.target.form);
               setEditable(false);

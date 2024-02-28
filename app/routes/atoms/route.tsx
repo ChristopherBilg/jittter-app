@@ -112,8 +112,10 @@ export const action = async ({ request }: ActionFunctionArgs) => {
       const validated = await validateUpdateReminderAtom(formData);
       if (!validated) return null;
 
-      const { atomId, content } = validated;
-      await Atom.update(userId, atomId, { data: { content } });
+      const { atomId, content, frequency, startingAt } = validated;
+      await Atom.update(userId, atomId, {
+        data: { content, frequency, startingAt },
+      });
 
       return null;
     }
