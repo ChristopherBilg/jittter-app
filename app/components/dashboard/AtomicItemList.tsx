@@ -24,9 +24,11 @@ const usePendingAtoms = () => {
       return fetcher.formData.get("_action") === AtomFormAction.CreateAtom;
     })
     .map((fetcher) => {
-      const content = String(fetcher.formData!.get("content"));
       const _createdAt = Number(fetcher.formData!.get("_createdAt"));
       const _type = String(fetcher.formData!.get("_type"));
+
+      const allFormEntries = fetcher.formData!.entries();
+      const data = Object.fromEntries(allFormEntries);
 
       return {
         _id: `pending-${_createdAt}`,
@@ -34,9 +36,7 @@ const usePendingAtoms = () => {
         createdAt: _createdAt,
         updatedAt: _createdAt,
         userId: "pending",
-        data: {
-          content: content,
-        },
+        data,
       } as AtomStructure<NoteStructure>;
     });
 };

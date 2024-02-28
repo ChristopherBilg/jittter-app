@@ -57,6 +57,7 @@ const AtomicReminder = ({ atom }: AtomicReminderProps) => {
             maxLength={
               UpdateReminderAtomSchema.shape.content.maxLength ?? undefined
             }
+            required
           />
 
           <div className="flex flex-col space-y-2 md:flex-row md:space-x-2 md:space-y-0">
@@ -104,6 +105,7 @@ const AtomicReminder = ({ atom }: AtomicReminderProps) => {
             </span>{" "}
             {atom.data.content}
           </p>
+
           <p className="text-left">
             <span className="text-sm font-semibold text-gray-600 md:text-xs">
               Frequency:
@@ -112,6 +114,7 @@ const AtomicReminder = ({ atom }: AtomicReminderProps) => {
               ([, value]) => value === atom.data.frequency,
             )?.[0] ?? "Unknown"}
           </p>
+
           <p className="text-left">
             <span className="text-sm font-semibold text-gray-600 md:text-xs">
               Next reminder at:

@@ -32,7 +32,7 @@ const AtomicContact = ({ atom }: AtomicContactProps) => {
   }
 
   return (
-    <div className="flex justify-between space-x-2 overflow-hidden border-l-2 border-t-2 border-blue-700 bg-white px-4 py-4 shadow-lg sm:rounded-md sm:px-6">
+    <div className="flex justify-between space-x-2 overflow-hidden border-l-2 border-t-2 border-red-600 bg-white px-4 py-4 shadow-lg sm:rounded-md sm:px-6">
       {editable ? (
         <fetcher.Form
           ref={formRef}
@@ -87,12 +87,14 @@ const AtomicContact = ({ atom }: AtomicContactProps) => {
             </span>{" "}
             {atom.data.fullName}
           </p>
+
           <p className="text-left">
             <span className="text-sm font-semibold text-gray-600 md:text-xs">
               Email:
             </span>{" "}
             {atom.data.email}
           </p>
+
           <p className="text-left">
             <span className="text-sm font-semibold text-gray-600 md:text-xs">
               Phone number:
