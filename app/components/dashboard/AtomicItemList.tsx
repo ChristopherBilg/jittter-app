@@ -6,6 +6,7 @@ import AtomicItem from "./AtomicItem";
 import CreateAtomicContact from "./CreateAtomicContact";
 import CreateAtomicNote from "./CreateAtomicNote";
 import CreateAtomicReminder from "./CreateAtomicReminder";
+import CreateAtomicItem from "./CreateAtomicItem";
 
 const useDeletedAtomIds = () => {
   return useFetchers()
@@ -76,6 +77,10 @@ const AtomicItemList = () => {
 
       <li>
         <CreateAtomicContact />
+      </li>
+
+      <li>
+        <CreateAtomicItem />
       </li>
     </ul>
   );
