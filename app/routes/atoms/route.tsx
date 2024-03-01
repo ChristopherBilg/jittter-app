@@ -1,5 +1,5 @@
 import { ActionFunctionArgs } from "@remix-run/cloudflare";
-import { Atom, AtomStructure } from "~/app/db.server/mongodb/atom";
+import { Atom, AtomStructure, AtomType } from "~/app/db.server/mongodb/atom";
 import { redirectIfNotAuthenticated } from "~/app/sessions";
 import { exhaustiveMatchingGuard } from "~/app/utils/misc";
 import {
@@ -18,6 +18,7 @@ export const enum AtomFormAction {
   UpdateNoteAtom = "update-note-atom",
   UpdateContactAtom = "update-contact-atom",
   UpdateReminderAtom = "update-reminder-atom",
+  UpdateDrawingAtom = "update-drawing-atom",
 }
 
 export const action = async ({ request }: ActionFunctionArgs) => {
@@ -29,11 +30,11 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 
   switch (_action) {
     case AtomFormAction.CreateAtom: {
-      const _type = formData.get("_type");
+      const _type = formData.get("_type") as AtomStructure["type"];
       const _createdAt = Number(formData.get("_createdAt"));
 
-      switch (_type as AtomStructure["type"]) {
-        case "note": {
+      switch (_type) {
+        case AtomType.Note: {
           const validated = await validateCreateNoteAtom(formData);
           if (!validated) return null;
 
@@ -47,7 +48,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 
           return null;
         }
-        case "contact": {
+        case AtomType.Contact: {
           const validated = await validateCreateContactAtom(formData);
           if (!validated) return null;
 
@@ -61,7 +62,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 
           return null;
         }
-        case "reminder": {
+        case AtomType.Reminder: {
           const validated = await validateCreateReminderAtom(formData);
           if (!validated) return null;
 
@@ -75,8 +76,14 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 
           return null;
         }
-        default:
+        case AtomType.Drawing: {
+          // TODO: Implement
           return null;
+        }
+        default: {
+          exhaustiveMatchingGuard(_type);
+          return null;
+        }
       }
     }
     case AtomFormAction.DeleteAtom: {
@@ -117,6 +124,10 @@ export const action = async ({ request }: ActionFunctionArgs) => {
         data: { content, frequency, startingAt },
       });
 
+      return null;
+    }
+    case AtomFormAction.UpdateDrawingAtom: {
+      // TODO: Implement
       return null;
     }
     default:

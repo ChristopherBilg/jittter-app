@@ -16,7 +16,9 @@ export const getNextReminderDate = (
       return startingAt;
     case AtomicReminderFrequency.Yearly:
       return startingAt;
-    default:
-      return exhaustiveMatchingGuard(frequency);
+    default: {
+      exhaustiveMatchingGuard(frequency);
+      return "An error occurred";
+    }
   }
 };

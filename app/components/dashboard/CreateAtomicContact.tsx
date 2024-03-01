@@ -1,4 +1,5 @@
 import { Form, useSubmit } from "@remix-run/react";
+import { AtomType } from "~/app/db.server/mongodb/atom";
 import { AtomFormAction } from "~/app/routes/atoms/route";
 import { CreateContactAtomSchema } from "~/app/routes/atoms/validate";
 
@@ -20,7 +21,7 @@ const CreateAtomicContact = () => {
       }}
     >
       <input type="hidden" name="_action" value={AtomFormAction.CreateAtom} />
-      <input type="hidden" name="_type" value="contact" />
+      <input type="hidden" name="_type" value={AtomType.Contact} />
 
       <input
         type="text"

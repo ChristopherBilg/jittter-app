@@ -1,10 +1,12 @@
 import { Form, useSubmit } from "@remix-run/react";
+import { useRef } from "react";
 import { AtomType } from "~/app/db.server/mongodb/atom";
 import { AtomFormAction } from "~/app/routes/atoms/route";
-import { CreateNoteAtomSchema } from "~/app/routes/atoms/validate";
 
-const CreateAtomicNote = () => {
+const CreateAtomicDrawing = () => {
   const submit = useSubmit();
+
+  const canvasRef = useRef<HTMLCanvasElement>(null);
 
   return (
     <Form
@@ -21,18 +23,16 @@ const CreateAtomicNote = () => {
       }}
     >
       <input type="hidden" name="_action" value={AtomFormAction.CreateAtom} />
-      <input type="hidden" name="_type" value={AtomType.Note} />
+      <input type="hidden" name="_type" value={AtomType.Drawing} />
 
-      <input
-        type="text"
-        name="content"
-        placeholder="Add a note"
-        className="rounded-md border border-gray-200 p-2"
-        maxLength={CreateNoteAtomSchema.shape.content.maxLength ?? undefined}
-        required
-      />
+      <canvas
+        ref={canvasRef}
+        id="atomic-drawing"
+        width="800"
+        height="800"
+      ></canvas>
     </Form>
   );
 };
 
-export default CreateAtomicNote;
+export default CreateAtomicDrawing;

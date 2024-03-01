@@ -22,13 +22,20 @@ export type ReminderStructure = {
   };
 };
 
+export const enum AtomType {
+  Note = "note",
+  Contact = "contact",
+  Reminder = "reminder",
+  Drawing = "drawing",
+}
+
 export type AtomStructure<T = NoteStructure | ContactStructure> = {
   _id: string;
   userId: string;
   createdAt: number;
   updatedAt: number;
   deletedAt?: number;
-  type: "note" | "contact" | "reminder";
+  type: AtomType;
 } & T;
 
 export class Atom {
