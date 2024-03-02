@@ -4,16 +4,18 @@ import { redirectIfNotAuthenticated } from "~/app/sessions";
 import { exhaustiveMatchingGuard } from "~/app/utils/misc";
 import {
   validateCreateContactAtom,
+  validateCreateDrawingAtom,
   validateCreateNoteAtom,
   validateCreateReminderAtom,
   validateDeleteAtom,
   validateUpdateContactAtom,
+  validateUpdateDrawingAtom,
   validateUpdateNoteAtom,
   validateUpdateReminderAtom,
 } from "./validate";
 
 export const enum AtomFormAction {
-  CreateAtom = "create-note-atom",
+  CreateAtom = "create-atom",
   DeleteAtom = "delete-atom",
   UpdateNoteAtom = "update-note-atom",
   UpdateContactAtom = "update-contact-atom",
@@ -77,7 +79,17 @@ export const action = async ({ request }: ActionFunctionArgs) => {
           return null;
         }
         case AtomType.Drawing: {
-          // TODO: Implement
+          const validated = await validateCreateDrawingAtom(formData);
+          if (!validated) return null;
+
+          const { content } = validated;
+          await Atom.create(userId, {
+            type: _type,
+            data: { content },
+            createdAt: _createdAt,
+            updatedAt: _createdAt,
+          });
+
           return null;
         }
         default: {
@@ -127,7 +139,12 @@ export const action = async ({ request }: ActionFunctionArgs) => {
       return null;
     }
     case AtomFormAction.UpdateDrawingAtom: {
-      // TODO: Implement
+      const validated = await validateUpdateDrawingAtom(formData);
+      if (!validated) return null;
+
+      const { atomId, content } = validated;
+      await Atom.update(userId, atomId, { data: { content } });
+
       return null;
     }
     default:

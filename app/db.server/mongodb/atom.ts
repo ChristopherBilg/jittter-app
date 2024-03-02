@@ -22,6 +22,12 @@ export type ReminderStructure = {
   };
 };
 
+export type DrawingStructure = {
+  data: {
+    content: string;
+  };
+};
+
 export const enum AtomType {
   Note = "note",
   Contact = "contact",
@@ -29,7 +35,9 @@ export const enum AtomType {
   Drawing = "drawing",
 }
 
-export type AtomStructure<T = NoteStructure | ContactStructure> = {
+export type AtomStructure<
+  T = NoteStructure | ContactStructure | ReminderStructure | DrawingStructure,
+> = {
   _id: string;
   userId: string;
   createdAt: number;
