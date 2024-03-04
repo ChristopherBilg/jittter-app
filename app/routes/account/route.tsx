@@ -45,8 +45,9 @@ const enum AtomFormAction {
 }
 
 export const action = async ({ request }: ActionFunctionArgs) => {
-  const { user } = await redirectIfNotAuthenticated(request, "/signin");
-  const { id: userId } = user;
+  const {
+    user: { id: userId },
+  } = await redirectIfNotAuthenticated(request, "/signin");
 
   const formData = await request.formData();
   const _action = formData.get("_action") as AtomFormAction;
@@ -229,9 +230,13 @@ const AccountRoute = () => {
         <main className="px-4 py-16 sm:px-6 lg:flex-auto lg:px-0 lg:py-20">
           <div className="mx-auto max-w-2xl space-y-16 sm:space-y-20 lg:mx-0 lg:max-w-none">
             <div>
-              <h2 className="text-base font-semibold leading-7 text-gray-900">
-                Profile
-              </h2>
+              <div className="flex flex-col sm:flex-row sm:justify-between">
+                <h2 className="text-base font-semibold leading-7 text-gray-900">
+                  Profile
+                </h2>
+
+                <span className="text-sm text-gray-700">({user.email})</span>
+              </div>
 
               <dl className="mt-6 space-y-6 divide-y divide-gray-100 border-t border-gray-200 text-sm leading-6">
                 <div className="pt-6 sm:flex">
@@ -248,7 +253,7 @@ const AccountRoute = () => {
                           placeholder="First Name"
                           autoComplete="given-name"
                           className="mr-2 w-1/2 rounded border px-4 py-2"
-                          defaultValue={user?.firstName || ""}
+                          defaultValue={user.firstName || ""}
                           maxLength={
                             UpdateNameSchema.shape.firstName.maxLength ??
                             undefined
@@ -262,7 +267,7 @@ const AccountRoute = () => {
                           placeholder="Last Name"
                           autoComplete="family-name"
                           className="w-1/2 rounded border px-4 py-2"
-                          defaultValue={user?.lastName || ""}
+                          defaultValue={user.lastName || ""}
                           maxLength={
                             UpdateNameSchema.shape.lastName.maxLength ??
                             undefined
