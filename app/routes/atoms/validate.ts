@@ -134,35 +134,13 @@ export const CreateDrawingAtomSchema = z.object({
   content: z
     .string()
     .min(0)
-    .max(2 ** 16),
+    .max(2 ** 20),
 });
 
 export const validateCreateDrawingAtom = async (formData: FormData) => {
   const content = formData.get("content");
 
   const result = CreateDrawingAtomSchema.safeParse({
-    content,
-  });
-
-  if (!result.success) return null;
-
-  return result.data;
-};
-
-export const UpdateDrawingAtomSchema = z.object({
-  atomId: z.string(),
-  content: z
-    .string()
-    .min(0)
-    .max(2 ** 16),
-});
-
-export const validateUpdateDrawingAtom = async (formData: FormData) => {
-  const atomId = formData.get("atomId");
-  const content = formData.get("content");
-
-  const result = UpdateDrawingAtomSchema.safeParse({
-    atomId,
     content,
   });
 

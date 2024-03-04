@@ -9,7 +9,6 @@ import {
   validateCreateReminderAtom,
   validateDeleteAtom,
   validateUpdateContactAtom,
-  validateUpdateDrawingAtom,
   validateUpdateNoteAtom,
   validateUpdateReminderAtom,
 } from "./validate";
@@ -20,7 +19,6 @@ export const enum AtomFormAction {
   UpdateNoteAtom = "update-note-atom",
   UpdateContactAtom = "update-contact-atom",
   UpdateReminderAtom = "update-reminder-atom",
-  UpdateDrawingAtom = "update-drawing-atom",
 }
 
 export const action = async ({ request }: ActionFunctionArgs) => {
@@ -135,15 +133,6 @@ export const action = async ({ request }: ActionFunctionArgs) => {
       await Atom.update(userId, atomId, {
         data: { content, frequency, startingAt },
       });
-
-      return null;
-    }
-    case AtomFormAction.UpdateDrawingAtom: {
-      const validated = await validateUpdateDrawingAtom(formData);
-      if (!validated) return null;
-
-      const { atomId, content } = validated;
-      await Atom.update(userId, atomId, { data: { content } });
 
       return null;
     }
