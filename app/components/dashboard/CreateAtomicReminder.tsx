@@ -24,17 +24,6 @@ const CreateAtomicReminder = () => {
       <input type="hidden" name="_action" value={AtomFormAction.CreateAtom} />
       <input type="hidden" name="_type" value={AtomType.Reminder} />
 
-      <input
-        type="text"
-        name="content"
-        placeholder="Add a reminder"
-        className="rounded-md border border-gray-200 p-2"
-        maxLength={
-          CreateReminderAtomSchema.shape.content.maxLength ?? undefined
-        }
-        required
-      />
-
       <div className="flex flex-col space-y-2 md:flex-row md:space-x-2 md:space-y-0">
         <select
           name="frequency"
@@ -59,6 +48,17 @@ const CreateAtomicReminder = () => {
           required
         />
       </div>
+
+      <input
+        type="text"
+        name="content"
+        placeholder="Add a reminder"
+        className="rounded-md border border-gray-200 p-2"
+        maxLength={
+          CreateReminderAtomSchema.shape.content.maxLength ?? undefined
+        }
+        required
+      />
 
       <input type="submit" className="hidden" />
     </Form>

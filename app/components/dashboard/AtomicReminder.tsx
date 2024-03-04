@@ -58,19 +58,6 @@ const AtomicReminder = ({ atom }: AtomicReminderProps) => {
             }
           }}
         >
-          <input
-            ref={firstInputRef}
-            type="text"
-            name="content"
-            placeholder="Add a reminder"
-            className="rounded-md border border-gray-200 p-2"
-            defaultValue={atom.data.content ?? ""}
-            maxLength={
-              UpdateReminderAtomSchema.shape.content.maxLength ?? undefined
-            }
-            required
-          />
-
           <div className="flex flex-col space-y-2 md:flex-row md:space-x-2 md:space-y-0">
             <select
               name="frequency"
@@ -96,6 +83,19 @@ const AtomicReminder = ({ atom }: AtomicReminderProps) => {
               required
             />
           </div>
+
+          <input
+            ref={firstInputRef}
+            type="text"
+            name="content"
+            placeholder="Add a reminder"
+            className="rounded-md border border-gray-200 p-2"
+            defaultValue={atom.data.content ?? ""}
+            maxLength={
+              UpdateReminderAtomSchema.shape.content.maxLength ?? undefined
+            }
+            required
+          />
 
           <input
             type="hidden"

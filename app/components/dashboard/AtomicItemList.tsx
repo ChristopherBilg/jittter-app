@@ -4,7 +4,6 @@ import { AtomFormAction } from "~/app/routes/atoms/route";
 import { loader } from "~/app/routes/dashboard/route";
 import AtomicItem from "./AtomicItem";
 import CreateAtomicContact from "./CreateAtomicContact";
-import CreateAtomicDrawing from "./CreateAtomicDrawing";
 import CreateAtomicNote from "./CreateAtomicNote";
 import CreateAtomicReminder from "./CreateAtomicReminder";
 
@@ -79,9 +78,10 @@ const AtomicItemList = () => {
         <CreateAtomicContact />
       </li>
 
+      {/* TODO: Clean up UI for drawing creation and add it back
       <li>
         <CreateAtomicDrawing />
-      </li>
+      </li> */}
 
       {/* TODO: Add atomic item creation (generic w/ SlateJS)
       <li>

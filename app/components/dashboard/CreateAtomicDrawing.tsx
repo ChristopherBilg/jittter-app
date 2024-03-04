@@ -145,7 +145,7 @@ const CreateAtomicDrawing = () => {
         onPointerMove={onInputMove}
       ></canvas>
 
-      <div className="flex flex-col">
+      <div className="flex flex-col space-y-2">
         <button
           type="submit"
           className="h-fit rounded-md bg-green-700 text-white"
@@ -163,7 +163,7 @@ const CreateAtomicDrawing = () => {
           <ArrowUpIcon className="h-5 w-5 md:h-4 md:w-4" />
         </button>
 
-        <p>{width}</p>
+        <p className="self-center">{width}</p>
 
         <button
           className="h-fit rounded-md bg-gray-600 text-white"
@@ -177,6 +177,7 @@ const CreateAtomicDrawing = () => {
         <input
           type="color"
           name="color"
+          className="w-4"
           value={color}
           onChange={(e) => setColor(e.target.value)}
         />
