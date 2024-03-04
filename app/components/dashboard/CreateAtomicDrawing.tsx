@@ -1,4 +1,8 @@
-import { PlusIcon } from "@heroicons/react/24/outline";
+import {
+  ArrowDownIcon,
+  ArrowUpIcon,
+  PlusIcon,
+} from "@heroicons/react/24/outline";
 import { Form, useSubmit } from "@remix-run/react";
 import { MouseEvent, PointerEvent, useEffect, useRef, useState } from "react";
 import { AtomType } from "~/app/db.server/mongodb/atom";
@@ -13,6 +17,8 @@ const CreateAtomicDrawing = () => {
   const [pressed, setPressed] = useState(false);
   const [x, setX] = useState<number | null>(null);
   const [y, setY] = useState<number | null>(null);
+  const [width, setWidth] = useState(5);
+  const [color, setColor] = useState("#000000");
 
   useEffect(() => {
     if (!canvasRef.current) return;
@@ -20,9 +26,19 @@ const CreateAtomicDrawing = () => {
     setContext(canvasRef.current.getContext("2d"));
   }, []);
 
-  useEffect(() => {
-    console.log(context);
-  }, [context]);
+  const onIncreaseLineWidthButtonClick = (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+
+    if (width >= 20) setWidth(20);
+    else setWidth((prev) => prev + 1);
+  };
+
+  const onDecreaseLineWidthButtonClick = (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+
+    if (width <= 1) setWidth(1);
+    else setWidth((prev) => prev - 1);
+  };
 
   const drawCircle = (
     context: CanvasRenderingContext2D,
@@ -32,8 +48,8 @@ const CreateAtomicDrawing = () => {
     if (!context) return;
 
     context.beginPath();
-    context.arc(x, y, 10, 0, Math.PI * 2);
-    context.fillStyle = "black";
+    context.arc(x, y, width, 0, Math.PI * 2);
+    context.fillStyle = color;
     context.fill();
   };
 
@@ -49,8 +65,8 @@ const CreateAtomicDrawing = () => {
     context.beginPath();
     context.moveTo(x1, y1);
     context.lineTo(x2, y2);
-    context.strokeStyle = "black";
-    context.lineWidth = 10 * 2;
+    context.strokeStyle = color;
+    context.lineWidth = width * 2;
     context.stroke();
   };
 
@@ -129,13 +145,42 @@ const CreateAtomicDrawing = () => {
         onPointerMove={onInputMove}
       ></canvas>
 
-      <button
-        type="submit"
-        className="h-fit rounded-md bg-green-700 text-white"
-      >
-        <span className="sr-only">Create drawing atom</span>
-        <PlusIcon className="h-5 w-5 md:h-4 md:w-4" />
-      </button>
+      <div className="flex flex-col">
+        <button
+          type="submit"
+          className="h-fit rounded-md bg-green-700 text-white"
+        >
+          <span className="sr-only">Create drawing atom</span>
+          <PlusIcon className="h-5 w-5 md:h-4 md:w-4" />
+        </button>
+
+        <button
+          className="h-fit rounded-md bg-gray-600 text-white"
+          onClick={onIncreaseLineWidthButtonClick}
+          disabled={width >= 20}
+        >
+          <span className="sr-only">Increase line width</span>
+          <ArrowUpIcon className="h-5 w-5 md:h-4 md:w-4" />
+        </button>
+
+        <p>{width}</p>
+
+        <button
+          className="h-fit rounded-md bg-gray-600 text-white"
+          onClick={onDecreaseLineWidthButtonClick}
+          disabled={width <= 1}
+        >
+          <span className="sr-only">Decrease line width</span>
+          <ArrowDownIcon className="h-5 w-5 md:h-4 md:w-4" />
+        </button>
+
+        <input
+          type="color"
+          name="color"
+          value={color}
+          onChange={(e) => setColor(e.target.value)}
+        />
+      </div>
 
       <input type="hidden" name="_action" value={AtomFormAction.CreateAtom} />
       <input type="hidden" name="_type" value={AtomType.Drawing} />
