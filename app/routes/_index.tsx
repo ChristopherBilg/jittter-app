@@ -3,7 +3,7 @@ import {
   type LoaderFunctionArgs,
   type MetaFunction,
 } from "@remix-run/cloudflare";
-import { getSession } from "~/app/sessions";
+import { getSession } from "~/app/sessions.server";
 import CallToAction from "../components/landing/CallToAction";
 import FAQs from "../components/landing/FAQs";
 import Footer from "../components/landing/Footer";

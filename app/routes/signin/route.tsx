@@ -12,7 +12,7 @@ import {
 } from "@remix-run/react";
 import Logo from "~/app/components/common/Logo";
 import SlimLayout from "~/app/components/common/SlimLayout";
-import { commitSession, getSession } from "~/app/sessions";
+import { commitSession, getSession } from "~/app/sessions.server";
 import { SignInUserSchema, validateSignIn } from "./validate";
 
 export const meta: MetaFunction = () => {

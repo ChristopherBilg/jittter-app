@@ -1,6 +1,6 @@
 import { ActionFunctionArgs } from "@remix-run/cloudflare";
 import { Atom, AtomStructure, AtomType } from "~/app/db.server/mongodb/atom";
-import { redirectIfNotAuthenticated } from "~/app/sessions";
+import { redirectIfNotAuthenticated } from "~/app/sessions.server";
 import { exhaustiveMatchingGuard } from "~/app/utils/misc";
 import {
   validateCreateContactAtom,

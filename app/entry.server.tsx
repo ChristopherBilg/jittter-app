@@ -9,17 +9,17 @@ import { RemixServer } from "@remix-run/react";
 import { EntryContext } from "@remix-run/react/dist/entry";
 import { isbot } from "isbot";
 import { renderToReadableStream } from "react-dom/server";
+import { setEnvironment } from "./utils/env.server";
 
 const handleRequest = async (
   request: Request,
   responseStatusCode: number,
   responseHeaders: Headers,
   remixContext: EntryContext,
-  // This is ignored so we can keep it in the template for visibility.  Feel
-  // free to delete this parameter in your app if you're not using it!
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  _loadContext: AppLoadContext,
+  loadContext: AppLoadContext,
 ) => {
+  setEnvironment(loadContext.env);
+
   const body = await renderToReadableStream(
     <RemixServer context={remixContext} url={request.url} />,
     {

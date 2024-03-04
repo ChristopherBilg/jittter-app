@@ -5,7 +5,7 @@ import AtomicItemList from "~/app/components/dashboard/AtomicItemList";
 import Container from "~/app/components/dashboard/Container";
 import Drawer from "~/app/components/dashboard/Drawer";
 import { Atom } from "~/app/db.server/mongodb/atom";
-import { redirectIfNotAuthenticated } from "~/app/sessions";
+import { redirectIfNotAuthenticated } from "~/app/sessions.server";
 
 export const meta: MetaFunction = () => {
   return [

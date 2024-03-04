@@ -13,7 +13,7 @@ import {
 import Logo from "~/app/components/common/Logo";
 import SlimLayout from "~/app/components/common/SlimLayout";
 import { User } from "~/app/db.server/postgresql/models/user";
-import { commitSession, getSession } from "~/app/sessions";
+import { commitSession, getSession } from "~/app/sessions.server";
 import { SignUpUserSchema, validateSignUp } from "./validate";
 
 export const meta: MetaFunction = () => {

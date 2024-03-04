@@ -1,5 +1,5 @@
 import { LoaderFunctionArgs, redirect } from "@remix-run/cloudflare";
-import { destroySession, getSession } from "~/app/sessions";
+import { destroySession, getSession } from "~/app/sessions.server";
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const session = await getSession(request.headers.get("Cookie"));

@@ -14,7 +14,7 @@ import { Link, useFetcher, useLoaderData } from "@remix-run/react";
 import clsx from "clsx";
 import { useState } from "react";
 import { User } from "~/app/db.server/postgresql/models/user";
-import { redirectIfNotAuthenticated } from "~/app/sessions";
+import { redirectIfNotAuthenticated } from "~/app/sessions.server";
 import { exhaustiveMatchingGuard } from "~/app/utils/misc";
 import {
   UpdateNameSchema,

@@ -20,7 +20,6 @@ const { getSession, commitSession, destroySession } =
       maxAge: 60 * 60 * 24 * 30,
       path: "/",
       sameSite: "lax",
-      // TODO: Figure out how to get the secret from the environment and add automation to periodically change it
       secrets: ["FtbXxXvxg809OWogmoxeFQ5T9V2hOgPQ"],
       secure: true,
     },

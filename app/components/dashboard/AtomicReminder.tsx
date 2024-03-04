@@ -130,7 +130,6 @@ const AtomicReminder = ({ atom }: AtomicReminderProps) => {
             <span className="text-sm font-semibold text-gray-600 md:text-xs">
               Next reminder at:
             </span>{" "}
-            {/* TODO: Update to perform calculation to get next reminder date */}
             {getNextReminderDate(atom.data.startingAt, atom.data.frequency)}
           </p>
         </button>

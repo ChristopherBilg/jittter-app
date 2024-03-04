@@ -9,7 +9,6 @@ class NeonDB {
   private _db;
 
   private constructor() {
-    // TODO: Figure out how to get the connection string from the environment
     this._connectionString =
       "postgresql://christopherbilg:dv91LmpwCjVb@ep-weathered-sky-a5ilhn57-pooler.us-east-2.aws.neon.tech/jittter-product-db?sslmode=require";
     this._db = drizzle(neon(this._connectionString), { schema });

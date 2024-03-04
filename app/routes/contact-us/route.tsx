@@ -9,7 +9,7 @@ import { useEffect, useRef } from "react";
 import Logo from "~/app/components/common/Logo";
 import SlimLayout from "~/app/components/common/SlimLayout";
 import { ContactUs } from "~/app/db.server/postgresql/models/contact-us";
-import { commitSession, getSession } from "~/app/sessions";
+import { commitSession, getSession } from "~/app/sessions.server";
 import { SendMessageSchema, validateSendMessage } from "./validate";
 
 export const meta: MetaFunction = () => {
