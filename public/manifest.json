@@ -77,5 +77,11 @@
       ]
     }
   ],
-  "edge_side_panel": {}
+  "launch_handler": {
+    "client_mode": ["navigate-existing", "auto"]
+  },
+  "orientation": "portrait",
+  "dir": "ltr",
+  "lang": "en",
+  "prefer_related_applications": false
 }
