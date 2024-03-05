@@ -12,6 +12,7 @@ import {
 } from "@remix-run/react";
 import stylesheet from "~/app/tailwind.css";
 import ErrorLayout from "./components/error/ErrorLayout";
+import Container from "./components/root/Container";
 
 export const meta: MetaFunction = () => {
   return [
@@ -49,38 +50,36 @@ export const ErrorBoundary = () => {
 
   if (isRouteErrorResponse(error)) {
     return (
-      <html lang="en" className="h-full scroll-smooth bg-white antialiased">
-        <head>
-          <meta charSet="utf-8" />
-          <meta name="viewport" content="width=device-width, initial-scale=1" />
-          <title>{`${error.status} Error - ${error.statusText}`}</title>
-
-          <Meta />
-          <Links />
-        </head>
-
-        <body className="flex h-full flex-col">
+      <Container title={`${error.status} Error - ${error.statusText}`}>
+        <div className="text-center">
           <ErrorLayout error={error} />
-        </body>
-      </html>
+        </div>
+      </Container>
     );
   } else if (error instanceof Error) {
     return (
-      // TODO: Better error messages here for engineers to debug
-      <div>
-        <h1>Error</h1>
-        <p>{error.message}</p>
+      <Container title={error.message}>
+        <div className="text-left">
+          <h1>Error</h1>
+          <p>{error.message}</p>
 
-        <p>The stack trace is:</p>
-        <pre>{error.stack}</pre>
+          <p>The stack trace is:</p>
+          <pre>{error.stack}</pre>
 
-        <p>The error object is:</p>
-        <pre>{JSON.stringify(error, null, 2)}</pre>
-      </div>
+          <p>The error object is:</p>
+          <pre>{JSON.stringify(error, null, 2)}</pre>
+        </div>
+      </Container>
     );
   } else {
-    // TODO: Better error messages here for engineers to debug
-    return <h1>Unknown Error</h1>;
+    return (
+      <Container title="Unknown Error">
+        <div className="text-center">
+          <h1>Unknown Error</h1>
+          <p>An unknown error occurred.</p>
+        </div>
+      </Container>
+    );
   }
 };
 
@@ -89,6 +88,7 @@ const App = () => (
     <head>
       <meta charSet="utf-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <title>Jittter</title>
 
       <Meta />
       <Links />

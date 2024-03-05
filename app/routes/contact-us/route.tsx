@@ -119,6 +119,18 @@ const ContactUsRoute = () => {
         possible.
       </p>
 
+      <p className="my-2 text-sm text-gray-700">
+        For more information about our products and services,{" "}
+        <Link
+          to="/"
+          prefetch="viewport"
+          className="font-medium text-blue-600 hover:underline"
+        >
+          visit our homepage
+        </Link>
+        .
+      </p>
+
       <hr />
 
       <fetcher.Form
@@ -126,8 +138,8 @@ const ContactUsRoute = () => {
         className="flex flex-col space-y-4"
         ref={formRef}
       >
-        {success && <p className="text-green-500">{success}</p>}
-        {error && <p className="text-red-500">{error}</p>}
+        {success && <p className="my-2 text-green-600">{success}</p>}
+        {error && <p className="my-2 text-red-600">{error}</p>}
 
         {Array.isArray(errors?.firstName) && (
           <span className="text-sm text-gray-500">
