@@ -13,6 +13,8 @@ const OptimisticDeleteAtomicItemButton = ({
 
   return (
     <Form
+      method="POST"
+      action="/atoms"
       onSubmit={(e) => {
         e.preventDefault();
 

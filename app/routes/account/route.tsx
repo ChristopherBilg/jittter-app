@@ -39,7 +39,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   });
 };
 
-const enum AtomFormAction {
+const enum AccountFormAction {
   UpdateName = "update-name",
   UpdatePassword = "update-password",
 }
@@ -50,10 +50,10 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   } = await redirectIfNotAuthenticated(request, "/signin");
 
   const formData = await request.formData();
-  const _action = formData.get("_action") as AtomFormAction;
+  const _action = formData.get("_action") as AccountFormAction;
 
   switch (_action) {
-    case AtomFormAction.UpdateName: {
+    case AccountFormAction.UpdateName: {
       const validateResult = await validateUpdateName(formData);
       if (!validateResult) return null;
 
@@ -66,7 +66,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 
       return null;
     }
-    case AtomFormAction.UpdatePassword: {
+    case AccountFormAction.UpdatePassword: {
       const validateResult = await validateUpdatePassword(formData);
       if (!validateResult) return null;
 
@@ -245,7 +245,11 @@ const AccountRoute = () => {
                   </dt>
 
                   <dd className="mt-1 flex justify-between gap-x-6 sm:mt-0 sm:flex-auto">
-                    <fetcher.Form method="POST">
+                    <fetcher.Form
+                      method="POST"
+                      action="/account"
+                      onBlur={(e) => fetcher.submit(e.target.form)}
+                    >
                       <div className="mx-auto flex w-full justify-start">
                         <input
                           type="text"
@@ -279,19 +283,7 @@ const AccountRoute = () => {
                       <input
                         type="hidden"
                         name="_action"
-                        value={AtomFormAction.UpdateName}
-                      />
-
-                      <input
-                        type="submit"
-                        value={
-                          fetcher.state !== "idle" &&
-                          fetcher.formData?.get("_action") ===
-                            AtomFormAction.UpdateName
-                            ? "Updating Name..."
-                            : "Update Name"
-                        }
-                        className="mx-auto my-1 w-fit cursor-pointer rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700"
+                        value={AccountFormAction.UpdateName}
                       />
                     </fetcher.Form>
                   </dd>
@@ -305,7 +297,7 @@ const AccountRoute = () => {
                   </dt>
 
                   <dd className="mt-1 flex justify-between gap-x-6 sm:mt-0 sm:flex-auto">
-                    <fetcher.Form method="POST">
+                    <fetcher.Form method="POST" action="/account">
                       <div className="mx-auto flex w-full justify-start">
                         <input
                           type="password"
@@ -347,7 +339,7 @@ const AccountRoute = () => {
                       <input
                         type="hidden"
                         name="_action"
-                        value={AtomFormAction.UpdatePassword}
+                        value={AccountFormAction.UpdatePassword}
                       />
 
                       <input
@@ -355,7 +347,7 @@ const AccountRoute = () => {
                         value={
                           fetcher.state !== "idle" &&
                           fetcher.formData?.get("_action") ===
-                            AtomFormAction.UpdatePassword
+                            AccountFormAction.UpdatePassword
                             ? "Updating Password..."
                             : "Update Password"
                         }

@@ -135,6 +135,7 @@ const ContactUsRoute = () => {
 
       <fetcher.Form
         method="POST"
+        action="/contact-us"
         className="flex flex-col space-y-4"
         ref={formRef}
       >

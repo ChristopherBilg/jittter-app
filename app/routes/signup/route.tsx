@@ -114,7 +114,11 @@ const SignUpRoute = () => {
 
       <hr />
 
-      <fetcher.Form method="POST" className="flex flex-col space-y-4">
+      <fetcher.Form
+        method="POST"
+        action="/signup"
+        className="flex flex-col space-y-4"
+      >
         {error && <p className="text-red-500">{error}</p>}
 
         {Array.isArray(errors?.firstName) && (

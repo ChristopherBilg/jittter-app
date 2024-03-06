@@ -110,6 +110,8 @@ const CreateAtomicDrawing = () => {
 
   return (
     <Form
+      method="POST"
+      action="/atoms"
       className="flex justify-between space-x-2 overflow-hidden bg-white px-4 py-4 shadow-lg sm:rounded-md sm:px-6"
       onSubmit={(e) => {
         if (!canvasRef.current || !context) return;

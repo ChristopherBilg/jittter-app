@@ -96,7 +96,11 @@ const SignInRoute = () => {
 
       <hr />
 
-      <fetcher.Form method="POST" className="flex flex-col space-y-4">
+      <fetcher.Form
+        method="POST"
+        action="/signin"
+        className="flex flex-col space-y-4"
+      >
         {error && <p className="text-red-500">{error}</p>}
 
         <input

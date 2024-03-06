@@ -8,6 +8,8 @@ const CreateAtomicContact = () => {
 
   return (
     <Form
+      method="POST"
+      action="/atoms"
       className="flex flex-col space-y-2 overflow-hidden bg-white px-4 py-4 shadow-lg sm:rounded-md sm:px-6"
       onSubmit={(e) => {
         e.preventDefault();
