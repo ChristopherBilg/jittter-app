@@ -27,12 +27,12 @@ const faqs: FAQ[][] = [
     {
       question: "How much does Jittter cost?",
       answer:
-        "Jittter is free to use, with optional premium features available for a monthly subscription.",
+        "Jittter is free to use, with optional features available for a monthly subscription.",
     },
     {
-      question: "What are the premium features?",
+      question: "What are the additional features?",
       answer:
-        "Premium features include advanced task management, increased storage, and more.",
+        "Additional features include advanced task management, increased storage, and more.",
     },
     {
       question: "Is Jittter secure?",

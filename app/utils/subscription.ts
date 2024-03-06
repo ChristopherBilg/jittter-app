@@ -1,17 +1,11 @@
-const enum SubscriptionTier {
-  Free = "free",
+export const enum SubscriptionTier {
+  Starter = "starter",
   Premium = "premium",
   Professional = "professional",
 }
 
-export const SubscriptionPrice = {
-  [SubscriptionTier.Free]: "$0",
+export const SubscriptionPrice: { [key in SubscriptionTier]: string } = {
+  [SubscriptionTier.Starter]: "$0",
   [SubscriptionTier.Premium]: "$5",
   [SubscriptionTier.Professional]: "$10",
-};
-
-export const AtomicNoteLimit = {
-  [SubscriptionTier.Free]: 1_000,
-  [SubscriptionTier.Premium]: 10_000,
-  [SubscriptionTier.Professional]: 100_000,
 };

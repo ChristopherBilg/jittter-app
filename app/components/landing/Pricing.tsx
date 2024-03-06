@@ -2,6 +2,7 @@ import { Link, useLoaderData } from "@remix-run/react";
 import clsx from "clsx";
 import { ComponentPropsWithoutRef } from "react";
 import { loader } from "~/app/routes/_index";
+import { SubscriptionPrice, SubscriptionTier } from "~/app/utils/subscription";
 import Container from "./Container";
 
 const CheckIcon = ({
@@ -36,16 +37,14 @@ const CheckIcon = ({
 };
 
 type PlanProps = {
-  name: string;
-  price: string;
+  subscriptionTier: SubscriptionTier;
   description: string;
   features: string[];
   featured?: boolean;
 };
 
 const Plan = ({
-  name,
-  price,
+  subscriptionTier,
   description,
   features,
   featured = false,
@@ -59,7 +58,9 @@ const Plan = ({
         featured ? "order-first bg-blue-600 py-8 lg:order-none" : "lg:py-8",
       )}
     >
-      <h3 className="font-display mt-5 text-lg text-white">{name}</h3>
+      <h3 className="font-display mt-5 text-lg capitalize text-white">
+        {subscriptionTier}
+      </h3>
 
       <p
         className={clsx(
@@ -71,7 +72,7 @@ const Plan = ({
       </p>
 
       <p className="font-display order-first text-5xl font-light tracking-tight text-white">
-        {price}
+        {SubscriptionPrice[subscriptionTier]}
       </p>
 
       <ul
@@ -129,25 +130,26 @@ const Pricing = () => {
 
         <div className="-mx-4 mt-16 grid max-w-2xl grid-cols-1 gap-y-10 sm:mx-auto lg:-mx-8 lg:max-w-none lg:grid-cols-3 xl:mx-0 xl:gap-x-8">
           <Plan
-            name="Starter"
-            price="Free"
+            subscriptionTier={SubscriptionTier.Starter}
             description="Good for anyone who wants to see what we're about."
-            features={["Unlimited notes"]}
+            features={["Basic features"]}
           />
 
           <Plan
             featured
-            name="Premium"
-            price="$5"
+            subscriptionTier={SubscriptionTier.Premium}
             description="Perfect for day-to-day users that want to get more done."
-            features={["Everything in Free"]}
+            features={[
+              "Everything in Starter",
+            ]}
           />
 
           <Plan
-            name="Professional"
-            price="$10"
+            subscriptionTier={SubscriptionTier.Professional}
             description="For power users that want to get the most out of our software."
-            features={["Everything in Premium"]}
+            features={[
+              "Everything in Premium",
+            ]}
           />
         </div>
       </Container>
