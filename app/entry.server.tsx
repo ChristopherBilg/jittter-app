@@ -9,17 +9,14 @@ import { RemixServer } from "@remix-run/react";
 import { EntryContext } from "@remix-run/react/dist/entry";
 import { isbot } from "isbot";
 import { renderToReadableStream } from "react-dom/server";
-import { setEnvironment } from "./utils/env.server";
 
 const handleRequest = async (
   request: Request,
   responseStatusCode: number,
   responseHeaders: Headers,
   remixContext: EntryContext,
-  loadContext: AppLoadContext,
+  _loadContext: AppLoadContext,
 ) => {
-  setEnvironment(loadContext.env);
-
   const body = await renderToReadableStream(
     <RemixServer context={remixContext} url={request.url} />,
     {
