@@ -1,5 +1,4 @@
-import { AtomicReminderFrequency } from "./constant";
-import { exhaustiveMatchingGuard } from "./misc";
+import { AtomicReminderFrequency, exhaustiveMatchingGuard } from "./misc";
 
 export const getNextReminderDate = (
   startingAt: string,

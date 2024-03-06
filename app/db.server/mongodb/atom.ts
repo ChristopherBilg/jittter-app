@@ -1,4 +1,4 @@
-import { AtomicReminderFrequency } from "~/app/utils/constant";
+import { AtomicReminderFrequency } from "~/app/utils/misc";
 
 export type NoteStructure = {
   data: {

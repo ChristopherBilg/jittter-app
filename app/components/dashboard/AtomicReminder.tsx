@@ -3,8 +3,8 @@ import { useEffect, useRef, useState } from "react";
 import { AtomStructure, ReminderStructure } from "~/app/db.server/mongodb/atom";
 import { AtomFormAction } from "~/app/routes/atoms/route";
 import { UpdateReminderAtomSchema } from "~/app/routes/atoms/validate";
-import { AtomicReminderFrequency } from "~/app/utils/constant";
 import { getNextReminderDate } from "~/app/utils/date";
+import { AtomicReminderFrequency } from "~/app/utils/misc";
 import OptimisticDeleteAtomicItemButton from "./OptimisticDeleteAtomicItemButton";
 
 type AtomicReminderProps = {

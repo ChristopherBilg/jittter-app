@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { AtomicReminderFrequency } from "~/app/utils/constant";
+import { AtomicReminderFrequency } from "~/app/utils/misc";
 
 export const CreateNoteAtomSchema = z.object({
   content: z.string().min(0).max(1024),

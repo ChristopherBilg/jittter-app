@@ -2,7 +2,7 @@ import { Form, useSubmit } from "@remix-run/react";
 import { AtomType } from "~/app/db.server/mongodb/atom";
 import { AtomFormAction } from "~/app/routes/atoms/route";
 import { CreateReminderAtomSchema } from "~/app/routes/atoms/validate";
-import { AtomicReminderFrequency } from "~/app/utils/constant";
+import { AtomicReminderFrequency } from "~/app/utils/misc";
 
 const CreateAtomicReminder = () => {
   const submit = useSubmit();
