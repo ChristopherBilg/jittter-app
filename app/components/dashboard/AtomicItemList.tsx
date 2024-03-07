@@ -5,6 +5,7 @@ import { loader } from "~/app/routes/dashboard/route";
 import AtomicItem from "./AtomicItem";
 import CreateAtomicContact from "./CreateAtomicContact";
 import CreateAtomicNote from "./CreateAtomicNote";
+import CreateAtomicReminder from "./CreateAtomicReminder";
 
 const useDeletedAtomIds = () => {
   return useFetchers()
@@ -73,10 +74,9 @@ const AtomicItemList = () => {
         <CreateAtomicContact />
       </li>
 
-      {/* TODO: Clean up UI for reminder creation and add it back
       <li>
         <CreateAtomicReminder />
-      </li> */}
+      </li>
     </ul>
   );
 };

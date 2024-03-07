@@ -17,9 +17,15 @@ const CreateAtomicNote = () => {
         const formData = new FormData(e.currentTarget);
         formData.set("_createdAt", new Date().getTime().toString());
 
-        submit(formData, { method: "POST", action: "/atoms", navigate: false });
+        submit(formData, {
+          method: "POST",
+          action: "/atoms",
+          navigate: false,
+          unstable_flushSync: true,
+        });
 
         e.currentTarget.reset();
+        e.currentTarget.scrollIntoView({ behavior: "smooth" });
       }}
     >
       <input type="hidden" name="_action" value={AtomFormAction.CreateAtom} />
