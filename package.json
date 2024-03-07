@@ -12,7 +12,8 @@
     "lint": "eslint --ignore-path .gitignore --cache --cache-location ./node_modules/.cache/eslint app/",
     "start": "wrangler pages dev --compatibility-date=2024-01-30 ./public",
     "drizzle:generate": "drizzle-kit generate:pg",
-    "drizzle:push": "drizzle-kit push:pg",
+    "drizzle:push": "source .env && drizzle-kit push:pg",
+    "drizzle:push-local": "source .dev.vars && drizzle-kit push:pg",
     "drizzle:studio": "drizzle-kit studio",
     "typecheck": "tsc"
   },
