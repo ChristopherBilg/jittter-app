@@ -5,6 +5,8 @@ import { output, z } from "zod";
 
 export const ApplicationEnvironmentVariableSchema = z.object({
   NODE_ENV: z.enum(["development", "production", "test"]).default("production"),
+  NEON_DATABASE_URL: z.string(),
+  MONGO_DATABASE_API_KEY: z.string(),
 });
 
 declare module "@remix-run/cloudflare" {

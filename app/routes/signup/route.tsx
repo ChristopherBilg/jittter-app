@@ -34,7 +34,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   });
 };
 
-export const action = async ({ request }: ActionFunctionArgs) => {
+export const action = async ({ request, context }: ActionFunctionArgs) => {
   const session = await getSession(request.headers.get("Cookie"));
 
   const { errors, data } = await validateSignUp(request);
@@ -52,7 +52,13 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 
   const { firstName, lastName, email, password } = data;
 
-  const user = await User.create(firstName, lastName, email, password);
+  const user = await User.create(
+    context.env.NEON_DATABASE_URL,
+    firstName,
+    lastName,
+    email,
+    password,
+  );
 
   if (!user) {
     session.flash("error", "An error occurred while creating your account.");

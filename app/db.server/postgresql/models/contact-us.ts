@@ -13,13 +13,14 @@ export const ContactUsTable = pgTable("contact_us", {
 
 export class ContactUs {
   static create = async (
+    connectionString: string,
     firstName: string,
     lastName: string,
     email: string,
     message: string,
   ) => {
     try {
-      const newMessages = await NeonDB.getInstance()
+      const newMessages = await NeonDB.getInstance(connectionString)
         .db.insert(ContactUsTable)
         .values({
           firstName,

@@ -31,8 +31,12 @@ export const meta: MetaFunction = () => {
   ];
 };
 
-export const loader = async ({ request }: LoaderFunctionArgs) => {
-  const { user } = await redirectIfNotAuthenticated(request, "/signin");
+export const loader = async ({ request, context }: LoaderFunctionArgs) => {
+  const { user } = await redirectIfNotAuthenticated(
+    request,
+    "/signin",
+    context.env.NEON_DATABASE_URL,
+  );
 
   return json({
     user,
@@ -44,10 +48,14 @@ const enum AccountFormAction {
   UpdatePassword = "update-password",
 }
 
-export const action = async ({ request }: ActionFunctionArgs) => {
+export const action = async ({ request, context }: ActionFunctionArgs) => {
   const {
     user: { id: userId },
-  } = await redirectIfNotAuthenticated(request, "/signin");
+  } = await redirectIfNotAuthenticated(
+    request,
+    "/signin",
+    context.env.NEON_DATABASE_URL,
+  );
 
   const formData = await request.formData();
   const _action = formData.get("_action") as AccountFormAction;
@@ -59,7 +67,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 
       const { firstName, lastName } = validateResult;
 
-      await User.update(userId, {
+      await User.update(context.env.NEON_DATABASE_URL, userId, {
         firstName,
         lastName,
       });
@@ -72,7 +80,11 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 
       const { newPassword } = validateResult;
 
-      await User.updateAuthentication(userId, newPassword);
+      await User.updateAuthentication(
+        context.env.NEON_DATABASE_URL,
+        userId,
+        newPassword,
+      );
 
       return null;
     }

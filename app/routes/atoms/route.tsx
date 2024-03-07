@@ -21,8 +21,12 @@ export const enum AtomFormAction {
   UpdateReminderAtom = "update-reminder-atom",
 }
 
-export const action = async ({ request }: ActionFunctionArgs) => {
-  const { user } = await redirectIfNotAuthenticated(request, "/login");
+export const action = async ({ request, context }: ActionFunctionArgs) => {
+  const { user } = await redirectIfNotAuthenticated(
+    request,
+    "/login",
+    context.env.NEON_DATABASE_URL,
+  );
   const { id: userId, subscriptionTier } = user;
 
   const formData = await request.formData();
@@ -31,7 +35,10 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   switch (_action) {
     case AtomFormAction.CreateAtom: {
       const atomLimit = AtomLimit[subscriptionTier as SubscriptionTier];
-      const atomCount = await Atom.count(userId);
+      const atomCount = await Atom.count(
+        context.env.MONGO_DATABASE_API_KEY,
+        userId,
+      );
       if (atomCount >= atomLimit) {
         return new Response("Atom limit reached", {
           status: 403,
@@ -49,7 +56,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
           const validated = await validateCreateNoteAtom(formData);
           if (!validated) return null;
 
-          await Atom.create(userId, {
+          await Atom.create(context.env.MONGO_DATABASE_API_KEY, userId, {
             type: _type,
             data: { ...validated },
             createdAt: _createdAt,
@@ -62,7 +69,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
           const validated = await validateCreateContactAtom(formData);
           if (!validated) return null;
 
-          await Atom.create(userId, {
+          await Atom.create(context.env.MONGO_DATABASE_API_KEY, userId, {
             type: _type,
             data: { ...validated },
             createdAt: _createdAt,
@@ -75,7 +82,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
           const validated = await validateCreateReminderAtom(formData);
           if (!validated) return null;
 
-          await Atom.create(userId, {
+          await Atom.create(context.env.MONGO_DATABASE_API_KEY, userId, {
             type: _type,
             data: { ...validated },
             createdAt: _createdAt,
@@ -95,7 +102,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
       if (!validated) return null;
 
       const { atomId } = validated;
-      await Atom.softDelete(userId, atomId);
+      await Atom.softDelete(context.env.MONGO_DATABASE_API_KEY, userId, atomId);
 
       return null;
     }
@@ -104,7 +111,9 @@ export const action = async ({ request }: ActionFunctionArgs) => {
       if (!validated) return null;
 
       const { atomId, ...rest } = validated;
-      await Atom.update(userId, atomId, { data: { ...rest } });
+      await Atom.update(context.env.MONGO_DATABASE_API_KEY, userId, atomId, {
+        data: { ...rest },
+      });
 
       return null;
     }
@@ -113,7 +122,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
       if (!validated) return null;
 
       const { atomId, ...rest } = validated;
-      await Atom.update(userId, atomId, {
+      await Atom.update(context.env.MONGO_DATABASE_API_KEY, userId, atomId, {
         data: { ...rest },
       });
 
@@ -124,7 +133,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
       if (!validated) return null;
 
       const { atomId, ...rest } = validated;
-      await Atom.update(userId, atomId, {
+      await Atom.update(context.env.MONGO_DATABASE_API_KEY, userId, atomId, {
         data: { ...rest },
       });
 

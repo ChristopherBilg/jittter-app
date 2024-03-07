@@ -18,9 +18,15 @@ export const UserTable = pgTable("user", {
 });
 
 export class User {
-  static getByAuthenticating = async (email: string, password: string) => {
+  static getByAuthenticating = async (
+    connectionString: string,
+    email: string,
+    password: string,
+  ) => {
     try {
-      const user = await NeonDB.getInstance().db.query.UserTable.findFirst({
+      const user = await NeonDB.getInstance(
+        connectionString,
+      ).db.query.UserTable.findFirst({
         where: and(eq(UserTable.email, email), isNull(UserTable.deletedAt)),
       });
       if (!user) return null;
@@ -35,9 +41,11 @@ export class User {
     }
   };
 
-  static getById = async (id: string) => {
+  static getById = async (connectionString: string, id: string) => {
     try {
-      const user = await NeonDB.getInstance().db.query.UserTable.findFirst({
+      const user = await NeonDB.getInstance(
+        connectionString,
+      ).db.query.UserTable.findFirst({
         where: eq(UserTable.id, id),
       });
 
@@ -49,6 +57,7 @@ export class User {
   };
 
   static create = async (
+    connectionString: string,
     firstName: string,
     lastName: string,
     email: string,
@@ -57,7 +66,7 @@ export class User {
     const passKey = await pbkdf2(password);
 
     try {
-      const newUsers = await NeonDB.getInstance()
+      const newUsers = await NeonDB.getInstance(connectionString)
         .db.insert(UserTable)
         .values({
           firstName,
@@ -77,11 +86,12 @@ export class User {
   };
 
   static update = async (
+    connectionString: string,
     id: string,
     user: Partial<InferSelectModel<typeof UserTable>>,
   ) => {
     try {
-      const updatedUsers = await NeonDB.getInstance()
+      const updatedUsers = await NeonDB.getInstance(connectionString)
         .db.update(UserTable)
         .set({ ...user, updatedAt: new Date() })
         .where(eq(UserTable.id, id))
@@ -96,11 +106,15 @@ export class User {
     }
   };
 
-  static updateAuthentication = async (id: string, password: string) => {
+  static updateAuthentication = async (
+    connectionString: string,
+    id: string,
+    password: string,
+  ) => {
     const passKey = await pbkdf2(password);
 
     try {
-      const updatedUsers = await NeonDB.getInstance()
+      const updatedUsers = await NeonDB.getInstance(connectionString)
         .db.update(UserTable)
         .set({ passKey, updatedAt: new Date() })
         .where(eq(UserTable.id, id))

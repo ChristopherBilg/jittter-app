@@ -15,11 +15,15 @@ export const meta: MetaFunction = () => {
   ];
 };
 
-export const loader = async ({ request }: LoaderFunctionArgs) => {
-  const { user } = await redirectIfNotAuthenticated(request, "/signin");
+export const loader = async ({ request, context }: LoaderFunctionArgs) => {
+  const { user } = await redirectIfNotAuthenticated(
+    request,
+    "/signin",
+    context.env.NEON_DATABASE_URL,
+  );
   const { id: userId } = user;
 
-  const atoms = await Atom.get(userId);
+  const atoms = await Atom.get(context.env.MONGO_DATABASE_API_KEY, userId);
 
   return json({
     atoms,

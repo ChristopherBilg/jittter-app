@@ -8,15 +8,14 @@ class NeonDB {
   private _connectionString;
   private _db;
 
-  private constructor() {
-    this._connectionString =
-      "postgresql://christopherbilg:dv91LmpwCjVb@ep-weathered-sky-a5ilhn57-pooler.us-east-2.aws.neon.tech/jittter-product-db?sslmode=require";
+  private constructor(connectionString: string) {
+    this._connectionString = connectionString;
     this._db = drizzle(neon(this._connectionString), { schema });
   }
 
-  public static getInstance = (): NeonDB => {
+  public static getInstance = (connectionString: string): NeonDB => {
     if (!NeonDB._instance) {
-      NeonDB._instance = new NeonDB();
+      NeonDB._instance = new NeonDB(connectionString);
     }
 
     return NeonDB._instance;

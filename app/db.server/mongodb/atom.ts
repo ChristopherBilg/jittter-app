@@ -43,10 +43,8 @@ export type AtomStructure<
 export class Atom {
   private static _baseUrl =
     "https://us-east-1.aws.data.mongodb-api.com/app/data-atlvy/endpoint/data/v1";
-  private static _apiKey =
-    "cHlUp98dhonFRL3PHhS0nIQzTZ1MmbD4TAXOGj2J4MaD05kDgoftyd03VCg6Apzo";
 
-  static create = async (userId: string, document: object) => {
+  static create = async (apiKey: string, userId: string, document: object) => {
     try {
       const body = JSON.stringify({
         dataSource: "jittter-product-cluster",
@@ -65,7 +63,7 @@ export class Atom {
         headers: {
           "Content-Type": "application/json",
           "Access-Control-Request-Headers": "*",
-          apiKey: this._apiKey,
+          apiKey,
         },
         body,
       });
@@ -79,7 +77,7 @@ export class Atom {
     }
   };
 
-  static get = async (userId: string) => {
+  static get = async (apiKey: string, userId: string) => {
     try {
       const body = JSON.stringify({
         dataSource: "jittter-product-cluster",
@@ -101,7 +99,7 @@ export class Atom {
         headers: {
           "Content-Type": "application/json",
           "Access-Control-Request-Headers": "*",
-          apiKey: this._apiKey,
+          apiKey,
         },
         body,
       });
@@ -114,7 +112,12 @@ export class Atom {
     }
   };
 
-  static update = async (userId: string, _id: string, document: object) => {
+  static update = async (
+    apiKey: string,
+    userId: string,
+    _id: string,
+    document: object,
+  ) => {
     try {
       const body = JSON.stringify({
         dataSource: "jittter-product-cluster",
@@ -139,7 +142,7 @@ export class Atom {
         headers: {
           "Content-Type": "application/json",
           "Access-Control-Request-Headers": "*",
-          apiKey: this._apiKey,
+          apiKey,
         },
         body,
       });
@@ -153,7 +156,7 @@ export class Atom {
     }
   };
 
-  static softDelete = async (userId: string, _id: string) => {
+  static softDelete = async (apiKey: string, userId: string, _id: string) => {
     try {
       const body = JSON.stringify({
         dataSource: "jittter-product-cluster",
@@ -177,7 +180,7 @@ export class Atom {
         headers: {
           "Content-Type": "application/json",
           "Access-Control-Request-Headers": "*",
-          apiKey: this._apiKey,
+          apiKey,
         },
         body,
       });
@@ -191,7 +194,7 @@ export class Atom {
     }
   };
 
-  static count = async (userId: string) => {
+  static count = async (apiKey: string, userId: string) => {
     try {
       const body = JSON.stringify({
         dataSource: "jittter-product-cluster",
@@ -222,7 +225,7 @@ export class Atom {
         headers: {
           "Content-Type": "application/json",
           "Access-Control-Request-Headers": "*",
-          apiKey: this._apiKey,
+          apiKey,
         },
         body,
       });

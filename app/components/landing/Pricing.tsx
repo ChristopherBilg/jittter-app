@@ -139,17 +139,13 @@ const Pricing = () => {
             featured
             subscriptionTier={SubscriptionTier.Premium}
             description="Perfect for day-to-day users that want to get more done."
-            features={[
-              "Everything in Starter",
-            ]}
+            features={["Everything in Starter"]}
           />
 
           <Plan
             subscriptionTier={SubscriptionTier.Professional}
             description="For power users that want to get the most out of our software."
-            features={[
-              "Everything in Premium",
-            ]}
+            features={["Everything in Premium"]}
           />
         </div>
       </Container>

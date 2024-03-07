@@ -33,10 +33,10 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   });
 };
 
-export const action = async ({ request }: ActionFunctionArgs) => {
+export const action = async ({ request, context }: ActionFunctionArgs) => {
   const session = await getSession(request.headers.get("Cookie"));
 
-  const user = await validateSignIn(request);
+  const user = await validateSignIn(request, context.env.NEON_DATABASE_URL);
 
   if (!user) {
     session.flash("error", "Invalid username and/or password");

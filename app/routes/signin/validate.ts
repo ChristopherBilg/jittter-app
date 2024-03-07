@@ -6,7 +6,10 @@ export const SignInUserSchema = z.object({
   password: z.string().min(10).max(128),
 });
 
-export const validateSignIn = async (request: Request) => {
+export const validateSignIn = async (
+  request: Request,
+  connectionString: string,
+) => {
   const formData = await request.formData();
 
   const email = formData.get("email");
@@ -20,6 +23,7 @@ export const validateSignIn = async (request: Request) => {
   if (!result.success) return null;
 
   return User.getByAuthenticating(
+    connectionString,
     result.data.email.toLowerCase(),
     result.data.password,
   );

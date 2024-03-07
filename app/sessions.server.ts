@@ -25,7 +25,11 @@ const { getSession, commitSession, destroySession } =
     },
   });
 
-const redirectIfNotAuthenticated = async (request: Request, route: string) => {
+const redirectIfNotAuthenticated = async (
+  request: Request,
+  route: string,
+  connectionString: string,
+) => {
   const session = await getSession(request.headers.get("Cookie"));
   if (!session.has("id")) {
     throw redirect(route, {
@@ -36,7 +40,7 @@ const redirectIfNotAuthenticated = async (request: Request, route: string) => {
     });
   }
 
-  const user = await User.getById(session.get("id")!);
+  const user = await User.getById(connectionString, session.get("id")!);
   if (!user) {
     throw redirect(route, {
       status: 302,
