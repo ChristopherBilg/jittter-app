@@ -5,7 +5,6 @@ import { loader } from "~/app/routes/dashboard/route";
 import AtomicItem from "./AtomicItem";
 import CreateAtomicContact from "./CreateAtomicContact";
 import CreateAtomicNote from "./CreateAtomicNote";
-import CreateAtomicReminder from "./CreateAtomicReminder";
 
 const useDeletedAtomIds = () => {
   return useFetchers()
@@ -71,21 +70,12 @@ const AtomicItemList = () => {
       </li>
 
       <li>
-        <CreateAtomicReminder />
-      </li>
-
-      <li>
         <CreateAtomicContact />
       </li>
 
-      {/* TODO: Clean up UI for drawing creation and add it back
+      {/* TODO: Clean up UI for reminder creation and add it back
       <li>
-        <CreateAtomicDrawing />
-      </li> */}
-
-      {/* TODO: Add atomic item creation (generic w/ SlateJS)
-      <li>
-        <CreateAtomicItem />
+        <CreateAtomicReminder />
       </li> */}
     </ul>
   );

@@ -2,9 +2,9 @@ import { ActionFunctionArgs } from "@remix-run/cloudflare";
 import { Atom, AtomStructure, AtomType } from "~/app/db.server/mongodb/atom";
 import { redirectIfNotAuthenticated } from "~/app/sessions.server";
 import { exhaustiveMatchingGuard } from "~/app/utils/misc";
+import { AtomLimit, SubscriptionTier } from "~/app/utils/subscription";
 import {
   validateCreateContactAtom,
-  validateCreateDrawingAtom,
   validateCreateNoteAtom,
   validateCreateReminderAtom,
   validateDeleteAtom,
@@ -23,13 +23,24 @@ export const enum AtomFormAction {
 
 export const action = async ({ request }: ActionFunctionArgs) => {
   const { user } = await redirectIfNotAuthenticated(request, "/login");
-  const { id: userId } = user;
+  const { id: userId, subscriptionTier } = user;
 
   const formData = await request.formData();
   const _action = formData.get("_action") as AtomFormAction;
 
   switch (_action) {
     case AtomFormAction.CreateAtom: {
+      const atomLimit = AtomLimit[subscriptionTier as SubscriptionTier];
+      const atomCount = await Atom.count(userId);
+      if (atomCount >= atomLimit) {
+        return new Response("Atom limit reached", {
+          status: 403,
+          headers: {
+            "Content-Type": "text/plain",
+          },
+        });
+      }
+
       const _type = formData.get("_type") as AtomStructure["type"];
       const _createdAt = Number(formData.get("_createdAt"));
 
@@ -38,10 +49,9 @@ export const action = async ({ request }: ActionFunctionArgs) => {
           const validated = await validateCreateNoteAtom(formData);
           if (!validated) return null;
 
-          const { content } = validated;
           await Atom.create(userId, {
             type: _type,
-            data: { content },
+            data: { ...validated },
             createdAt: _createdAt,
             updatedAt: _createdAt,
           });
@@ -52,10 +62,9 @@ export const action = async ({ request }: ActionFunctionArgs) => {
           const validated = await validateCreateContactAtom(formData);
           if (!validated) return null;
 
-          const { fullName, email, phoneNumber } = validated;
           await Atom.create(userId, {
             type: _type,
-            data: { fullName, email, phoneNumber },
+            data: { ...validated },
             createdAt: _createdAt,
             updatedAt: _createdAt,
           });
@@ -66,24 +75,9 @@ export const action = async ({ request }: ActionFunctionArgs) => {
           const validated = await validateCreateReminderAtom(formData);
           if (!validated) return null;
 
-          const { content, frequency, startingAt } = validated;
           await Atom.create(userId, {
             type: _type,
-            data: { content, frequency, startingAt },
-            createdAt: _createdAt,
-            updatedAt: _createdAt,
-          });
-
-          return null;
-        }
-        case AtomType.Drawing: {
-          const validated = await validateCreateDrawingAtom(formData);
-          if (!validated) return null;
-
-          const { content } = validated;
-          await Atom.create(userId, {
-            type: _type,
-            data: { content },
+            data: { ...validated },
             createdAt: _createdAt,
             updatedAt: _createdAt,
           });
@@ -109,8 +103,8 @@ export const action = async ({ request }: ActionFunctionArgs) => {
       const validated = await validateUpdateNoteAtom(formData);
       if (!validated) return null;
 
-      const { atomId, content } = validated;
-      await Atom.update(userId, atomId, { data: { content } });
+      const { atomId, ...rest } = validated;
+      await Atom.update(userId, atomId, { data: { ...rest } });
 
       return null;
     }
@@ -118,9 +112,9 @@ export const action = async ({ request }: ActionFunctionArgs) => {
       const validated = await validateUpdateContactAtom(formData);
       if (!validated) return null;
 
-      const { atomId, fullName, email, phoneNumber } = validated;
+      const { atomId, ...rest } = validated;
       await Atom.update(userId, atomId, {
-        data: { fullName, email, phoneNumber },
+        data: { ...rest },
       });
 
       return null;
@@ -129,9 +123,9 @@ export const action = async ({ request }: ActionFunctionArgs) => {
       const validated = await validateUpdateReminderAtom(formData);
       if (!validated) return null;
 
-      const { atomId, content, frequency, startingAt } = validated;
+      const { atomId, ...rest } = validated;
       await Atom.update(userId, atomId, {
-        data: { content, frequency, startingAt },
+        data: { ...rest },
       });
 
       return null;

@@ -2,6 +2,7 @@ import { useFetcher } from "@remix-run/react";
 import { useEffect, useRef, useState } from "react";
 import { AtomStructure, ContactStructure } from "~/app/db.server/mongodb/atom";
 import { AtomFormAction } from "~/app/routes/atoms/route";
+import { UpdateContactAtomSchema } from "~/app/routes/atoms/validate";
 import OptimisticDeleteAtomicItemButton from "./OptimisticDeleteAtomicItemButton";
 
 type AtomicContactProps = {
@@ -29,6 +30,10 @@ const AtomicContact = ({ atom }: AtomicContactProps) => {
 
   if (fetcher?.formData?.has("phoneNumber")) {
     atom.data.phoneNumber = String(fetcher.formData.get("phoneNumber"));
+  }
+
+  if (fetcher?.formData?.has("notes")) {
+    atom.data.notes = String(fetcher.formData.get("notes"));
   }
 
   return (
@@ -61,24 +66,46 @@ const AtomicContact = ({ atom }: AtomicContactProps) => {
             autoComplete="name"
             defaultValue={atom.data.fullName ?? ""}
             className="w-full rounded-md border border-gray-200 p-2"
+            maxLength={
+              UpdateContactAtomSchema.shape.fullName.maxLength ?? undefined
+            }
+            required
           />
 
-          <input
-            type="email"
-            name="email"
-            placeholder="Email"
-            autoComplete="email"
-            defaultValue={atom.data.email ?? ""}
-            className="w-full rounded-md border border-gray-200 p-2"
-          />
+          <div className="flex flex-col space-y-2 md:flex-row md:space-x-2 md:space-y-0">
+            <input
+              type="email"
+              name="email"
+              placeholder="Email"
+              autoComplete="email"
+              defaultValue={atom.data.email ?? ""}
+              className="rounded-md border border-gray-200 p-2 md:w-1/2"
+              maxLength={
+                UpdateContactAtomSchema.shape.email.maxLength ?? undefined
+              }
+            />
 
-          <input
-            type="text"
-            name="phoneNumber"
-            placeholder="Phone number"
-            autoComplete="tel"
-            defaultValue={atom.data.phoneNumber ?? ""}
-            className="w-full rounded-md border border-gray-200 p-2"
+            <input
+              type="text"
+              name="phoneNumber"
+              placeholder="Phone number"
+              autoComplete="tel"
+              defaultValue={atom.data.phoneNumber ?? ""}
+              className="rounded-md border border-gray-200 p-2 md:w-1/2"
+              maxLength={
+                UpdateContactAtomSchema.shape.phoneNumber.maxLength ?? undefined
+              }
+            />
+          </div>
+
+          <textarea
+            name="notes"
+            placeholder="Notes"
+            defaultValue={atom.data.notes ?? ""}
+            className="min-h-32 w-full rounded-md border border-gray-200 p-2"
+            maxLength={
+              UpdateContactAtomSchema.shape.notes.maxLength ?? undefined
+            }
           />
 
           <input
@@ -114,6 +141,13 @@ const AtomicContact = ({ atom }: AtomicContactProps) => {
               Phone number:
             </span>{" "}
             {atom.data.phoneNumber}
+          </p>
+
+          <p className="whitespace-pre-line text-left">
+            <span className="text-sm font-semibold text-gray-600 md:text-xs">
+              Notes:
+            </span>{" "}
+            {atom.data.notes}
           </p>
         </button>
       )}

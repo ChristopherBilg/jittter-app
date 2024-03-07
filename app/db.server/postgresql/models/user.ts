@@ -1,6 +1,7 @@
 import { InferSelectModel, and, eq, isNull } from "drizzle-orm";
 import { pgTable, text, uuid } from "drizzle-orm/pg-core";
 import { pbkdf2, pbkdf2Verify } from "~/app/utils/auth.server";
+import { SubscriptionTier } from "~/app/utils/subscription";
 import { getTimestampFields } from "../../../utils/db";
 import NeonDB from "../neondb";
 
@@ -10,6 +11,9 @@ export const UserTable = pgTable("user", {
   lastName: text("last_name").notNull(),
   email: text("email").notNull().unique(),
   passKey: text("pass_key").notNull(),
+  subscriptionTier: text("subscription_tier")
+    .notNull()
+    .default(SubscriptionTier.Starter),
   ...getTimestampFields(),
 });
 

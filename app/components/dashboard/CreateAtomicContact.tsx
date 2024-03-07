@@ -43,7 +43,6 @@ const CreateAtomicContact = () => {
           placeholder="Email address"
           className="rounded-md border border-gray-200 p-2 md:w-1/2"
           maxLength={CreateContactAtomSchema.shape.email.maxLength ?? undefined}
-          required
         />
 
         <input
@@ -54,9 +53,15 @@ const CreateAtomicContact = () => {
           maxLength={
             CreateContactAtomSchema.shape.phoneNumber.maxLength ?? undefined
           }
-          required
         />
       </div>
+
+      <textarea
+        name="notes"
+        placeholder="Notes"
+        className="min-h-32 rounded-md border border-gray-200 p-2"
+        maxLength={CreateContactAtomSchema.shape.notes.maxLength ?? undefined}
+      />
 
       <input type="submit" className="hidden" />
     </Form>

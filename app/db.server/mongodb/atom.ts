@@ -11,6 +11,7 @@ export type ContactStructure = {
     fullName: string;
     email: string;
     phoneNumber: string;
+    notes: string;
   };
 };
 
@@ -22,21 +23,14 @@ export type ReminderStructure = {
   };
 };
 
-export type DrawingStructure = {
-  data: {
-    content: string;
-  };
-};
-
 export const enum AtomType {
   Note = "note",
   Contact = "contact",
   Reminder = "reminder",
-  Drawing = "drawing",
 }
 
 export type AtomStructure<
-  T = NoteStructure | ContactStructure | ReminderStructure | DrawingStructure,
+  T = NoteStructure | ContactStructure | ReminderStructure,
 > = {
   _id: string;
   userId: string;
@@ -194,6 +188,51 @@ export class Atom {
     } catch (err) {
       console.error(err);
       return null;
+    }
+  };
+
+  static count = async (userId: string) => {
+    try {
+      const body = JSON.stringify({
+        dataSource: "jittter-product-cluster",
+        database: "jittter-product-cluster",
+        collection: "atom",
+        pipeline: [
+          {
+            $match: {
+              userId,
+              deletedAt: {
+                $exists: false,
+              },
+            },
+          },
+          {
+            $group: {
+              _id: null,
+              count: {
+                $sum: 1,
+              },
+            },
+          },
+        ],
+      });
+
+      const atoms = await fetch(`${this._baseUrl}/action/aggregate`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Request-Headers": "*",
+          apiKey: this._apiKey,
+        },
+        body,
+      });
+
+      const data: { documents: { _id?: string; count?: number }[] } =
+        await atoms.json();
+      return Number(data?.documents?.[0]?.count ?? 0);
+    } catch (err) {
+      console.error(err);
+      return 0;
     }
   };
 }
