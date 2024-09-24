@@ -1,0 +1,87 @@
+{
+  "short_name": "Jittter",
+  "name": "Jittter",
+  "description": "Productivity workflows made simple for everyone",
+  "id": "/dashboard?source=pwa",
+  "start_url": "/dashboard?source=pwa",
+  "background_color": "#2563EB",
+  "theme_color": "#2563EB",
+  "display_override": [
+    "standalone",
+    "fullscreen",
+    "window-controls-overlay",
+    "minimal-ui",
+    "browser"
+  ],
+  "display": "standalone",
+  "scope": "/",
+  "categories": [
+    "business",
+    "finance",
+    "lifestyle",
+    "personalization",
+    "productivity",
+    "utilities"
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshot-987x1280.png",
+      "sizes": "987x1280",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Dashboard of Jittter (wide)"
+    },
+    {
+      "src": "/screenshot-1280x720.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Dashboard of Jittter (wide)"
+    }
+  ],
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Dashboard",
+      "url": "/dashboard?source=pwa",
+      "description": "Dashboard",
+      "icons": [
+        {
+          "src": "/favicon-96x96.png",
+          "type": "image/png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Account Settings",
+      "url": "/account?source=pwa",
+      "description": "Account Settings",
+      "icons": [
+        {
+          "src": "/favicon-96x96.png",
+          "type": "image/png",
+          "sizes": "96x96"
+        }
+      ]
+    }
+  ],
+  "launch_handler": {
+    "client_mode": ["navigate-existing", "auto"]
+  },
+  "orientation": "portrait",
+  "dir": "ltr",
+  "lang": "en",
+  "prefer_related_applications": false
+}
