@@ -53,7 +53,7 @@
     "prettier-plugin-tailwindcss": "^0.5.11",
     "tailwindcss": "^3.4.1",
     "typescript": "^5.1.0",
-    "wrangler": "^3.31.0"
+    "wrangler": "^3.78.9"
   },
   "engines": {
     "node": ">=18.0.0"
